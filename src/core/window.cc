@@ -143,6 +143,8 @@ void CoreWindow::init(const int32 width, const int32 height, const char * name) 
   SetWindowCallbacks();
 
   InitGLEW();
+  Core::instance().geometry_.init();
+  Core::instance().material_.init("./../data/materials/shader.lua");
 
   glfwSetInputMode(glfw_window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
   is_already_initialized_ = true;
