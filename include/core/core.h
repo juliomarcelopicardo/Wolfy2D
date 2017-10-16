@@ -9,6 +9,8 @@
 
 #include "Wolfy2D.h"
 #include "window.h"
+#include "geometry.h"
+#include "material.h"
 #include <stdio.h>
 
 
@@ -44,6 +46,10 @@ class Core {
 *******************************************************************************/
   /// Default window instance.
   CoreWindow window_;
+  /// Sprites quad geometry.
+  CoreGeometry geometry_;
+  /// Sprites material.
+  CoreMaterial material_;
   
   /// Time when the application starts.
   uint64 start_time_;
