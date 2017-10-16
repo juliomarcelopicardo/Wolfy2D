@@ -27,6 +27,13 @@ enum KeyboardButton {
   kKeyboardButton_Tab = 258,
 };
 
+glm::vec2 MousePosition();
+bool IsMouseButtonDown(MouseButton button);
+bool IsMouseButtonUp(MouseButton button);
+bool IsMouseButtonPressed(MouseButton button);
+bool IsKeyboardButtonDown(KeyboardButton button);
+bool IsKeyboardButtonUp(KeyboardButton button);
+bool IsKeyboardButtonPressed(KeyboardButton button);
 
 }; /* Input */
 }; /* W2D */

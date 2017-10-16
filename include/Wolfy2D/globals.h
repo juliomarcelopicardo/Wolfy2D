@@ -8,6 +8,7 @@
 #define __WOLFY2D_GLOBALS_H__ 1
 
 #include <stdint.h>
+#include "GLM/glm.hpp"
 
 namespace W2D {
 
