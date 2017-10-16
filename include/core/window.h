@@ -1,15 +1,14 @@
-/** Copyright Julio Marcelo Picardo. SouthBros 2017-18, all rights reserved.
+/** Copyright Julio Marcelo Picardo 2017-18, all rights reserved.
 *
 *  @project Wolfy2D
 *  @author Julio Marcelo Picardo <juliomarcelopicardo@gmail.com>
-*
 */
 
 #ifndef __CORE_WINDOW_H__
 #define __CORE_WINDOW_H__ 1
 
 #include "Wolfy2D.h"
-#include <Windows.h>
+#include "core/input.h"
 
 #include "GLFW/glfw3.h"
 #include "GLM/glm.hpp"
@@ -34,11 +33,10 @@ class CoreWindow {
   bool is_opened_;
   /// Glfw window pointer.
   GLFWwindow *glfw_window_;
-  /// Mouse cursor position in the application.
-  glm::vec2 mouse_position_;
   /// Initialized state.
   bool is_already_initialized_;
-
+  /// Input instance.
+  CoreInput input_;
 
   /*******************************************************************************
   ***                        Constructor and destructor                        ***

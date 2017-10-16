@@ -16,7 +16,7 @@ int32 main() {
 
   while (Window::IsOpened()) {
     Window::Clear();
-
+    
     Window::Frame();
   }
 
