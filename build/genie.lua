@@ -63,6 +63,9 @@ project "Wolfy2D"
     path.join(PROJ_DIR, "external/glm/src/"),
     -- FontStash
     path.join(PROJ_DIR, "external/fontstash/include/"),
+	  -- STB 
+    path.join(PROJ_DIR, "external/stb/include/"),
+    path.join(PROJ_DIR, "external/stb/src/"),
   }
 
   files {
@@ -80,6 +83,8 @@ project "Wolfy2D"
     path.join(PROJ_DIR, "external/glfw3_2_1/src/*.h"),
     -- GLEW
     path.join(PROJ_DIR, "external/glew/src/*.c"),
+    -- LUA
+    path.join(PROJ_DIR, "external/lua/src/*.*"),
     -- ImGui
 	  path.join(PROJ_DIR, "external/imgui/*.cpp"),
 	  path.join(PROJ_DIR, "external/imgui/*.h"),
@@ -94,6 +99,9 @@ project "Wolfy2D"
     path.join(PROJ_DIR, "external/fontstash/include/FONTSTASH/fontstash.h"),
     path.join(PROJ_DIR, "external/fontstash/include/FONTSTASH/glfontstash.h"),
     path.join(PROJ_DIR, "external/fontstash/include/FONTSTASH/stb_truetype.h"),
+    -- STB
+    path.join(PROJ_DIR, "external/stb/include/STB/*.h"),
+    path.join(PROJ_DIR, "external/stb/src/*.c"),
   }
 
   configuration "Debug"
@@ -122,6 +130,7 @@ function GenerateProject(name)
     path.join(PROJ_DIR, "external/imgui/include/"),
     path.join(PROJ_DIR, "external/glm/include/"),
     path.join(PROJ_DIR, "external/fontstash/include/"),
+    path.join(PROJ_DIR, "external/stb/include/"),
   }
 
   files {
