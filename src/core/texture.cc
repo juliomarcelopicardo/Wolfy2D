@@ -27,7 +27,6 @@ CoreTexture::CoreTexture() {
   width_ = 0;
   height_ = 0;
   texture_id_ = 0;
-  wrap_mode_ = kTextureWrap_Repeat;
 }
 
 CoreTexture::~CoreTexture() {
@@ -36,7 +35,7 @@ CoreTexture::~CoreTexture() {
   }
 }
 
-void CoreTexture::init(const char* path, const TextureWrap wrap_mode) {
+void CoreTexture::init(const char* path) {
 
   //Loading the image, we have to do this before generate the identifier:
   int32 channels = 0;
@@ -54,9 +53,11 @@ void CoreTexture::init(const char* path, const TextureWrap wrap_mode) {
     texture_id_ = 0;
     glGenTextures(1, &texture_id_);
     glBindTexture(GL_TEXTURE_2D, texture_id_);
-    wrap_mode_ = wrap_mode;
 
-    set_info();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     //The "internalformat" -third parameter- means the format that OpenGL 
     //should use to store the data internally, this is the format of 
@@ -85,46 +86,7 @@ void CoreTexture::init(const char* path, const TextureWrap wrap_mode) {
 
 
 
-void CoreTexture::enable(const uint32 program_id, const char* text_name, const uint32 texture_slot) {
 
-    glActiveTexture(GL_TEXTURE0 + texture_slot);
-    glBindTexture(GL_TEXTURE_2D, texture_id_);
-    glUniform1i(glGetUniformLocation(program_id, text_name), texture_slot);
-
-}
-
-void CoreTexture::enable(const uint32 uniform_location, const uint32 texture_slot) {
-    glActiveTexture(GL_TEXTURE0 + texture_slot);
-    glBindTexture(GL_TEXTURE_2D, texture_id_);
-    glUniform1i(uniform_location, texture_slot);
-}
-
-void CoreTexture::set_info() {
-  switch (wrap_mode_) {
-  case kTextureWrap_Repeat:
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    break;
-  case kTextureWrap_MirrorRepeat:
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-    break;
-  case kTextureWrap_ClampToEdge:
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    break;
-  case kTextureWrap_ClampToBorder:
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    break;
-  }
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-}
-
-void CoreTexture::set_color(const float* color) {
-  glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
-}
 
 
 };/* W2D */

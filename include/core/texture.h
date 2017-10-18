@@ -13,13 +13,6 @@
 
 namespace W2D {
 
-enum TextureWrap {
-  kTextureWrap_Repeat = 0,
-  kTextureWrap_MirrorRepeat,
-  kTextureWrap_ClampToEdge,
-  kTextureWrap_ClampToBorder
-};
-
 class CoreTexture {
 
  public:
@@ -36,7 +29,7 @@ class CoreTexture {
   
 //Font textures for texts need to be "clamped to the edge", but normal 
   //textures should be normally repeated.
-  void init(const char* path, const TextureWrap wrap_mode = kTextureWrap_Repeat);
+  void init(const char* path);
   
 
   
@@ -44,10 +37,6 @@ class CoreTexture {
 ***                        Texture Setters & Getters                         ***
 *******************************************************************************/
 
-  void enable(const uint32 program_id, const char* text_name, const uint32 texture_slot = 0);
-  void enable(const uint32 uniform_location, const uint32 texture_slot = 0);
-
-  void set_color(const float* color);
 
 /*******************************************************************************
 ***                          	Public attributes                              ***
@@ -56,7 +45,6 @@ class CoreTexture {
   uint32 texture_id_;
   int32 width_;
   int32 height_;
-  TextureWrap wrap_mode_;
 
  protected:
   void set_info();
