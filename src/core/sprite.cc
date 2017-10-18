@@ -14,6 +14,7 @@
 #include "GLM/gtc/matrix_transform.hpp"
 #include "GLM/gtc/type_ptr.hpp"
 #include "core/core.h"
+#include "STB/stb_image.h"
 
 
 namespace W2D {
@@ -35,13 +36,57 @@ CoreSprite::~CoreSprite() {
 /******************************************************************************
 ***                                  INIT                                   ***
 ******************************************************************************/
-void CoreSprite::init(const CoreTexture& texture) {
+void CoreSprite::init(const char* texture_path) {
+
   position_ = { 0.0f, 0.0f };
   scale_ = { 1.0f, 1.0f };
   rotation_ = 0.0f;
-  texture_size_ = { (float)texture.width_, (float)texture.height_ };
-  set_size(texture_size_);
-  texture_id_ = texture.texture_id_;
+
+  //Loading the image, we have to do this before generate the identifier:
+  int32 channels = 0;
+
+  stbi_set_flip_vertically_on_load(true);
+  int32 width, height;
+  unsigned char* tmp_texture = stbi_load(texture_path, &width, &height, &channels,
+    STBI_rgb_alpha);
+  if (tmp_texture) {
+
+    //We can blend the texture to refuse to show the alpha channel.
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    //Once we have loaded the texture, we create the handler and we bind it:
+    texture_id_ = 0;
+    glGenTextures(1, &texture_id_);
+    glBindTexture(GL_TEXTURE_2D, texture_id_);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    //The "internalformat" -third parameter- means the format that OpenGL 
+    //should use to store the data internally, this is the format of 
+    //the texture. Is different of the "format" -7th parameter-, a parameter
+    //which combined with the type defines the layout of the data that 
+    //we pass to OpenGL in the last parameter.
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+      GL_UNSIGNED_BYTE, tmp_texture);
+    glBindTexture(GL_TEXTURE_2D, 0); //Unbind the texture.
+                                     //Releasing the image data:
+    stbi_image_free(tmp_texture);
+
+  }
+  else {
+    std::string error(" ERROR: Texture incorrect, file \"");
+    error += texture_path;
+    error += "\" doesn't exists.";
+    printf("\n %s", error.c_str());
+    exit(EXIT_FAILURE);
+  }
+
+  texture_size_ = { (float)width, (float)height };
+  size_ = texture_size_;
 }
 
 
@@ -63,12 +108,24 @@ void CoreSprite::set_size(const glm::vec2 size) {
   scale_.y = size.y / texture_size_.y;
 }
 
+void CoreSprite::set_texture_id(const uint32 texture_id) {
+  texture_id_ = texture_id;
+}
+
 const glm::vec2 CoreSprite::position() {
   return position_;
 }
 
 const glm::vec2 CoreSprite::size() {
   return size_;
+}
+
+const glm::vec2 CoreSprite::textureSize() {
+  return texture_size_;
+}
+
+const uint32 CoreSprite::textureID() {
+  return texture_id_;
 }
 
 

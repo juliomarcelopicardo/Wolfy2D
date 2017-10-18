@@ -30,7 +30,7 @@ class CoreSprite {
 ***                             Sprite methods                               ***
 *******************************************************************************/
 
-  void init(const CoreTexture& texture);
+  void init(const char* texture_path);
   void render();
 
 /*******************************************************************************
@@ -40,9 +40,12 @@ class CoreSprite {
   void set_position(const glm::vec2 pos);
   void set_rotation(const float rotation);
   void set_size(const glm::vec2 size);
+  void set_texture_id(const uint32 texture_id);
 
   const glm::vec2 position();
   const glm::vec2 size();
+  const glm::vec2 textureSize();
+  const uint32 textureID();
 
 /*******************************************************************************
 ***                          	Public attributes                              ***
@@ -53,7 +56,6 @@ class CoreSprite {
 ***                          	Private attributes                             ***
 *******************************************************************************/
  private:
-
 
   glm::vec2 position_;
   glm::vec2 size_;
