@@ -11,6 +11,7 @@
 #include "window.h"
 #include "geometry.h"
 #include "material.h"
+#include "text.h"
 #include <stdio.h>
 
 
@@ -50,6 +51,8 @@ class Core {
   CoreGeometry geometry_;
   /// Sprites material.
   CoreMaterial material_;
+  /// Texts base object.
+  CoreText text_;
   
   /// Time when the application starts.
   uint64 start_time_;

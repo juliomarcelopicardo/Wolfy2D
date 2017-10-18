@@ -19,6 +19,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "..\..\include\Wolfy2D\text.h"
 
 
 
@@ -35,7 +36,7 @@ namespace W2D {
     color_ = { 1.0f, 1.0f, 1.0f, 1.0f };
     regular_ = FONS_INVALID;
     font_ = nullptr;
-    size_ = 0.0f;
+    size_ = 30.0f;
 
   }
 

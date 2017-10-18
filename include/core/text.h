@@ -31,7 +31,6 @@ class CoreText {
   void set_position(const glm::vec2 position);
   void set_size(const float size);
   void set_color(const glm::vec4 color);
-  void release_font();
   void render(const char* text);
   
  private:
@@ -42,6 +41,7 @@ class CoreText {
   glm::vec4 color_; 
   float size_;
 
+  void release_font();
   CoreText(const CoreText& copy);
   CoreText& operator=(const CoreText& copy);
 
