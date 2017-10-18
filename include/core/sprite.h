@@ -11,7 +11,6 @@
 
 #include "GLM/glm.hpp"
 #include "Wolfy2D/globals.h"
-#include "texture.h"
 
 
 namespace W2D {
@@ -32,6 +31,8 @@ class CoreSprite {
 
   void init(const char* texture_path);
   void render();
+  void calculateProjectionMatrix();
+  void releaseTexture();
 
 /*******************************************************************************
 ***                         Sprite Setters & Getters                         ***
@@ -40,12 +41,15 @@ class CoreSprite {
   void set_position(const glm::vec2 pos);
   void set_rotation(const float rotation);
   void set_size(const glm::vec2 size);
+  void set_texture_size(const glm::vec2 texture_size);
   void set_texture_id(const uint32 texture_id);
 
   const glm::vec2 position();
   const glm::vec2 size();
   const glm::vec2 textureSize();
+  const float rotation();
   const uint32 textureID();
+  
 
 /*******************************************************************************
 ***                          	Public attributes                              ***
@@ -63,8 +67,8 @@ class CoreSprite {
   float rotation_;
   glm::vec2 texture_size_;
   uint32 texture_id_;
-
-
+  glm::mat4 projection_matrix_;
+  
   CoreSprite(const CoreSprite& copy);
   CoreSprite& operator=(const CoreSprite& copy);
   

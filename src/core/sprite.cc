@@ -7,7 +7,6 @@
 
 #include "GL/glew.h"
 #include "core/sprite.h"
-#include "core/texture.h"
 #include "core/window.h"
 #include "core/material.h"
 #include "core/geometry.h"
@@ -28,9 +27,7 @@ CoreSprite::CoreSprite() {
   texture_size_ = { 0.0f, 0.0f };
 }
 
-CoreSprite::~CoreSprite() {
-
-}
+CoreSprite::~CoreSprite() {}
 
 
 /******************************************************************************
@@ -108,6 +105,10 @@ void CoreSprite::set_size(const glm::vec2 size) {
   scale_.y = size.y / texture_size_.y;
 }
 
+void CoreSprite::set_texture_size(const glm::vec2 texture_size) {
+  texture_size_ = texture_size;
+}
+
 void CoreSprite::set_texture_id(const uint32 texture_id) {
   texture_id_ = texture_id;
 }
@@ -122,6 +123,10 @@ const glm::vec2 CoreSprite::size() {
 
 const glm::vec2 CoreSprite::textureSize() {
   return texture_size_;
+}
+
+const float CoreSprite::rotation() {
+  return rotation_;
 }
 
 const uint32 CoreSprite::textureID() {
@@ -144,16 +149,27 @@ void CoreSprite::render() {
   model_matrix = glm::translate(model_matrix, glm::vec3(position_.x, position_.y, 0.0f));
   model_matrix = glm::rotate(model_matrix, rotation_, glm::vec3(0.0f, 0.0f, 1.0f));
   model_matrix = glm::scale(model_matrix, glm::vec3(img_size.x, img_size.y, 1.0f));
-
-  glm::mat4 projection = glm::ortho(0.0f, (float)core.window_.width_, (float)core.window_.height_, 0.0f, -1.0f, 1.0f);
-
-
-
+  
   material.render(glm::value_ptr(model_matrix),
-                  glm::value_ptr(projection),
+                  glm::value_ptr(projection_matrix_),
                   texture_id_);
 
   geometry.render();
+}
+
+void CoreSprite::calculateProjectionMatrix() {
+  projection_matrix_ = glm::ortho(0.0f, 
+                                  (float)Core::instance().window_.width_, 
+                                  (float)Core::instance().window_.height_, 
+                                  0.0f, 
+                                  -1.0f,
+                                  1.0f);
+}
+
+void CoreSprite::releaseTexture() {
+  if (glIsTexture(texture_id_)) {
+    glDeleteTextures(1, &texture_id_);
+  }
 }
 
 
