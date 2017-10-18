@@ -11,5 +11,6 @@
 #include "Wolfy2D/window.h"
 #include "Wolfy2D/time.h"
 #include "Wolfy2D/input.h"
+#include "Wolfy2D/text.h"
 
 #endif
