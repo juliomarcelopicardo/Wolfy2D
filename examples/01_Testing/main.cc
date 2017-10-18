@@ -10,7 +10,6 @@
 #include "Wolfy2D.h"
 #include "core\texture.h"
 #include "core\sprite.h"
-#include "core/text.h"
 
 namespace W2D {
   int32 main() {
@@ -18,11 +17,12 @@ namespace W2D {
     Window::Init(1024, 978);
 
     CoreTexture pepe, mario;
-    CoreText text;
     pepe.init("./../data/texture.png");
     mario.init("./../data/mario.png");
-    text.init("./../data/DigitFont.ttf");
-    text.set_size(40.0f);
+    Text paco;
+    paco.set_color({ 0.0f, 1.0f, 0.0f, 1.0f });
+    Text paquito;
+    paquito.set_position({ 200.0f, 200.0f });
     CoreSprite sprite, sprite2;
     sprite.init(pepe);
     sprite2.init(mario);
@@ -33,7 +33,7 @@ namespace W2D {
 
   while (Window::IsOpened()) {
     Window::Clear();
-    sprite.render();    sprite2.render();    sprite2.set_rotation(Time() * 0.001f);    text.render("PAAAAAAAAAAAAAAAAAAAAAACO");    if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_W)) {      printf("\n W down");    }    if (Input::IsKeyboardButtonPressed(Input::kKeyboardButton_S)) {      printf("\n S pressed");    }    if (Input::IsKeyboardButtonUp(Input::kKeyboardButton_D)) {      printf("\n D up");    }    if (Input::IsMouseButtonDown(Input::kMouseButton_Left)) {      printf("\n Left down");    }    if (Input::IsMouseButtonPressed(Input::kMouseButton_Middle)) {      printf("\n Middle pressed");    }    if (Input::IsMouseButtonUp(Input::kMouseButton_Right)) {      printf("\n Right up");    }    
+    sprite.render();    sprite2.render();    sprite2.set_rotation(Time() * 0.001f);    paquito.render("PAQUITORRR");    paco.render("PAAAAAAAAAAAAAAAACO");    if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_W)) {      printf("\n W down");    }    if (Input::IsKeyboardButtonPressed(Input::kKeyboardButton_S)) {      printf("\n S pressed");    }    if (Input::IsKeyboardButtonUp(Input::kKeyboardButton_D)) {      printf("\n D up");    }    if (Input::IsMouseButtonDown(Input::kMouseButton_Left)) {      printf("\n Left down");    }    if (Input::IsMouseButtonPressed(Input::kMouseButton_Middle)) {      printf("\n Middle pressed");    }    if (Input::IsMouseButtonUp(Input::kMouseButton_Right)) {      printf("\n Right up");    }    
     Window::Frame();
   }
 
