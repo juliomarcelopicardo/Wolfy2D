@@ -99,13 +99,6 @@ private:
   CoreWindow& operator=(const CoreWindow& copy);
 
 
-/*******************************************************************************
-***                             Error checkings                              ***
-*******************************************************************************/
-void checkResolution();
-void checkWindow();
-void checkCursorPosition();
-
 }; /* WINDOW */
 
 }; /* W2D */
