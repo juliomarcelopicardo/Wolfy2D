@@ -126,6 +126,8 @@ CoreWindow::~CoreWindow() {}
 
 void CoreWindow::init(const int32 width, const int32 height, const char * name) {
 
+  auto& core = Core::instance();
+
   if (is_already_initialized_) {
     exit(EXIT_FAILURE);
   }
@@ -136,16 +138,23 @@ void CoreWindow::init(const int32 width, const int32 height, const char * name) 
   width_ = width;
   height_ = height;
   glfw_window_ = glfwCreateWindow(width, height, name, nullptr, nullptr);
-  checkWindow();
+  if (!glfw_window_) {
+    glfwTerminate();
+    printf("\n Error: Init window failed.");
+    exit(EXIT_FAILURE);
+  }
   glfwSetWindowPos(glfw_window_, 30, 30);
 
   // Window and Input Callbacks
   SetWindowCallbacks();
 
   InitGLEW();
-  Core::instance().geometry_.init();
-  Core::instance().material_.init("./../data/materials/shader.lua");
-  Core::instance().text_.init("./../data/DigitFont.ttf");
+
+  // Initialize the base objects.
+  core.geometry_.init();
+  core.material_.init("./../data/materials/shader.lua");
+  core.text_.init("./../data/DigitFont.ttf");
+  core.sprite_.calculateProjectionMatrix(); // we calculate once as it wont change.
 
   glfwSetInputMode(glfw_window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
   is_already_initialized_ = true;
@@ -176,24 +185,6 @@ void CoreWindow::clear(float red, float green, float blue) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(red, green, blue, 0.0f); 
 }
-
-/*******************************************************************************
-***                             Error checkings                              ***
-*******************************************************************************/
-void CoreWindow::checkResolution() {
-  const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-
-    
-}
-
-void CoreWindow::checkWindow() {
-  if (!glfw_window_) {
-    glfwTerminate();
-    exit(EXIT_FAILURE);
-  }
-}
-
-
 
 
 
