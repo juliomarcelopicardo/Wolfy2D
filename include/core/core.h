@@ -8,10 +8,11 @@
 #define __WOLFY2D_CORE_H__ 1
 
 #include "Wolfy2D.h"
-#include "window.h"
-#include "geometry.h"
-#include "material.h"
-#include "text.h"
+#include "core/window.h"
+#include "core/geometry.h"
+#include "core/material.h"
+#include "core/sprite.h"
+#include "core/text.h"
 #include <stdio.h>
 
 
@@ -53,7 +54,9 @@ class Core {
   CoreMaterial material_;
   /// Texts base object.
   CoreText text_;
-  
+  /// Sprite base object.
+  CoreSprite sprite_;
+
   /// Time when the application starts.
   uint64 start_time_;
 
