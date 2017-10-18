@@ -10,7 +10,6 @@
 #include "core/lua_class.h"
 #include "core/material.h"
 #include "core/core.h"
-#include "core/texture.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
