@@ -7,6 +7,10 @@
 #ifndef __SILVERLYNX_H__
 #define __SILVERLYNX_H__ 1
 
+/*
+  USER'S API BASE FILE TO INCLUDE ALL THE ENGINE FUNCTIONALITY.
+*/
+
 #include "Wolfy2D/globals.h"
 #include "Wolfy2D/window.h"
 #include "Wolfy2D/time.h"

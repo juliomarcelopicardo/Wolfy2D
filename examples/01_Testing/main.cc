@@ -15,11 +15,11 @@ namespace W2D {
     Window::Init(1024, 978);
     
     Sprite cat, mario;
+    Text green_text, text;
+
     cat.init("./../data/texture.png");
     mario.init("./../data/mario.png");
-    Text green_text, text;
     green_text.set_color({ 0.0f, 1.0f, 0.0f, 1.0f });
-    Text ;
     text.set_position({ 200.0f, 200.0f });
     cat.set_position({ 300.0f, 300.0f });
     mario.set_size({250, 250});
