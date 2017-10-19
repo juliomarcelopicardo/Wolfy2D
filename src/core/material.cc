@@ -25,11 +25,11 @@ namespace W2D {
 
 
 
-CoreMaterial::CoreMaterial() {
+Material::Material() {
   uniform_location_ = { 0, 0, 0, 0 };
 }
 
-CoreMaterial::~CoreMaterial() {
+Material::~Material() {
   if (glIsProgram(program_id_)) {
     glDeleteProgram(program_id_);
   }
@@ -41,23 +41,23 @@ CoreMaterial::~CoreMaterial() {
 ***                            Material methods                              ***
 *******************************************************************************/
 
-void CoreMaterial::getShadersCode(const char* lua_path) {
+void Material::getShadersCode(const char* lua_path) {
   Lua L;
   L.doFile(lua_path);
   vertex_shader_code_ = L.getStringFromTable("Shader", "vertex");
   fragment_shader_code_ = L.getStringFromTable("Shader", "fragment");
 }
 
-void CoreMaterial::createProgram() {
+void Material::createProgram() {
   program_id_ = glCreateProgram();
 }
 
-void CoreMaterial::createShaders() {
+void Material::createShaders() {
   vertex_shader_id_ = glCreateShader(GL_VERTEX_SHADER);
   fragment_shader_id_ = glCreateShader(GL_FRAGMENT_SHADER);
 }
 
-void CoreMaterial::compileShaders() {
+void Material::compileShaders() {
     
   const GLchar* vertex_shader_code = vertex_shader_code_.c_str();
   glShaderSource(vertex_shader_id_, 1, &vertex_shader_code, NULL);
@@ -70,24 +70,24 @@ void CoreMaterial::compileShaders() {
   logShaderError(fragment_shader_id_);
 }
 
-void CoreMaterial::attachShaders() {
+void Material::attachShaders() {
   glAttachShader(program_id_, vertex_shader_id_);
   glAttachShader(program_id_, fragment_shader_id_);
 }
 
 
-void CoreMaterial::linkProgram() {
+void Material::linkProgram() {
   glLinkProgram(program_id_);
   logProgramError();
 }
 
 
-void CoreMaterial::detachShaders() {
+void Material::detachShaders() {
   glDetachShader(program_id_, vertex_shader_id_);
   glDetachShader(program_id_, fragment_shader_id_);
 }
 
-void CoreMaterial::deleteShaders() {
+void Material::deleteShaders() {
   glDeleteShader(vertex_shader_id_);
   glDeleteShader(fragment_shader_id_);
 }
@@ -95,7 +95,7 @@ void CoreMaterial::deleteShaders() {
 /* Hacemos esto para optimizar, guardando los uniforms en variables evitamos tener
    que hacer la llamada glGetUniformLocation en cada frame (ya que es muy costosa).
 */
-void CoreMaterial::saveUniformLocations() { 
+void Material::saveUniformLocations() { 
 
   uint32 program = program_id_;
 
@@ -110,7 +110,7 @@ void CoreMaterial::saveUniformLocations() {
   glUseProgram(0);
 }
 
-void CoreMaterial::render(const float model_matrix[16], 
+void Material::render(const float model_matrix[16], 
                           const float projection_matrix[16], 
                           const uint32 texture_id) {
   //Estas dos flags son las que van a hacer que todo alpha por debajo
@@ -133,7 +133,7 @@ void CoreMaterial::render(const float model_matrix[16],
   glUniform1i(uniform_location_.texture, 0);
 }
 
-void CoreMaterial::init(const char* lua_path) {
+void Material::init(const char* lua_path) {
   getShadersCode(lua_path);
   createProgram();
   createShaders();
@@ -151,7 +151,7 @@ void CoreMaterial::init(const char* lua_path) {
 ***                            Error checkings                               ***
 *******************************************************************************/
 
-void CoreMaterial::logShaderError(const uint32 shader_id_) {
+void Material::logShaderError(const uint32 shader_id_) {
   int32 log_length = 0;
   int32 output = 0;
   glGetShaderiv(shader_id_, GL_COMPILE_STATUS, &output);
@@ -169,7 +169,7 @@ void CoreMaterial::logShaderError(const uint32 shader_id_) {
 }
 
 
-void CoreMaterial::logProgramError() {
+void Material::logProgramError() {
   int32 log_length = 0;
   int32 output = 0;
   glGetProgramiv(program_id_, GL_LINK_STATUS, &output);

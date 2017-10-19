@@ -51,7 +51,7 @@ class Core {
   /// Sprites quad geometry.
   Geometry geometry_;
   /// Sprites material.
-  CoreMaterial material_;
+  Material material_;
   /// Texts base object.
   Txt text_;
   /// Sprite base object.

@@ -21,16 +21,16 @@ struct UniformLocation {
   uint32 texture;
 };
 
-class CoreMaterial {
+class Material {
  public:
 
 /*******************************************************************************
 ***                        Constructor and destructor                        ***
 *******************************************************************************/
   /// Default class constructor.
-  CoreMaterial();
+  Material();
   /// Default class destructor.
-  ~CoreMaterial();
+  ~Material();
 
 /*******************************************************************************
 ***                            Material methods                              ***
@@ -162,6 +162,11 @@ class CoreMaterial {
   UniformLocation uniform_location_;
   /// Id of the program used by the material.
   uint32 program_id_;
+
+  /// Copy constructor
+  Material(const Material& copy);
+  /// Assignment operator.
+  Material& operator=(const Material& copy);
 
 };
 };/* W2D */
