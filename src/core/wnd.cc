@@ -6,7 +6,7 @@
 
 #include "GL/glew.h"
 #include "Wolfy2D/globals.h"
-#include "core/window.h"
+#include "core/wnd.h"
 #include "core/core.h"
 
 

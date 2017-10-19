@@ -6,7 +6,7 @@
 
 #include "Wolfy2D/sprite.h"
 #include "core/core.h"
-#include "core/sprite.h"
+#include "core/texture.h"
 
 namespace W2D {
 

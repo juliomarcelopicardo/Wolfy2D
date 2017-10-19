@@ -4,7 +4,7 @@
 *  @author Julio Marcelo Picardo <juliomarcelopicardo@gmail.com>
 */
 
-#include "core/input.h"
+#include "core/input_manager.h"
 #include "core/core.h"
 
 namespace W2D {

@@ -8,7 +8,7 @@
 #define __CORE_WINDOW_H__ 1
 
 #include "Wolfy2D.h"
-#include "core/input.h"
+#include "core/input_manager.h"
 
 #include "GLFW/glfw3.h"
 #include "GLM/glm.hpp"

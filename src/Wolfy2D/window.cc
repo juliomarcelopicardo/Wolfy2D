@@ -4,7 +4,7 @@
 *  @author Julio Marcelo Picardo <juliomarcelopicardo@gmail.com>
 */
 
-#include "core/window.h"
+#include "core/wnd.h"
 #include "core/core.h"
 
 namespace W2D {

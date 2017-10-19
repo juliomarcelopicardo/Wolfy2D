@@ -6,7 +6,7 @@
 
 #include "Wolfy2D\text.h"
 #include "core/core.h"
-#include "core/text.h"
+#include "core/txt.h"
 
 namespace W2D {
 

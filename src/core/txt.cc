@@ -14,7 +14,7 @@
 #include <GLFW/glfw3.h>
 #define GLFONTSTASH_IMPLEMENTATION
 #include "FONTSTASH/glfontstash.h"
-#include "core/text.h"
+#include "core/txt.h"
 #include "core/core.h"
 #include <string>
 #include <map>

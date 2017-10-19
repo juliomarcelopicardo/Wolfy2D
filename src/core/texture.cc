@@ -6,7 +6,7 @@
 */
 
 #include "GL/glew.h"
-#include "core/sprite.h"
+#include "core/texture.h"
 #include "core/wnd.h"
 #include "core/material.h"
 #include "core/geometry.h"
