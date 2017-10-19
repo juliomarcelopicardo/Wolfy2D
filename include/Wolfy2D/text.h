@@ -11,6 +11,7 @@
 
 namespace W2D {
 
+/// Class used to render texts in scene.
 class Text {
 
  public:
@@ -84,8 +85,11 @@ class Text {
   
  private:
 
+   /// Size of the text font.
    float size_;
+   /// Position of the text.
    glm::vec2 position_;
+   /// Color of the text font.
    glm::vec4 color_;
 };
 
