@@ -64,7 +64,10 @@ class Core {
 ***                         Private Copy Constructor                         ***
 *******************************************************************************/
  private:
+
+  /// Copy constructor.
   Core(const Core& copy);
+  /// Assignment operator.
   Core& operator=(const Core& copy);
 
 }; /* CORE */
