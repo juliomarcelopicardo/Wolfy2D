@@ -4,8 +4,8 @@
 *  @author Julio Marcelo Picardo <juliomarcelopicardo@gmail.com>
 */
 
-#ifndef __SILVERLYNX_H__
-#define __SILVERLYNX_H__ 1
+#ifndef __WOLFY2D_H__
+#define __WOLFY2D_H__ 1
 
 /*
   USER'S API BASE FILE TO INCLUDE ALL THE ENGINE FUNCTIONALITY.
