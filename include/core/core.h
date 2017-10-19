@@ -49,7 +49,7 @@ class Core {
   /// Default window instance.
   CoreWindow window_;
   /// Sprites quad geometry.
-  CoreGeometry geometry_;
+  Geometry geometry_;
   /// Sprites material.
   CoreMaterial material_;
   /// Texts base object.

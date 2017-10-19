@@ -12,15 +12,17 @@
 
 namespace W2D {
 
-
-class CoreGeometry {
+/// Quad geometry class used to renderize sprites.
+class Geometry {
  public:
 
 /*******************************************************************************
 ***                        Constructor and destructor                        ***
 *******************************************************************************/
-  CoreGeometry();
-  ~CoreGeometry();
+  /// Default class constructor.
+  Geometry();
+  /// Default class destructor.
+  ~Geometry();
 
 /*******************************************************************************
 ***                            Geometry methods                              ***
@@ -32,6 +34,12 @@ class CoreGeometry {
   /// @brief  Initializes the quad geometry which will be used for the sprites.
   ///--------------------------------------------------------------------------
   void init();
+
+  ///--------------------------------------------------------------------------
+  /// @fn   render();
+  ///
+  /// @brief  Renders the quad geometry which will be used for the sprites.
+  ///--------------------------------------------------------------------------
   void render();
 
 /*******************************************************************************
@@ -51,8 +59,10 @@ class CoreGeometry {
 *******************************************************************************/
  private:
  
-  CoreGeometry(const CoreGeometry& copy);
-  CoreGeometry& operator=(const CoreGeometry& copy);
+  /// Copy constructor
+  Geometry(const Geometry& copy);
+  /// Asignment operator.
+  Geometry& operator=(const Geometry& copy);
 
 };
 

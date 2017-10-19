@@ -20,7 +20,7 @@ namespace W2D {
 ***                       Constructor and destructor                         ***
 *******************************************************************************/
 
-CoreGeometry::CoreGeometry() {
+Geometry::Geometry() {
   num_vertices_ = 6;
   uv_buffer_ = 0;
   position_buffer_ = 0;
@@ -28,7 +28,7 @@ CoreGeometry::CoreGeometry() {
   vertices_id_[1] = 0;
 }
 
-CoreGeometry::~CoreGeometry() {
+Geometry::~Geometry() {
   if (glIsVertexArray(vertices_id_[0])) {
     glDeleteVertexArrays(2, vertices_id_);
   }
@@ -49,7 +49,7 @@ CoreGeometry::~CoreGeometry() {
 ***                   QUAD                 ***
 *********************************************/
 
-void CoreGeometry::init() {
+void Geometry::init() {
 
   num_vertices_ = 6;
 
@@ -90,7 +90,7 @@ void CoreGeometry::init() {
   glBindVertexArray(0);
 }
 
-void CoreGeometry::render() {
+void Geometry::render() {
   //Posiciones
   glEnableVertexAttribArray(0); // 1.
   glBindBuffer(GL_ARRAY_BUFFER, vertices_id_[0]); // 2. 

@@ -12,12 +12,13 @@
 namespace W2D {
 namespace Window {
 
+
 void Init(const int32 width = 800,
-                const int32 height = 600,
-                const bool mouse_cursor_visible = true,
-                const char* display_name = "Wolfy2D Window");
+          const int32 height = 600,
+          const bool mouse_cursor_visible = true,
+          const char* display_name = "Wolfy2D Window");
 bool IsOpened();
-void Clear(float red = 0.3f, float green = 0.3f, float blue = 0.6f);
+void Clear(float red = 0.3f, float green = 0.3f, float blue = 0.1f);
 void Close();
 void Frame();
 int32 Height();
