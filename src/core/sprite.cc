@@ -7,7 +7,7 @@
 
 #include "GL/glew.h"
 #include "core/sprite.h"
-#include "core/window.h"
+#include "core/wnd.h"
 #include "core/material.h"
 #include "core/geometry.h"
 #include "GLM/gtc/matrix_transform.hpp"
@@ -18,7 +18,7 @@
 
 namespace W2D {
 
-CoreSprite::CoreSprite() {
+Texture::Texture() {
   position_ = { 0.0f, 0.0f };
   size_ = { 0.0f, 0.0f };
   scale_ = { 1.0f, 1.0f };
@@ -27,13 +27,13 @@ CoreSprite::CoreSprite() {
   texture_size_ = { 0.0f, 0.0f };
 }
 
-CoreSprite::~CoreSprite() {}
+Texture::~Texture() {}
 
 
 /******************************************************************************
 ***                                  INIT                                   ***
 ******************************************************************************/
-void CoreSprite::init(const char* texture_path) {
+void Texture::init(const char* texture_path) {
 
   position_ = { 0.0f, 0.0f };
   scale_ = { 1.0f, 1.0f };
@@ -91,45 +91,45 @@ void CoreSprite::init(const char* texture_path) {
 /******************************************************************************
 ***                          SETTERS AND GETTERS                            ***
 ******************************************************************************/
-void CoreSprite::set_position(const glm::vec2 pos) {
+void Texture::set_position(const glm::vec2 pos) {
   position_ = pos;
 }
 
-void CoreSprite::set_rotation(const float rotation) {
+void Texture::set_rotation(const float rotation) {
   rotation_ = rotation;
 }
 
-void CoreSprite::set_size(const glm::vec2 size) {
+void Texture::set_size(const glm::vec2 size) {
   size_ = size;
   scale_.x = size.x / texture_size_.x;
   scale_.y = size.y / texture_size_.y;
 }
 
-void CoreSprite::set_texture_size(const glm::vec2 texture_size) {
+void Texture::set_texture_size(const glm::vec2 texture_size) {
   texture_size_ = texture_size;
 }
 
-void CoreSprite::set_texture_id(const uint32 texture_id) {
+void Texture::set_texture_id(const uint32 texture_id) {
   texture_id_ = texture_id;
 }
 
-const glm::vec2 CoreSprite::position() {
+const glm::vec2 Texture::position() {
   return position_;
 }
 
-const glm::vec2 CoreSprite::size() {
+const glm::vec2 Texture::size() {
   return size_;
 }
 
-const glm::vec2 CoreSprite::textureSize() {
+const glm::vec2 Texture::textureSize() {
   return texture_size_;
 }
 
-const float CoreSprite::rotation() {
+const float Texture::rotation() {
   return rotation_;
 }
 
-const uint32 CoreSprite::textureID() {
+const uint32 Texture::textureID() {
   return texture_id_;
 }
 
@@ -137,7 +137,7 @@ const uint32 CoreSprite::textureID() {
 /******************************************************************************
 ***                                RENDER                                   ***
 ******************************************************************************/
-void CoreSprite::render() {
+void Texture::render() {
 
   auto& core = Core::instance();
   auto& material = core.material_;
@@ -157,7 +157,7 @@ void CoreSprite::render() {
   geometry.render();
 }
 
-void CoreSprite::calculateProjectionMatrix() {
+void Texture::calculateProjectionMatrix() {
   projection_matrix_ = glm::ortho(0.0f, 
                                   (float)Core::instance().window_.width_, 
                                   (float)Core::instance().window_.height_, 
@@ -166,7 +166,7 @@ void CoreSprite::calculateProjectionMatrix() {
                                   1.0f);
 }
 
-void CoreSprite::releaseTexture() {
+void Texture::releaseTexture() {
   if (glIsTexture(texture_id_)) {
     glDeleteTextures(1, &texture_id_);
   }
