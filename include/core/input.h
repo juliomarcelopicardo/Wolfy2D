@@ -4,8 +4,8 @@
 *  @author Julio Marcelo Picardo <juliomarcelopicardo@gmail.com>
 */
 
-#ifndef __CORE_INPUT_H__
-#define __CORE_INPUT_H__ 1
+#ifndef __INPUTMANAGER_H__
+#define __INPUTMANAGER_H__ 1
 
 #include "Wolfy2D.h"
 #include "GLM/glm.hpp"
@@ -14,6 +14,7 @@ namespace W2D {
 
 const int32 kNumMouseButtons = 3;
 
+/// Contains all the info of the button status.
 struct ButtonStatus {
   ButtonStatus() : is_pressed(false),
                    is_up(false),
@@ -22,6 +23,11 @@ struct ButtonStatus {
   bool is_up;
   bool is_down;
 
+  ///--------------------------------------------------------------------------
+  /// @fn   resetStatus();
+  ///
+  /// @brief  Reset all the status (all values = false).
+  ///--------------------------------------------------------------------------
   void resetStatus() {
     is_pressed = false;
     is_up = false;
@@ -30,7 +36,7 @@ struct ButtonStatus {
 };
 
 
-class CoreInput {
+class InputManager {
 
  public:
 
@@ -39,10 +45,10 @@ class CoreInput {
 *******************************************************************************/
 
   /// Default class constructor.
-  CoreInput();
+  InputManager();
   
   /// Default class destructor.
-  ~CoreInput();
+  ~InputManager();
 
 /*******************************************************************************
 ***                           Public Methods                                 ***
@@ -168,11 +174,13 @@ class CoreInput {
 
 private:
 
-  CoreInput(const CoreInput& copy);
-  CoreInput& operator=(const CoreInput& copy);
+  /// Copy constructor.
+  InputManager(const InputManager& copy);
+  /// Assignment operator.
+  InputManager& operator=(const InputManager& copy);
 
 
-}; /* WINDOW */
+}; /* INPUTMANAGER */
 
 }; /* W2D */
 

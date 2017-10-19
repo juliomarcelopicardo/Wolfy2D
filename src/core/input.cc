@@ -28,18 +28,18 @@ namespace W2D {
 ***                        Constructor and destructor                        ***
 *******************************************************************************/
 
-CoreInput::CoreInput() {
+InputManager::InputManager() {
   mouse_wheel_ = 0.0f;
 }
 
-CoreInput::~CoreInput() {}
+InputManager::~InputManager() {}
 
 
 /*******************************************************************************
 ***                               Public methods                             ***
 *******************************************************************************/
 
-ButtonStatus * CoreInput::getButton(const int32 glfw_key_id) {
+ButtonStatus * InputManager::getButton(const int32 glfw_key_id) {
 
   switch (glfw_key_id) {
     case W2D::Input::kKeyboardButton_W: return &keyboard_W_button_; break;
@@ -53,7 +53,7 @@ ButtonStatus * CoreInput::getButton(const int32 glfw_key_id) {
   return nullptr;
 }
 
-void CoreInput::resetInputButtonsStatus() {
+void InputManager::resetInputButtonsStatus() {
   mouse_button_[Input::kMouseButton_Left].resetStatus();
   mouse_button_[Input::kMouseButton_Right].resetStatus();
   mouse_button_[Input::kMouseButton_Middle].resetStatus();
@@ -68,7 +68,7 @@ void CoreInput::resetInputButtonsStatus() {
 
 
 
-void CoreInput::refreshButtonsUp() {
+void InputManager::refreshButtonsUp() {
   mouse_button_[Input::kMouseButton_Left].is_up = false;
   mouse_button_[Input::kMouseButton_Right].is_up = false;
   mouse_button_[Input::kMouseButton_Middle].is_up = false;
@@ -81,7 +81,7 @@ void CoreInput::refreshButtonsUp() {
   keyboard_Tab_button_.is_up = false;
 }
 
-bool CoreInput::isMouseButtonDown(Input::MouseButton button) {
+bool InputManager::isMouseButtonDown(Input::MouseButton button) {
   if (mouse_button_[button].is_down) {
     mouse_button_[button].is_down = false;
     return true;
@@ -89,15 +89,15 @@ bool CoreInput::isMouseButtonDown(Input::MouseButton button) {
   return false;
 }
 
-bool CoreInput::isMouseButtonUp(Input::MouseButton button) {
+bool InputManager::isMouseButtonUp(Input::MouseButton button) {
   return mouse_button_[button].is_up;
 }
 
-bool CoreInput::isMouseButtonPressed(Input::MouseButton button) {
+bool InputManager::isMouseButtonPressed(Input::MouseButton button) {
   return mouse_button_[button].is_pressed;
 }
 
-bool CoreInput::isKeyboardButtonDown(Input::KeyboardButton button) {
+bool InputManager::isKeyboardButtonDown(Input::KeyboardButton button) {
   switch (button) {
   case Input::kKeyboardButton_W:
     if (keyboard_W_button_.is_down) {
@@ -145,7 +145,7 @@ bool CoreInput::isKeyboardButtonDown(Input::KeyboardButton button) {
   return false;
 }
 
-bool CoreInput::isKeyboardButtonUp(Input::KeyboardButton button) {
+bool InputManager::isKeyboardButtonUp(Input::KeyboardButton button) {
   switch (button) {
   case Input::kKeyboardButton_W: return keyboard_W_button_.is_up; break;
   case Input::kKeyboardButton_A: return keyboard_A_button_.is_up; break;
@@ -158,7 +158,7 @@ bool CoreInput::isKeyboardButtonUp(Input::KeyboardButton button) {
   return false;
 }
 
-bool CoreInput::isKeyboardButtonPressed(Input::KeyboardButton button) {
+bool InputManager::isKeyboardButtonPressed(Input::KeyboardButton button) {
   switch (button) {
   case Input::kKeyboardButton_W: return keyboard_W_button_.is_pressed; break;
   case Input::kKeyboardButton_A: return keyboard_A_button_.is_pressed; break;
@@ -171,7 +171,7 @@ bool CoreInput::isKeyboardButtonPressed(Input::KeyboardButton button) {
   return false;
 }
 
-void CoreInput::checkCursorPosition() {
+void InputManager::checkCursorPosition() {
 
   if (mouse_position_.x < 0.0) {
     mouse_position_.x = 0.0;
