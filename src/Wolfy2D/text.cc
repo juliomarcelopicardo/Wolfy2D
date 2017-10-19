@@ -51,6 +51,18 @@ void Text::render(const char * text_to_render) {
   text.render(text_to_render);
 }
 
+const float Text::size() {
+  return size_;
+}
+
+const glm::vec4 Text::color() {
+  return color_;
+}
+
+const glm::vec2 Text::position() {
+  return position_;
+}
+
 
 
 
