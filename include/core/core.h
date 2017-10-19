@@ -47,7 +47,7 @@ class Core {
 ***                               Attributes                                 ***
 *******************************************************************************/
   /// Default window instance.
-  CoreWindow window_;
+  Wnd window_;
   /// Sprites quad geometry.
   Geometry geometry_;
   /// Sprites material.

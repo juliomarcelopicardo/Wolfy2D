@@ -17,7 +17,8 @@
 
 namespace W2D {
 
-class CoreWindow {
+/// Class to manage the base window.
+class Wnd {
 
  public:
 
@@ -36,17 +37,17 @@ class CoreWindow {
   /// Initialized state.
   bool is_already_initialized_;
   /// Input instance.
-  CoreInput input_;
+  InputManager input_;
 
   /*******************************************************************************
   ***                        Constructor and destructor                        ***
   *******************************************************************************/
 
   /// Default class constructor.
-  CoreWindow();
+  Wnd();
   
   /// Default class destructor.
-  ~CoreWindow();
+  ~Wnd();
 
   /*******************************************************************************
   ***                               Public methods                             ***
@@ -95,8 +96,10 @@ class CoreWindow {
 
 private:
 
-  CoreWindow(const CoreWindow& copy);
-  CoreWindow& operator=(const CoreWindow& copy);
+  /// Copy constructor.
+  Wnd(const Wnd& copy);
+  /// Assignment operator.
+  Wnd& operator=(const Wnd& copy);
 
 
 }; /* WINDOW */

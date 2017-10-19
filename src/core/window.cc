@@ -111,20 +111,20 @@ void InitGLEW() {
 ***                        Constructor and destructor                        ***
 *******************************************************************************/
 
-CoreWindow::CoreWindow() {
+Wnd::Wnd() {
   width_ = 800;
   height_ = 600;
   is_opened_ = false;
   is_already_initialized_ = false;
 }
 
-CoreWindow::~CoreWindow() {}
+Wnd::~Wnd() {}
 
 /*******************************************************************************
 ***                               Public methods                             ***
 *******************************************************************************/
 
-void CoreWindow::init(const int32 width, const int32 height, const char * name) {
+void Wnd::init(const int32 width, const int32 height, const char * name) {
 
   auto& core = Core::instance();
 
@@ -162,13 +162,13 @@ void CoreWindow::init(const int32 width, const int32 height, const char * name) 
 }
 
 
-void CoreWindow::close() {
+void Wnd::close() {
     
   glfwDestroyWindow(glfw_window_);
   glfwTerminate();
 }
 
-void CoreWindow::frame() {
+void Wnd::frame() {
 
   glfwSwapBuffers(glfw_window_);
   is_opened_ = !glfwWindowShouldClose(glfw_window_);
@@ -180,7 +180,7 @@ void CoreWindow::frame() {
   glfwPollEvents(); 
 }
 
-void CoreWindow::clear(float red, float green, float blue) {
+void Wnd::clear(float red, float green, float blue) {
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(red, green, blue, 0.0f); 

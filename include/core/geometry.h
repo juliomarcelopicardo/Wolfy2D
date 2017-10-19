@@ -61,7 +61,7 @@ class Geometry {
  
   /// Copy constructor
   Geometry(const Geometry& copy);
-  /// Asignment operator.
+  /// Assignment operator.
   Geometry& operator=(const Geometry& copy);
 
 };
