@@ -46,6 +46,7 @@ project "Wolfy2D"
   includedirs {
     path.join(PROJ_DIR, "include/"),
     path.join(PROJ_DIR, "src/"),
+    path.join(PROJ_DIR, "data/"),
     -- GLFW
     path.join(PROJ_DIR, "external/glfw3_2_1/include/"),
   	path.join(PROJ_DIR, "external/glfw3_2_1/src/"),
@@ -75,6 +76,7 @@ project "Wolfy2D"
     path.join(PROJ_DIR, "include/*.h"),
     path.join(PROJ_DIR, "include/core/*.h"),
     path.join(PROJ_DIR, "include/Wolfy2D/*.h"),
+    path.join(PROJ_DIR, "data/*.*"),
     path.join(PROJ_DIR, "data/geometries/*.*"),
     path.join(PROJ_DIR, "data/materials/*.*"),
     path.join(PROJ_DIR, "data/textures/*.*"),
@@ -123,7 +125,8 @@ function GenerateProject(name)
 	kind "ConsoleApp"
 
   includedirs {
-	  path.join(PROJ_DIR, "include/"),
+    path.join(PROJ_DIR, "include/"),
+    path.join(PROJ_DIR, "data/"),
     path.join(PROJ_DIR, "external/glew/include/"),
     path.join(PROJ_DIR, "external/glfw3_2_1/include/"),
     path.join(PROJ_DIR, "external/lua/include/"),
