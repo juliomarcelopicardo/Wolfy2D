@@ -53,7 +53,7 @@ class Core {
   /// Sprites material.
   CoreMaterial material_;
   /// Texts base object.
-  CoreText text_;
+  Txt text_;
   /// Sprite base object.
   CoreSprite sprite_;
 

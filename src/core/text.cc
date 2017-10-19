@@ -31,7 +31,7 @@ namespace W2D {
   ***                              TEXT CLASS                             ***
   **************************************************************************/
 
-  CoreText::CoreText() {
+  Txt::Txt() {
     position_ = { 0.0f, 0.0f };
     color_ = { 1.0f, 1.0f, 1.0f, 1.0f };
     regular_ = FONS_INVALID;
@@ -40,7 +40,7 @@ namespace W2D {
 
   }
 
-  CoreText::~CoreText() {
+  Txt::~Txt() {
     release_font();
   }
 
@@ -49,7 +49,7 @@ namespace W2D {
   /**************************************************************************
   ***                              INITIALIZE                             ***
   **************************************************************************/
-  void CoreText::init(const char* path) {
+  void Txt::init(const char* path) {
 
     release_font();
 
@@ -75,7 +75,7 @@ namespace W2D {
     }
   }
 
-  void CoreText::release_font() {
+  void Txt::release_font() {
     //Eliminamos el libro de fuentes de la familia:
     if (font_) {
       glfonsDelete(font_);
@@ -88,11 +88,11 @@ namespace W2D {
   ***                               SETTERS                               ***
   **************************************************************************/
 
-  void CoreText::set_position(const glm::vec2 position) {
+  void Txt::set_position(const glm::vec2 position) {
     position_ = position;
   }
 
-  void CoreText::set_size(const float size) {
+  void Txt::set_size(const float size) {
     if (size >= 1.0f) {
       size_ = size;
     }
@@ -101,7 +101,7 @@ namespace W2D {
     }
   }
 
-  void CoreText::set_color(const glm::vec4 color) {
+  void Txt::set_color(const glm::vec4 color) {
     color_ = color;
   }
 
@@ -109,7 +109,7 @@ namespace W2D {
   /**************************************************************************
   ***                               RENDER                                ***
   **************************************************************************/
-  void CoreText::render(const char* text) {
+  void Txt::render(const char* text) {
     glm::i32vec2 window_size = { Core::instance().window_.width_, Core::instance().window_.height_ };
 
     if (font_) {
