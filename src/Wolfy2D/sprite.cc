@@ -57,17 +57,6 @@ void Sprite::init(const char * image_path) {
   release_sprite_when_destroy_ = true;
 }
 
-void Sprite::set_position(const glm::vec2 position) {
-  position_ = position;
-}
-
-void Sprite::set_size(const glm::vec2 size) {
-  size_ = size;
-}
-
-void Sprite::set_rotation(const float radians) {
-  rotation_ = radians;
-}
 
 
 void Sprite::render() {
@@ -81,6 +70,37 @@ void Sprite::render() {
 }
 
 
+/*******************************************************************************
+***                              Public Setters                              ***
+*******************************************************************************/
+
+void Sprite::set_position(const glm::vec2 position) {
+  position_ = position;
+}
+
+void Sprite::set_size(const glm::vec2 size) {
+  size_ = size;
+}
+
+void Sprite::set_rotation(const float radians) {
+  rotation_ = radians;
+}
+
+/*******************************************************************************
+***                              Public Getters                              ***
+*******************************************************************************/
+
+const glm::vec2 Sprite::size() {
+  return size_;
+}
+
+const float Sprite::rotation() {
+  return rotation_;
+}
+
+const glm::vec2 Sprite::position() {
+  return position_;
+}
 
 
 }; /* W2D */
