@@ -13,6 +13,7 @@
 #include "core/material.h"
 #include "core/texture.h"
 #include "core/txt.h"
+#include "core/imgui_class.h"
 #include <stdio.h>
 
 
@@ -56,6 +57,8 @@ class Core {
   Txt text_;
   /// Sprite base object.
   Texture sprite_;
+  /// Imgui properties and manager.
+  ImGuiProperties imgui_;
 
   /// Time when the application starts.
   uint64 start_time_;

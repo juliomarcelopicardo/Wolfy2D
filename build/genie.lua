@@ -88,8 +88,7 @@ project "Wolfy2D"
     -- LUA
     path.join(PROJ_DIR, "external/lua/src/*.*"),
     -- ImGui
-	  path.join(PROJ_DIR, "external/imgui/*.cpp"),
-	  path.join(PROJ_DIR, "external/imgui/*.h"),
+	  path.join(PROJ_DIR, "external/imgui/src/*.*"),
     -- GLM
     path.join(PROJ_DIR, "external/glm/include/GLM/detail/*.*"),
     path.join(PROJ_DIR, "external/glm/include/GLM/gtc/*.*"),

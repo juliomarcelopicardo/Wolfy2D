@@ -54,10 +54,22 @@ void InputKeyCB(GLFWwindow* window, int32 key, int32 scancode, int32 action, int
       break;
     }
   }
+
+  ImGuiIO& io = ImGui::GetIO();
+  if (action == GLFW_PRESS) { io.KeysDown[key] = true; }    
+  if (action == GLFW_RELEASE) { io.KeysDown[key] = false; }
+   
+
+  (void)mods; // Modifiers are not reliable across systems
+  io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
+  io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
+  io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
+  io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 }
 
 void InputCharCB(GLFWwindow* window, uint32 c) {
-
+  ImGuiIO& io = ImGui::GetIO();
+  if (c > 0 && c < 0x10000) { io.AddInputCharacter((uint16)c); }
 }
 
 
@@ -96,7 +108,7 @@ void InitGLEW() {
 }
 #pragma endregion
 
-#pragma region CORE
+#pragma region WINDOW
 
 /*******************************************************************************
 ********************************************************************************
@@ -149,6 +161,7 @@ void Wnd::init(const int32 width, const int32 height, const char * name) {
   SetWindowCallbacks();
 
   InitGLEW();
+  InitImGui();
 
   // Initialize the base objects.
   core.geometry_.init();
@@ -163,13 +176,15 @@ void Wnd::init(const int32 width, const int32 height, const char * name) {
 
 
 void Wnd::close() {
-    
+
+  ShutdownImGui();
   glfwDestroyWindow(glfw_window_);
   glfwTerminate();
 }
 
 void Wnd::frame() {
 
+  RenderImGui();
   glfwSwapBuffers(glfw_window_);
   is_opened_ = !glfwWindowShouldClose(glfw_window_);
   double x, y;
@@ -183,7 +198,8 @@ void Wnd::frame() {
 void Wnd::clear(float red, float green, float blue) {
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glClearColor(red, green, blue, 0.0f); 
+  glClearColor(red, green, blue, 1.0f); 
+  FrameImGui();
 }
 
 
