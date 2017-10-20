@@ -95,6 +95,9 @@ void FrameImGui() {
 
   // Start the frame
   ImGui::NewFrame();
+
+  ImGui::Text("Wolfy2D speed: %.3f ms/frame (%.1f FPS)",
+    1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 }
 
 void ShutdownImGui() {
@@ -103,10 +106,6 @@ void ShutdownImGui() {
 }
 
 void RenderImGui() {
-  ImGui::Text("Wolfy2D speed: %.3f ms/frame (%.1f FPS)",
-    1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
-
   ImGui::Render();
 }
 

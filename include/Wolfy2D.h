@@ -17,5 +17,6 @@
 #include "Wolfy2D/input.h"
 #include "Wolfy2D/text.h"
 #include "Wolfy2D/sprite.h"
+#include "Wolfy2D/imgui.h"
 
 #endif
