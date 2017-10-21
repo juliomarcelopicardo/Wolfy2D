@@ -16,7 +16,9 @@
 #include "Wolfy2D/time.h"
 #include "Wolfy2D/input.h"
 #include "Wolfy2D/text.h"
+#include "Wolfy2D/draw.h"
 #include "Wolfy2D/sprite.h"
+#include "Wolfy2D/animation.h"
 #include "Wolfy2D/imgui.h"
 
 #endif

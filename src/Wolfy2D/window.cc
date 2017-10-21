@@ -11,7 +11,6 @@ namespace W2D {
 namespace Window {
 
 void Init(const int32 width, const int32 height, const char* display_name) {
-
   Core::instance().window_.init(width, height, display_name);
 }
 
