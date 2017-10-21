@@ -10,6 +10,10 @@
 
 namespace W2D {
 
+/*******************************************************************************
+***                        Constructor and destructor                        ***
+*******************************************************************************/
+
 Sprite::Sprite() {
   position_ = { 0.0f, 0.0f };
   size_ = { 0.0f, 0.0f };
@@ -45,6 +49,10 @@ Sprite::Sprite(const Sprite& other) {
   release_sprite_when_destroy_ = false;
 }
 
+/*******************************************************************************
+***                              Public Methods                              ***
+*******************************************************************************/
+
 void Sprite::init(const char * image_path) {
   auto& sprite = Core::instance().sprite_;
 
@@ -57,8 +65,6 @@ void Sprite::init(const char * image_path) {
   release_sprite_when_destroy_ = true;
 }
 
-
-
 void Sprite::render() {
   auto& sprite = Core::instance().sprite_;
   sprite.set_texture_id(texture_id_);
@@ -68,7 +74,6 @@ void Sprite::render() {
   sprite.set_rotation(rotation_);
   sprite.render();
 }
-
 
 /*******************************************************************************
 ***                              Public Setters                              ***
