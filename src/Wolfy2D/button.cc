@@ -11,6 +11,10 @@
 
 namespace W2D {
 
+/*******************************************************************************
+***                        Constructor and destructor                        ***
+*******************************************************************************/
+
 Button::Button() {
   position_ = { 0.0f, 0.0f };
   size_ = { 0.0f, 0.0f };
@@ -50,6 +54,11 @@ Button::Button(const Button& other) {
   is_enabled_ = other.is_enabled_;
 }
 
+
+/*******************************************************************************
+***                              Public Methods                              ***
+*******************************************************************************/
+
 void Button::init(Sprite& normal, Sprite& hover, Sprite& pressed, Sprite& disabled) {
   
   texture_size_ = { normal.originalTextureSize().x, normal.originalTextureSize().y };
@@ -68,30 +77,41 @@ void Button::render() {
     uint32 texture = normal_texture_id_;
     if (is_enabled_) {
       Vec2 mouse = Input::MousePosition();
-      if (mouse.x >= position_.x && mouse.x <= position_.x + size_.x &&
-          mouse.y >= position_.y && mouse.y <= position_.y + size_.y) {
+      if (mouse.x >= position_.x - size_.x * 0.5f && 
+          mouse.x <= position_.x + size_.x * 0.5f &&
+          mouse.y >= position_.y - size_.y * 0.5f &&
+          mouse.y <= position_.y + size_.y * 0.5f) {
         texture = hover_texture_id_;
         if (Input::IsMouseButtonPressed(Input::kMouseButton_Left)) {
           texture = pressed_texture_id_;
         }
       }
-      // RENDER
-      auto& sprite = Core::instance().sprite_;
-      sprite.set_position({ position_.x, position_.y });
-      sprite.set_texture_size({ texture_size_.x, texture_size_.y });
-      sprite.set_size({ size_.x, size_.y });
-      sprite.render();
     }
     else {
       texture = disabled_texture_id_;
     }
-    Core::instance().sprite_.set_texture_id(texture);
+
+    // RENDER
+    auto& sprite = Core::instance().sprite_;
+    sprite.set_texture_id(texture);
+    sprite.set_position({ position_.x, position_.y });
+    sprite.set_texture_size({ texture_size_.x, texture_size_.y });
+    sprite.set_size({ size_.x, size_.y });
+    sprite.set_rotation(0.0f);
+    sprite.render();
   }
   else {
     printf(" ERROR: There aren't any sprites asigned to this button.\n");
   }
 }
 
+void Button::disable() {
+  is_enabled_ = false;
+}
+
+void Button::enable() {
+  is_enabled_ = true;
+}
 
 /*******************************************************************************
 ***                              Public Setters                              ***
@@ -104,6 +124,7 @@ void Button::set_position(const Vec2 position) {
 void Button::set_size(const Vec2 size) {
   size_ = size;
 }
+
 
 
 /*******************************************************************************
