@@ -10,6 +10,13 @@
 
 namespace W2D {
 
+// STATIC FUNCTION.
+void Text::SetFont(const char* font_path) {
+  Core::instance().text_.init(font_path);
+}
+
+
+
 Text::Text() {
   size_ = 30.0f;
   position_ = { 0.0f, 0.0f };

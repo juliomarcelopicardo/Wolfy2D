@@ -132,9 +132,9 @@ namespace W2D {
       fonsDrawText(font_, position_.x, position_.y, text, NULL);
     }
     else {
-      std::string log_error(" ERROR: Regular not initialized of the font. Does the font exist?");
-      printf("\n %s", log_error.c_str());
-      exit(EXIT_FAILURE);
+      // ERROR FOR THE USER... TO HELP HIM.
+      printf(" ERROR: Set a font for the texts..."
+             " Use Text::SetFont(\"MyFontName.ttf\"); function.\n");
     }
   }
 

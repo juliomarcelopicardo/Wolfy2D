@@ -16,6 +16,14 @@ class Text {
 
  public:
 
+  ///--------------------------------------------------------------------------
+  /// @fn   SetFont(const char* path);
+  ///
+  /// @brief Sets a font for rendering the texts.
+  /// @param font_path Font path to render texts.
+  ///--------------------------------------------------------------------------
+  static void SetFont(const char* font_path);
+
 /*******************************************************************************
 ***                        Constructor and destructor                        ***
 *******************************************************************************/

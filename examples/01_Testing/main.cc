@@ -17,6 +17,7 @@ namespace W2D {
     Sprite cat, mario;
     Text green_text, text;
 
+    Text::SetFont("./../data/DigitFont.ttf");
     cat.init("./../data/texture.png");
     mario.init("./../data/mario.png");
     green_text.set_color({ 0.0f, 1.0f, 0.0f, 1.0f });

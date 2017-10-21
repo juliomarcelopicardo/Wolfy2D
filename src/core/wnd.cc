@@ -166,7 +166,6 @@ void Wnd::init(const int32 width, const int32 height, const char * name) {
   // Initialize the base objects.
   core.geometry_.init();
   core.material_.init("./../data/materials/shader.lua");
-  core.text_.init("./../data/DigitFont.ttf");
   core.sprite_.calculateProjectionMatrix(); // we calculate once as it wont change.
 
   glfwSetInputMode(glfw_window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
