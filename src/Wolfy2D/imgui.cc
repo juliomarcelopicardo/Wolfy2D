@@ -11,8 +11,8 @@ namespace W2D {
 namespace ImGuiEditor {
 
 void SetupSprite(Sprite& sprite, const char* display_name) {
-  glm::vec2 position = sprite.position();
-  glm::vec2 size = sprite.size();
+  Vec2 position = sprite.position();
+  Vec2 size = sprite.size();
   float rotation = sprite.rotation();
   
   ImGui::PushID(&sprite);
@@ -30,9 +30,9 @@ void SetupSprite(Sprite& sprite, const char* display_name) {
 }
 
 void SetupText(Text & text, const char * display_name) {
-  glm::vec2 position = text.position();
+  Vec2 position = text.position();
   float size = text.size();
-  glm::vec4 color = text.color();
+  Vec4 color = text.color();
 
   ImGui::PushID(&text);
   if (ImGui::TreeNode(display_name)) {

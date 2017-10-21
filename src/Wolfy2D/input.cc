@@ -14,27 +14,28 @@ namespace Input {
 /*******************************************************************************
 ***                             Input getters                                ***
 *******************************************************************************/
-glm::vec2 MousePosition() {
-  return Core::instance().window_.input_.mouse_position_;
+const Vec2 MousePosition() {
+  return{ Core::instance().window_.input_.mouse_position_.x ,
+          Core::instance().window_.input_.mouse_position_.y };
 }
 
-bool IsMouseButtonDown(MouseButton button) {
+const bool IsMouseButtonDown(MouseButton button) {
   return Core::instance().window_.input_.isMouseButtonDown(button);
 }
-bool IsMouseButtonUp(MouseButton button) {
+const bool IsMouseButtonUp(MouseButton button) {
   return Core::instance().window_.input_.isMouseButtonUp(button);
 }
-bool IsMouseButtonPressed(MouseButton button) {
+const bool IsMouseButtonPressed(MouseButton button) {
   return Core::instance().window_.input_.isMouseButtonPressed(button);
 }
 
-bool IsKeyboardButtonDown(KeyboardButton button) {
+const bool IsKeyboardButtonDown(KeyboardButton button) {
   return Core::instance().window_.input_.isKeyboardButtonDown(button);
 }
-bool IsKeyboardButtonUp(KeyboardButton button) {
+const bool IsKeyboardButtonUp(KeyboardButton button) {
   return Core::instance().window_.input_.isKeyboardButtonUp(button);
 }
-bool IsKeyboardButtonPressed(KeyboardButton button) {
+const bool IsKeyboardButtonPressed(KeyboardButton button) {
   return Core::instance().window_.input_.isKeyboardButtonPressed(button);
 }
 

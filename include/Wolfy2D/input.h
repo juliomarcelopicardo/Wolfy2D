@@ -30,60 +30,60 @@ enum KeyboardButton {
 };
 
 ///--------------------------------------------------------------------------
-/// @fn   glm::vec2 MousePosition();
+/// @fn   const Vec2 MousePosition();
 ///
 /// @brief Mouse cursor position getter.
-/// @return Position.
+/// @return Mouse cursor Position.
 ///--------------------------------------------------------------------------
-glm::vec2 MousePosition();
+const Vec2 MousePosition();
 ///--------------------------------------------------------------------------
-/// @fn   bool IsMouseButtonDown(MouseButton button);
+/// @fn   const bool IsMouseButtonDown(MouseButton button);
 ///
 /// @brief Mouse button down info.
 /// @param button Mouse button to check
 /// @return true if the button is down.
 ///--------------------------------------------------------------------------
-bool IsMouseButtonDown(MouseButton button);
+const bool IsMouseButtonDown(MouseButton button);
 ///--------------------------------------------------------------------------
-/// @fn   bool IsMouseButtonUp(MouseButton button);
+/// @fn   const bool IsMouseButtonUp(MouseButton button);
 ///
 /// @brief Mouse button up info.
 /// @param button Mouse button to check
 /// @return true if the button is up.
 ///--------------------------------------------------------------------------
-bool IsMouseButtonUp(MouseButton button);
+const bool IsMouseButtonUp(MouseButton button);
 ///--------------------------------------------------------------------------
-/// @fn   bool IsMouseButtonPressed(MouseButton button);
+/// @fn   const bool IsMouseButtonPressed(MouseButton button);
 ///
 /// @brief Mouse button pressed info.
 /// @param button Mouse button to check
 /// @return true if the button is pressed.
 ///--------------------------------------------------------------------------
-bool IsMouseButtonPressed(MouseButton button);
+const bool IsMouseButtonPressed(MouseButton button);
 ///--------------------------------------------------------------------------
-/// @fn   bool IsKeyboardButtonDown(KeyboardButton button);
+/// @fn   const bool IsKeyboardButtonDown(KeyboardButton button);
 ///
 /// @brief Keyboard button down info.
 /// @param button Keyboard button to check
 /// @return true if the button is down.
 ///--------------------------------------------------------------------------
-bool IsKeyboardButtonDown(KeyboardButton button);
+const bool IsKeyboardButtonDown(KeyboardButton button);
 ///--------------------------------------------------------------------------
-/// @fn   bool IsKeyboardButtonUp(KeyboardButton button);
+/// @fn   const bool IsKeyboardButtonUp(KeyboardButton button);
 ///
 /// @brief Keyboard button up info.
 /// @param button Keyboard button to check
 /// @return true if the button is up.
 ///--------------------------------------------------------------------------
-bool IsKeyboardButtonUp(KeyboardButton button);
+const bool IsKeyboardButtonUp(KeyboardButton button);
 ///--------------------------------------------------------------------------
-/// @fn   bool IsKeyboardButtonPressed(KeyboardButton button);
+/// @fn   const bool IsKeyboardButtonPressed(KeyboardButton button);
 ///
 /// @brief Keyboard button pressed info.
 /// @param button Mouse button to check
 /// @return true if the button is pressed.
 ///--------------------------------------------------------------------------
-bool IsKeyboardButtonPressed(KeyboardButton button);
+const bool IsKeyboardButtonPressed(KeyboardButton button);
 
 }; /* Input */
 }; /* W2D */

@@ -33,12 +33,12 @@ class Text {
 *******************************************************************************/
   
   ///--------------------------------------------------------------------------
-  /// @fn   set_position(const glm::vec2 position);
+  /// @fn   set_position(const Vec2 position);
   ///
   /// @brief Text position setter.
   /// @param position Position to set.
   ///--------------------------------------------------------------------------
-  void set_position(const glm::vec2 position);
+  void set_position(const Vec2 position);
   ///--------------------------------------------------------------------------
   /// @fn   set_size(const float size);
   ///
@@ -47,12 +47,12 @@ class Text {
   ///--------------------------------------------------------------------------
   void set_size(const float size);
   ///--------------------------------------------------------------------------
-  /// @fn   set_color(const glm::vec4 color_rgba);
+  /// @fn   set_color(const Vec4 color_rgba);
   ///
   /// @brief Text color setter. (0.0f -> black, 1.0f -> White) 
   /// @param color_rgba Color to set.
   ///--------------------------------------------------------------------------
-  void set_color(const glm::vec4 color_rgba);
+  void set_color(const Vec4 color_rgba);
   ///--------------------------------------------------------------------------
   /// @fn   render(const char* text_to_render);
   ///
@@ -69,28 +69,28 @@ class Text {
   ///--------------------------------------------------------------------------
   const float size();
   ///--------------------------------------------------------------------------
-  /// @fn   const glm::vec4 color();
+  /// @fn   const Vec4 color();
   ///
   /// @brief Text color getter.
   /// @return color of the text font.
   ///--------------------------------------------------------------------------
-  const glm::vec4 color();
+  const Vec4 color();
   ///--------------------------------------------------------------------------
-  /// @fn   const glm::vec2 position();
+  /// @fn   const Vec2 position();
   ///
   /// @brief Text position getter.
   /// @return position of the text in the screen.
   ///--------------------------------------------------------------------------
-  const glm::vec2 position();
+  const Vec2 position();
   
  private:
 
    /// Size of the text font.
    float size_;
    /// Position of the text.
-   glm::vec2 position_;
+   Vec2 position_;
    /// Color of the text font.
-   glm::vec4 color_;
+   Vec4 color_;
 };
 
 

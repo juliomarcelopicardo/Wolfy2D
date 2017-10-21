@@ -181,11 +181,11 @@ void InputManager::checkCursorPosition() {
   }
 
   auto& window = Core::instance().window_;
-  if (mouse_position_.x > window.width_) {
-    mouse_position_.x = window.width_;
+  if (mouse_position_.x > (float)window.width_) {
+    mouse_position_.x = (float)window.width_;
   }
-  if (mouse_position_.x > window.height_) {
-    mouse_position_.x = window.height_;
+  if (mouse_position_.x > (float)window.height_) {
+    mouse_position_.x = (float)window.height_;
   }
 }
 

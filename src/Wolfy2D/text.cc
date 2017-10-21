@@ -31,7 +31,7 @@ Text::Text(const Text& other) {
   color_ = other.color_;
 }
 
-void Text::set_position(const glm::vec2 position) {
+void Text::set_position(const Vec2 position) {
   position_ = position;
 }
 
@@ -39,14 +39,14 @@ void Text::set_size(const float size) {
   size_ = size;
 }
 
-void Text::set_color(const glm::vec4 color_rgba) {
+void Text::set_color(const Vec4 color_rgba) {
   color_ = color_rgba;
 }
 
 void Text::render(const char * text_to_render) {
   auto& text = Core::instance().text_;
-  text.set_color(color_);
-  text.set_position(position_);
+  text.set_color({ color_.x, color_.y, color_.z, color_.w });
+  text.set_position({ position_.x, position_.y });
   text.set_size(size_);
   text.render(text_to_render);
 }
@@ -55,11 +55,11 @@ const float Text::size() {
   return size_;
 }
 
-const glm::vec4 Text::color() {
+const Vec4 Text::color() {
   return color_;
 }
 
-const glm::vec2 Text::position() {
+const Vec2 Text::position() {
   return position_;
 }
 

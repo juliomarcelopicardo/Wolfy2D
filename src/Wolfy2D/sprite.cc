@@ -49,9 +49,9 @@ void Sprite::init(const char * image_path) {
   auto& sprite = Core::instance().sprite_;
 
   sprite.init(image_path);
-  position_ = sprite.position();
-  texture_size_ = sprite.textureSize();
-  size_ = sprite.size();
+  position_ = { sprite.position().x, sprite.position().y };
+  texture_size_ = { sprite.textureSize().x, sprite.textureSize().y };
+  size_ = { sprite.size().x, sprite.size().y };
   rotation_ = sprite.rotation();
   texture_id_ = sprite.textureID();
   release_sprite_when_destroy_ = true;
@@ -62,9 +62,9 @@ void Sprite::init(const char * image_path) {
 void Sprite::render() {
   auto& sprite = Core::instance().sprite_;
   sprite.set_texture_id(texture_id_);
-  sprite.set_position(position_);
-  sprite.set_texture_size(texture_size_);
-  sprite.set_size(size_);
+  sprite.set_position({ position_.x, position_.y });
+  sprite.set_texture_size({ texture_size_.x, texture_size_.y });
+  sprite.set_size({ size_.x, size_.y });
   sprite.set_rotation(rotation_);
   sprite.render();
 }
@@ -74,11 +74,11 @@ void Sprite::render() {
 ***                              Public Setters                              ***
 *******************************************************************************/
 
-void Sprite::set_position(const glm::vec2 position) {
+void Sprite::set_position(const Vec2 position) {
   position_ = position;
 }
 
-void Sprite::set_size(const glm::vec2 size) {
+void Sprite::set_size(const Vec2 size) {
   size_ = size;
 }
 
@@ -90,7 +90,7 @@ void Sprite::set_rotation(const float radians) {
 ***                              Public Getters                              ***
 *******************************************************************************/
 
-const glm::vec2 Sprite::size() {
+const Vec2 Sprite::size() {
   return size_;
 }
 
@@ -98,7 +98,7 @@ const float Sprite::rotation() {
   return rotation_;
 }
 
-const glm::vec2 Sprite::position() {
+const Vec2 Sprite::position() {
   return position_;
 }
 

@@ -41,12 +41,12 @@ class Sprite {
   ///--------------------------------------------------------------------------
   void init(const char* image_path);
   ///--------------------------------------------------------------------------
-  /// @fn   set_position(const glm::vec2 position);
+  /// @fn   set_position(const Vec2 position);
   ///
   /// @brief Position setter.
   /// @param position Position to set.
   ///--------------------------------------------------------------------------
-  void set_position(const glm::vec2 position);
+  void set_position(const Vec2 position);
   ///--------------------------------------------------------------------------
   /// @fn   set_rotation(const float rotation);
   ///
@@ -55,12 +55,12 @@ class Sprite {
   ///--------------------------------------------------------------------------
   void set_rotation(const float rotation);
   ///--------------------------------------------------------------------------
-  /// @fn   set_size(const glm::vec2 size);
+  /// @fn   set_size(const Vec2 size);
   ///
   /// @brief Sprite Size setter.
   /// @param size Size to set.
   ///--------------------------------------------------------------------------
-  void set_size(const glm::vec2 size);
+  void set_size(const Vec2 size);
   ///--------------------------------------------------------------------------
   /// @fn   render();
   ///
@@ -73,12 +73,12 @@ class Sprite {
 *******************************************************************************/
 
   ///--------------------------------------------------------------------------
-  /// @fn   const glm::vec2 size();
+  /// @fn   const Vec2 size();
   ///
   /// @brief Sprite size getter.
   /// @return size of the sprite.
   ///--------------------------------------------------------------------------
-  const glm::vec2 size();
+  const Vec2 size();
   ///--------------------------------------------------------------------------
   /// @fn   const float color();
   ///
@@ -87,12 +87,12 @@ class Sprite {
   ///--------------------------------------------------------------------------
   const float rotation();
   ///--------------------------------------------------------------------------
-  /// @fn   const glm::vec2 position();
+  /// @fn   const Vec2 position();
   ///
   /// @brief Text position getter.
   /// @return position of the sprite in the window.
   ///--------------------------------------------------------------------------
-  const glm::vec2 position();
+  const Vec2 position();
 
 /*******************************************************************************
 ***                            Private Attributes                            ***
@@ -100,13 +100,13 @@ class Sprite {
  private:
 
    /// Position.
-   glm::vec2 position_;
+   Vec2 position_;
    /// Size.
-   glm::vec2 size_;
+   Vec2 size_;
    /// Rotation in radians.
    float rotation_;
    /// Original image size.
-   glm::vec2 texture_size_;
+   Vec2 texture_size_;
    /// Texture id.
    uint32 texture_id_;
    /// Sets if the texture should be destroyed when the class is destroyed.

@@ -8,7 +8,6 @@
 #define __WOLFY2D_GLOBALS_H__ 1
 
 #include <stdint.h>
-#include "GLM/glm.hpp"
 
 namespace W2D {
 
@@ -39,6 +38,25 @@ namespace W2D {
   /// precision
   typedef float float32;
   typedef double float64;
+
+  /// Vectors
+  typedef struct {
+    float32 x;
+    float32 y;
+  }Vec2;
+
+  typedef struct {
+    float32 x;
+    float32 y;
+    float32 z;
+  }Vec3;
+
+  typedef struct {
+    float32 x;
+    float32 y;
+    float32 z;
+    float32 w;
+  }Vec4;
 
   // MAIN DECLARATION
   int32 main();

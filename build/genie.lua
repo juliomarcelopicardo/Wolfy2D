@@ -22,7 +22,6 @@ solution "Wolfy2D_Solution"
       "_DEBUG",
   	  "_GLFW_WIN32",
       "LUA_COMPAT_MODULE",
-      "ENJINE_OPENGL",
       "GLEW_STATIC",
 	  }
 
@@ -35,7 +34,6 @@ solution "Wolfy2D_Solution"
       "NDEBUG",
       "_GLFW_WIN32",
       "LUA_COMPAT_MODULE",
-      "ENJINE_OPENGL",
       "GLEW_STATIC",
 	  }
 
@@ -144,7 +142,7 @@ function GenerateProject(name)
     targetdir ("../bin/")
     links {
       "opengl32",
-      "Wolfy2D",
+      "Wolfy2D-d",
 	  }
 
   configuration "Release"
