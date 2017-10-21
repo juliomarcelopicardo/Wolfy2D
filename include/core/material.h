@@ -73,12 +73,11 @@ class Material {
 *******************************************************************************/
 
   ///--------------------------------------------------------------------------
-  /// @fn   getShadersCode(const char* lua_path);
+  /// @fn   saveShadersCode();
   ///
-  /// @brief Gets the shader text from a lua file.
-  /// @param lua_path File path.
+  /// @brief Saves the shader texts for the vertex and fragment.
   ///--------------------------------------------------------------------------
-  void getShadersCode(const char* lua_path);
+  void saveShadersCode();
   ///--------------------------------------------------------------------------
   /// @fn   createProgram();
   ///

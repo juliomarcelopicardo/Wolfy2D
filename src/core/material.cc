@@ -7,7 +7,6 @@
 
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
-#include "core/lua_class.h"
 #include "core/material.h"
 #include "core/core.h"
 #include <stdio.h>
@@ -41,11 +40,31 @@ Material::~Material() {
 ***                            Material methods                              ***
 *******************************************************************************/
 
-void Material::getShadersCode(const char* lua_path) {
-  Lua L;
-  L.doFile(lua_path);
-  vertex_shader_code_ = L.getStringFromTable("Shader", "vertex");
-  fragment_shader_code_ = L.getStringFromTable("Shader", "fragment");
+void Material::saveShadersCode() {
+
+  vertex_shader_code_.clear();
+  fragment_shader_code_.clear();
+  vertex_shader_code_ =
+    "#version 330\n"
+    "layout(location = 0) in vec3 a_position;\n"
+    "layout(location = 1) in vec2 a_uv;\n"
+    "uniform mat4 u_m_matrix;\n"
+    "uniform mat4 u_p_matrix;\n"
+    "uniform int u_time;\n"
+    "out vec3 normal;\n"
+    "out vec2 uv;\n"
+    "void main() {\n"
+    "  uv = a_uv;\n"
+    "  gl_Position = u_p_matrix* u_m_matrix * vec4(a_position, 1.0);\n}";
+
+  fragment_shader_code_ =
+    "#version 330\n"
+    "in vec2 uv;\n"
+    "uniform sampler2D u_sample;\n"
+    "out vec4 fragColor;\n"
+    "void main() {\n"
+    "  fragColor = texture(u_sample, uv);\n"
+    "}\n";
 }
 
 void Material::createProgram() {
@@ -134,7 +153,7 @@ void Material::render(const float model_matrix[16],
 }
 
 void Material::init(const char* lua_path) {
-  getShadersCode(lua_path);
+  saveShadersCode();
   createProgram();
   createShaders();
   compileShaders();
