@@ -21,6 +21,14 @@ namespace W2D {
     walk[1].init("./../data/right2.png");
     walk[2].init("./../data/right3.png");
     walk[3] = walk[1];
+    Sprite normal, hover, pressed, disabled;
+    normal.init("./../data/normal.png");
+    hover.init("./../data/hover.png");
+    pressed.init("./../data/pressed.png");
+    disabled.init("./../data/disabled.png");
+    Button button;
+    button.init(normal, hover, pressed, disabled);
+    button.set_position({ 500.0f, 800.0f });
     Animation animation;
     animation.init(walk, 4);
     animation.set_position({ 500.0f, 200.0f });
@@ -43,7 +51,7 @@ namespace W2D {
     Window::Clear();
     ImGuiEditor::SetupSprite(mario, "SuperMario");
     ImGuiEditor::SetupText(text, "PACO");
-        cat.render();    mario.render();    mario.set_rotation(Time() * 0.001f);    text.render("PAQUITORRR");    green_text.render("PAAAAAAAAAAAAAAAACO");        if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_W)) {      printf("\n W down");    }    if (Input::IsKeyboardButtonPressed(Input::kKeyboardButton_S)) {      printf("\n S pressed");    }    if (Input::IsKeyboardButtonUp(Input::kKeyboardButton_D)) {      printf("\n D up");    }    if (Input::IsMouseButtonDown(Input::kMouseButton_Left)) {      printf("\n Left down");    }    if (Input::IsMouseButtonPressed(Input::kMouseButton_Middle)) {      printf("\n Middle pressed");    }    if (Input::IsMouseButtonUp(Input::kMouseButton_Right)) {      printf("\n Right up");    }    Draw::Line({ 0.0f, 0.0f }, { 1020, 970 });    animation.render();    Window::Frame();
+        cat.render();    mario.render();    mario.set_rotation(Time() * 0.001f);    text.render("PAQUITORRR");    green_text.render("PAAAAAAAAAAAAAAAACO");    button.render();    Draw::Line({ 0.0f, 0.0f }, { 1020, 970 });    animation.render();    Window::Frame();
   }
 
   Window::Close();
