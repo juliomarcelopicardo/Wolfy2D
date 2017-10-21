@@ -139,7 +139,7 @@ function GenerateProject(name)
     targetdir ("../bin/")
     links {
       "opengl32",
-      "Wolfy2D-d",
+      "Wolfy2D",
 	  }
 
   configuration "Release"
