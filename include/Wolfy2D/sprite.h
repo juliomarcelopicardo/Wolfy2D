@@ -80,6 +80,13 @@ class Sprite {
   ///--------------------------------------------------------------------------
   const Vec2 size();
   ///--------------------------------------------------------------------------
+  /// @fn   const Vec2 originalTextureSize();
+  ///
+  /// @brief Original texture size getter.
+  /// @return size of the original texture.
+  ///--------------------------------------------------------------------------
+  const Vec2 originalTextureSize();
+  ///--------------------------------------------------------------------------
   /// @fn   const float color();
   ///
   /// @brief Sprite rotation getter.
@@ -93,6 +100,13 @@ class Sprite {
   /// @return position of the sprite in the window.
   ///--------------------------------------------------------------------------
   const Vec2 position();
+  ///--------------------------------------------------------------------------
+  /// @fn   const uint32 textureID();
+  ///
+  /// @brief Texture id getter.
+  /// @return Original texture id in gpu.
+  ///--------------------------------------------------------------------------
+  const uint32 textureID();
 
 /*******************************************************************************
 ***                            Private Attributes                            ***

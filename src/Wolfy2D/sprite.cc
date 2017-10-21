@@ -94,12 +94,20 @@ const Vec2 Sprite::size() {
   return size_;
 }
 
+const Vec2 Sprite::originalTextureSize() {
+  return texture_size_;
+}
+
 const float Sprite::rotation() {
   return rotation_;
 }
 
 const Vec2 Sprite::position() {
   return position_;
+}
+
+const uint32 Sprite::textureID() {
+  return texture_id_;
 }
 
 
