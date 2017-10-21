@@ -74,10 +74,7 @@ project "Wolfy2D"
     path.join(PROJ_DIR, "include/*.h"),
     path.join(PROJ_DIR, "include/core/*.h"),
     path.join(PROJ_DIR, "include/Wolfy2D/*.h"),
-    path.join(PROJ_DIR, "data/*.*"),
-    path.join(PROJ_DIR, "data/geometries/*.*"),
-    path.join(PROJ_DIR, "data/materials/*.*"),
-    path.join(PROJ_DIR, "data/textures/*.*"),
+    path.join(PROJ_DIR, "data/**.*"),
     -- GLFW
     path.join(PROJ_DIR, "external/glfw3_2_1/src/*.c"),
     path.join(PROJ_DIR, "external/glfw3_2_1/src/*.h"),
@@ -134,7 +131,7 @@ function GenerateProject(name)
   }
 
   files {
-    path.join(PROJ_DIR, "data/"..name.."/*.*"),
+    path.join(PROJ_DIR, "data/"..name.."/**.*"),
     path.join(PROJ_DIR, "examples/"..name.."/*.*"),
   }
 
