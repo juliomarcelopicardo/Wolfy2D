@@ -9,6 +9,10 @@
 
 namespace W2D {
 
+/*******************************************************************************
+***                        Constructor and destructor                        ***
+*******************************************************************************/
+
 Animation::Animation() {
   position_ = { 0.0f, 0.0f };
   size_ = { 0.0f, 0.0f };
@@ -53,6 +57,10 @@ Animation::Animation(const Animation& other) {
   initialized_ = other.initialized_;
 }
 
+/*******************************************************************************
+***                              Public Methods                              ***
+*******************************************************************************/
+
 void Animation::init(Sprite* sprite_list, const uint32 number_of_sprites) {
   auto& sprite = Core::instance().sprite_;
 
@@ -64,7 +72,7 @@ void Animation::init(Sprite* sprite_list, const uint32 number_of_sprites) {
     texture_id_.resize(number_of_sprites);
     texture_id_list_length_ = number_of_sprites;
     index_ = 0;
-    for (int32 i = 0; i < texture_id_list_length_; ++i) {
+    for (uint32 i = 0; i < texture_id_list_length_; ++i) {
       texture_id_[i] = sprite_list[i].textureID();
     }
     initialized_ = true;
@@ -73,13 +81,6 @@ void Animation::init(Sprite* sprite_list, const uint32 number_of_sprites) {
     initialized_ = false;
     printf(" ERROR: Can't create animation without more than 1 sprites.\n");
   }
-
-}
-
-
-
-void Animation::set_speed(const uint64 milliseconds_per_change) {
-  milliseconds_per_change_ = milliseconds_per_change;
 }
 
 void Animation::render() {
@@ -104,7 +105,6 @@ void Animation::render() {
   }
 }
 
-
 /*******************************************************************************
 ***                              Public Setters                              ***
 *******************************************************************************/
@@ -119,6 +119,10 @@ void Animation::set_size(const Vec2 size) {
 
 void Animation::set_rotation(const float radians) {
   rotation_ = radians;
+}
+
+void Animation::set_speed(const uint64 milliseconds_per_change) {
+  milliseconds_per_change_ = milliseconds_per_change;
 }
 
 /*******************************************************************************
