@@ -19,6 +19,7 @@
 #include "Wolfy2D/draw.h"
 #include "Wolfy2D/sprite.h"
 #include "Wolfy2D/animation.h"
+#include "Wolfy2D/button.h"
 #include "Wolfy2D/imgui.h"
 
 #endif
