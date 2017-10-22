@@ -61,6 +61,20 @@ class Button {
   /// @brief Renderizes the base button.
   ///--------------------------------------------------------------------------
   void render();
+  ///--------------------------------------------------------------------------
+  /// @fn   update();
+  ///
+  /// @brief Updates the base button.
+  ///--------------------------------------------------------------------------
+  void update();
+  ///--------------------------------------------------------------------------
+  /// @fn   const bool isClicked();
+  ///
+  /// @brief Check if the button has been clicked.
+  /// @return true if clicked.
+  ///--------------------------------------------------------------------------
+  const bool isClicked();
+
 
 /*******************************************************************************
 ***                              Public Setters                              ***
@@ -122,6 +136,8 @@ class Button {
    uint32 pressed_texture_id_;
    /// Disabled texture id.
    uint32 disabled_texture_id_;
+   /// Current texture used.
+   uint32 current_texture_id_;
    /// True if initialized.
    bool initialized_;
    /// True if active or enabled.

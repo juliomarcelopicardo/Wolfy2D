@@ -38,6 +38,7 @@ Button& Button::operator=(const Button& other) {
   hover_texture_id_ = other.hover_texture_id_;
   pressed_texture_id_ = other.pressed_texture_id_;
   disabled_texture_id_ = other.disabled_texture_id_;
+  current_texture_id_ = other.current_texture_id_;
   is_enabled_ = other.is_enabled_;
   return *this;
 }
@@ -51,6 +52,7 @@ Button::Button(const Button& other) {
   hover_texture_id_ = other.hover_texture_id_;
   pressed_texture_id_ = other.pressed_texture_id_;
   disabled_texture_id_ = other.disabled_texture_id_;
+  current_texture_id_ = other.current_texture_id_;
   is_enabled_ = other.is_enabled_;
 }
 
@@ -68,32 +70,57 @@ void Button::init(Sprite& normal, Sprite& hover, Sprite& pressed, Sprite& disabl
   hover_texture_id_ = hover.textureID();
   pressed_texture_id_ = pressed.textureID();
   disabled_texture_id_ = disabled.textureID();
+  current_texture_id_ = normal.textureID();
   initialized_ = true;
+}
+
+
+
+
+void Button::disable() {
+  is_enabled_ = false;
+}
+
+void Button::enable() {
+  is_enabled_ = true;
+}
+
+const bool Button::isClicked() {
+  if (Input::IsMouseButtonUp(Input::kMouseButton_Left) && 
+      (current_texture_id_ == pressed_texture_id_ ||
+       current_texture_id_ == hover_texture_id_)) {
+    return true;
+  }
+  return false;
+}
+
+void Button::update() {
+  // UPDATE
+  if (is_enabled_) {
+    current_texture_id_ = normal_texture_id_;
+    Vec2 mouse = Input::MousePosition();
+    if (mouse.x >= position_.x - size_.x * 0.5f &&
+        mouse.x <= position_.x + size_.x * 0.5f &&
+        mouse.y >= position_.y - size_.y * 0.5f &&
+        mouse.y <= position_.y + size_.y * 0.5f) {
+      current_texture_id_ = hover_texture_id_;
+      if (Input::IsMouseButtonPressed(Input::kMouseButton_Left)) {
+        current_texture_id_ = pressed_texture_id_;
+      }
+    }
+  }
+  else {
+    current_texture_id_ = disabled_texture_id_;
+  }
 }
 
 void Button::render() {
   if (initialized_) {
-    // UPDATE
-    uint32 texture = normal_texture_id_;
-    if (is_enabled_) {
-      Vec2 mouse = Input::MousePosition();
-      if (mouse.x >= position_.x - size_.x * 0.5f && 
-          mouse.x <= position_.x + size_.x * 0.5f &&
-          mouse.y >= position_.y - size_.y * 0.5f &&
-          mouse.y <= position_.y + size_.y * 0.5f) {
-        texture = hover_texture_id_;
-        if (Input::IsMouseButtonPressed(Input::kMouseButton_Left)) {
-          texture = pressed_texture_id_;
-        }
-      }
-    }
-    else {
-      texture = disabled_texture_id_;
-    }
+    
+    update();
 
-    // RENDER
     auto& sprite = Core::instance().sprite_;
-    sprite.set_texture_id(texture);
+    sprite.set_texture_id(current_texture_id_);
     sprite.set_position({ position_.x, position_.y });
     sprite.set_texture_size({ texture_size_.x, texture_size_.y });
     sprite.set_size({ size_.x, size_.y });
@@ -105,13 +132,7 @@ void Button::render() {
   }
 }
 
-void Button::disable() {
-  is_enabled_ = false;
-}
 
-void Button::enable() {
-  is_enabled_ = true;
-}
 
 /*******************************************************************************
 ***                              Public Setters                              ***
