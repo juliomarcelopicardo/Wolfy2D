@@ -27,6 +27,21 @@ void Line(const Vec2 origin, const Vec2 destiny,
           const Vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f },
           const float32 line_width = 2.0f);
 
+///--------------------------------------------------------------------------
+/// @fn   Rect(const Vec2 center_position, const Vec2 size,
+///            const Vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f },
+///            const float32 line_width = 2.0f);
+///
+/// @brief  Draws a rectangle in the screen.
+/// @param  center_position Position where the center of the polygon will be.
+/// @param  size Width and height of the rectangle.
+/// @param  color Line color.
+/// @param  line_width Line width.
+///--------------------------------------------------------------------------
+void Rect(const Vec2 center_position, const Vec2 size, 
+          const Vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f },
+          const float32 line_width = 2.0f);
+
 
 
 }; /* Draw */
