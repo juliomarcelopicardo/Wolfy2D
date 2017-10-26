@@ -50,7 +50,7 @@ ButtonStatus* InputManager::getButton(const int32 glfw_key_id) {
     case W2D::Input::kKeyboardButton_E: return &keyboard_E_button_; break;
     case W2D::Input::kKeyboardButton_Tab: return &keyboard_Tab_button_; break;
     case W2D::Input::kKeyboardButton_Escape: return &keyboard_Escape_button_; break;
-    case W2D::Input::kKeyboardButton_SpaceBar: return &keyboard_Tab_button_; break;
+    case W2D::Input::kKeyboardButton_SpaceBar: return &keyboard_SpaceBar_button_; break;
     case W2D::Input::kKeyboardButton_Up: return &keyboard_Up_button_; break;
     case W2D::Input::kKeyboardButton_Down: return &keyboard_Down_button_; break;
     case W2D::Input::kKeyboardButton_Left: return &keyboard_Left_button_; break;
