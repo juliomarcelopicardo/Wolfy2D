@@ -23,6 +23,7 @@ solution "Wolfy2D_Solution"
   	  "_GLFW_WIN32",
       "LUA_COMPAT_MODULE",
       "GLEW_STATIC",
+      "CHIPMUNK_WIN32",
 	  }
 
   configuration "Release"
@@ -35,6 +36,7 @@ solution "Wolfy2D_Solution"
       "_GLFW_WIN32",
       "LUA_COMPAT_MODULE",
       "GLEW_STATIC",
+      "CHIPMUNK_WIN32",
 	  }
 
 project "Wolfy2D"
@@ -65,6 +67,9 @@ project "Wolfy2D"
 	  -- STB 
     path.join(PROJ_DIR, "external/stb/include/"),
     path.join(PROJ_DIR, "external/stb/src/"),
+    -- Chipmunk
+    path.join(PROJ_DIR, "external/chipmunk/include/"),
+    path.join(PROJ_DIR, "external/chipmunk/src/"),
   }
 
   files {
@@ -98,6 +103,9 @@ project "Wolfy2D"
     -- STB
     path.join(PROJ_DIR, "external/stb/include/STB/*.h"),
     path.join(PROJ_DIR, "external/stb/src/*.c"),
+    -- Chipmunk
+    path.join(PROJ_DIR, "external/chipmunk/include/*.h"),
+    path.join(PROJ_DIR, "external/chipmunk/src/*.c"),
   }
 
   configuration "Debug"
@@ -128,6 +136,7 @@ function GenerateProject(name)
     path.join(PROJ_DIR, "external/glm/include/"),
     path.join(PROJ_DIR, "external/fontstash/include/"),
     path.join(PROJ_DIR, "external/stb/include/"),
+    path.join(PROJ_DIR, "external/chipmunk/include/"),
   }
 
   files {

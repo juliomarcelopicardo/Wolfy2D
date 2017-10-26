@@ -8,6 +8,7 @@
  
 #include <string>
 #include "Wolfy2D.h"
+#include "chipmunk.h"
 
 namespace W2D {
   int32 main() {
@@ -45,13 +46,40 @@ namespace W2D {
     mario.set_size({250, 250});
     mario.set_rotation(0.3f);
     mario.set_position({ 555, 444 });
-    
+
+
+
+
+
+    /* EJEMPLO */
+    cpSpace* world = cpSpaceNew();
+    cpSpaceSetGravity(world, { 0, 0.00098 });
+    printf("\n Gravity - (%f, %f)", cpSpaceGetGravity(world).x, cpSpaceGetGravity(world).y);
+
+    // Creams un cuerpo en el     mundo,        masa, momento de inercia
+    cpBody* body = cpSpaceAddBody(world, cpBodyNew(0, 0));
+    cpBody* floor_body = cpSpaceAddBody(world, cpBodyNewStatic());
+    cpBodySetPosition(floor_body, { 100, 968 });
+    cpBodySetPosition(body, { 100, 0 });
+
+    // Creamos una forma en el       mundo,
+    // Parametros de cpboxshape (b,w,h,r) -> body, ancho, alto, radio de erro.
+    // CONVIENE NO PONER EL RADIO DE ERROR A 0, recomendable 1 unidad(pixel).
+    // La shape o collider se crea en el centro de masas del body.
+    // Un body puede tener varias shapes, cada una con su masa.
+    cpShape* shape = cpSpaceAddShape(world, cpBoxShapeNew(body, 50, 50, 1));
+    cpShape* floor_shape = cpSpaceAddShape(world, cpBoxShapeNew(floor_body, 40, 40, 1));
+    cpShapeSetMass(shape, 100);
+    printf("\n Masa del box - %f", cpShapeGetMass(shape));
+
+    /* EJEMPLO */
 
   while (Window::IsOpened()) {
     Window::Clear();
     ImGuiEditor::SetupSprite(mario, "SuperMario");
     ImGuiEditor::SetupText(text, "PACO");
-        cat.render();    mario.render();    mario.set_rotation(Time() * 0.001f);    text.render("PAQUITORRR");    green_text.render("PAAAAAAAAAAAAAAAACO");    button.render();    Draw::Line({ 0.0f, 0.0f }, { 1020, 970 });    animation.render();    Window::Frame();
+        cat.render();    mario.render();    mario.set_rotation(Time() * 0.001f);    text.render("PAQUITORRR");    green_text.render("PAAAAAAAAAAAAAAAACO");    button.render();    if (button.isClicked()) {      printf(" Button clicked\n");    }        Draw::Rect({ 400, 400 }, { 200, 100 });    Draw::Line({ 0.0f, 0.0f }, { 1020, 970 });    animation.render();    cpSpaceStep(world, 16.6);
+    cat.set_position({ (float)cpBodyGetPosition(body).x, (float)cpBodyGetPosition(body).y});    Window::Frame();
   }
 
   Window::Close();
