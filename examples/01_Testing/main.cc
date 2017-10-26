@@ -42,13 +42,13 @@ namespace W2D {
     green_text.set_color({ 0.0f, 1.0f, 0.0f, 1.0f });
     text.set_position({ 200.0f, 200.0f });
     text.set_size(50);
-    cat.set_position({ 300.0f, 300.0f });
+    cat.set_position({ 0.0f, 0.0f });
     mario.set_size({250, 250});
     mario.set_rotation(0.3f);
     mario.set_position({ 555, 444 });
 
 
-
+    Sprite::SetPivot(kSpritePivotPoint_UpLeft);
 
 
     /* EJEMPLO */
@@ -59,8 +59,8 @@ namespace W2D {
     // Creams un cuerpo en el     mundo,        masa, momento de inercia
     cpBody* body = cpSpaceAddBody(world, cpBodyNew(0, 0));
     cpBody* floor_body = cpSpaceAddBody(world, cpBodyNewStatic());
-    cpBodySetPosition(floor_body, { 100, 968 });
-    cpBodySetPosition(body, { 100, 0 });
+    cpBodySetPosition(floor_body, { 0, 968 });
+    cpBodySetPosition(body, { 0, 0 });
 
     // Creamos una forma en el       mundo,
     // Parametros de cpboxshape (b,w,h,r) -> body, ancho, alto, radio de erro.

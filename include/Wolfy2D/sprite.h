@@ -11,10 +11,31 @@
 
 namespace W2D {
 
+/// It only affects to the position.
+enum SpritePivotPoint {
+  kSpritePivotPoint_Center = 0,
+  kSpritePivotPoint_UpLeft,
+  kSpritePivotPoint_Up,
+  kSpritePivotPoint_UpRight,
+  kSpritePivotPoint_Right,
+  kSpritePivotPoint_Downight,
+  kSpritePivotPoint_Down,
+  kSpritePivotPoint_DownLeft,
+  kSpritePivotPoint_Left,
+};
+
 /// Sprite class.
 class Sprite {
 
  public:
+
+  ///--------------------------------------------------------------------------
+  /// @fn   SetPivot(const SpritePivotPoint pivot);
+  ///
+  /// @brief Sets the position origin when rendering the sorites.
+  /// @param pivot Pivot or local origin.
+  ///--------------------------------------------------------------------------
+  static void SetPivot(const SpritePivotPoint pivot);
 
 /*******************************************************************************
 ***                        Constructor and destructor                        ***
@@ -51,8 +72,6 @@ class Sprite {
 /*******************************************************************************
 ***                              Public Setters                              ***
 *******************************************************************************/
-
-  
 
   ///--------------------------------------------------------------------------
   /// @fn   set_position(const Vec2 position);

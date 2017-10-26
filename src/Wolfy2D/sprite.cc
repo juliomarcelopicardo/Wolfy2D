@@ -10,6 +10,11 @@
 
 namespace W2D {
 
+// STATIC FUNCTION.
+void Sprite::SetPivot(const SpritePivotPoint pivot) {
+  Core::instance().sprite_.set_pivot(pivot);
+}
+
 /*******************************************************************************
 ***                        Constructor and destructor                        ***
 *******************************************************************************/

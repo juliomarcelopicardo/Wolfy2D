@@ -11,6 +11,7 @@
 
 #include "GLM/glm.hpp"
 #include "Wolfy2D/globals.h"
+#include "Wolfy2D/sprite.h"
 
 
 namespace W2D {
@@ -94,10 +95,17 @@ class Texture {
   ///--------------------------------------------------------------------------
   /// @fn   set_texture_id(const uint32 texture_id);
   ///
-  /// @brief Texture_id Texture id setter.
+  /// @brief Texture id setter.
   /// @param texture_id Texture gpu handler or id.
   ///--------------------------------------------------------------------------
   void set_texture_id(const uint32 texture_id);
+  ///--------------------------------------------------------------------------
+  /// @fn   set_pivot(const SpritePivotPoint pivot);
+  ///
+  /// @brief Pivot setter.
+  /// @param pivot Pivot or origin of the sprite.
+  ///--------------------------------------------------------------------------
+  void set_pivot(const SpritePivotPoint pivot);
 
   ///--------------------------------------------------------------------------
   /// @fn   const glm::vec2 position();
@@ -134,6 +142,13 @@ class Texture {
   /// @return the id or handler of the texture in the gpu.
   ///--------------------------------------------------------------------------
   const uint32 textureID();
+  ///--------------------------------------------------------------------------
+  /// @fn   const SpritePivotPoint pivot();
+  ///
+  /// @brief Pivot id getter.
+  /// @return the pivot or origin of the texture in the gpu.
+  ///--------------------------------------------------------------------------
+  const SpritePivotPoint pivot();
   
 
 /*******************************************************************************
@@ -160,6 +175,8 @@ class Texture {
   uint32 texture_id_;
   /// Camera ortographic projection matrix.
   glm::mat4 projection_matrix_;
+  /// Sets the pivot or local origin of the texture.
+  SpritePivotPoint pivot_;
   
   /// Default copy constructor.
   Texture(const Texture& copy);

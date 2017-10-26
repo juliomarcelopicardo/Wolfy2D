@@ -25,6 +25,7 @@ Texture::Texture() {
   rotation_ = 0.0f;
   texture_id_ = 0;
   texture_size_ = { 0.0f, 0.0f };
+  pivot_ = kSpritePivotPoint_Center;
 }
 
 Texture::~Texture() {}
@@ -114,6 +115,10 @@ void Texture::set_texture_id(const uint32 texture_id) {
   texture_id_ = texture_id;
 }
 
+void Texture::set_pivot(const SpritePivotPoint pivot) {
+  pivot_ = pivot;
+}
+
 const glm::vec2 Texture::position() {
   return position_;
 }
@@ -134,6 +139,10 @@ const uint32 Texture::textureID() {
   return texture_id_;
 }
 
+const SpritePivotPoint Texture::pivot() {
+  return pivot_;
+}
+
 
 /******************************************************************************
 ***                                RENDER                                   ***
@@ -146,8 +155,45 @@ void Texture::render() {
 
   glm::vec2 img_size = { size_.x * scale_.x, size_.y * scale_.y };
 
+  glm::vec2 position = position_;
+  glm::vec2 half_size = img_size * 0.5f;
+  switch (pivot_) {
+    case W2D::kSpritePivotPoint_UpLeft: {
+      position.x = position.x + half_size.x;
+      position.y = position.y + half_size.y;
+    }break;
+    case W2D::kSpritePivotPoint_Up: {
+      position.x = position.x;
+      position.y = position.y + half_size.y;
+    }break;
+    case W2D::kSpritePivotPoint_UpRight: {
+      position.x = position.x - half_size.x;
+      position.y = position.y + half_size.y;
+    }break;
+    case W2D::kSpritePivotPoint_Right: {
+      position.x = position.x - half_size.x;
+      position.y = position.y;
+    }break;
+    case W2D::kSpritePivotPoint_Downight: {
+      position.x = position.x - half_size.x;
+      position.y = position.y - half_size.y;
+    }break;
+    case W2D::kSpritePivotPoint_Down: {
+      position.x = position.x;
+      position.y = position.y - half_size.y;
+    }break;
+    case W2D::kSpritePivotPoint_DownLeft: {
+      position.x = position.x + half_size.x;
+      position.y = position.y - half_size.y;
+    }break;
+    case W2D::kSpritePivotPoint_Left: {
+      position.x = position.x + half_size.x;
+      position.y = position.y;
+    }break;
+  }
+
   glm::mat4 model_matrix(1.0f);
-  model_matrix = glm::translate(model_matrix, glm::vec3(position_.x, position_.y, 0.0f));
+  model_matrix = glm::translate(model_matrix, glm::vec3(position.x, position.y, 0.0f));
   model_matrix = glm::rotate(model_matrix, rotation_, glm::vec3(0.0f, 0.0f, 1.0f));
   model_matrix = glm::scale(model_matrix, glm::vec3(img_size.x, img_size.y, 1.0f));
   
