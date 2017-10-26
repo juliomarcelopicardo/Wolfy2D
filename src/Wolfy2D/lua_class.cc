@@ -5,7 +5,8 @@
 *
 */
 
-#include "core/lua_class.h"
+#include "LUA/lua.hpp"
+#include "Wolfy2D/lua_class.h"
 #include "core/core.h"
 #include <stdio.h>
 #include <stdlib.h>

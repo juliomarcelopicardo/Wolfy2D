@@ -7,7 +7,6 @@
 #ifndef __LUA_CLASS__
 #define __LUA_CLASS__ 1
 
-#include "LUA/lua.hpp"
 #include "Wolfy2D.h"
 
 namespace W2D {
@@ -18,18 +17,15 @@ class Lua {
   ***     CONSTRUCTORS & DESTRUCTOR     ***
   ****************************************/
 
-  /** @brief Initializes Lua (creates new state and opens libraries).
-    */
+  /// Initializes Lua (creates new state and opens libraries).
   Lua();
 
-  /** @brief Closes Lua.
-    */
+  /// Closes Lua.
   ~Lua();
 
-  lua_State* operator*();
+  struct lua_State* operator*();
 
-  /** @brief Closes and reinitializes Lua.
-    */
+  /// Closes and reinitializes Lua.
   void resetLua();
 
 
@@ -450,12 +446,9 @@ class Lua {
     */
   bool getBooleanFromArray(const char* table, const uint32 index);
 
-
- protected:
-  lua_State* L_;
-
-
+  
  private:
+  struct lua_State* L_;
   Lua(const Lua&);
   Lua& operator=(const Lua &);
 
