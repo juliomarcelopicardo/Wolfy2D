@@ -39,7 +39,6 @@ void InputScrollCB(GLFWwindow* window, double xoffset, double yoffset) {
 }
 
 void InputKeyCB(GLFWwindow* window, int32 key, int32 scancode, int32 action, int32 mods) {
-  
   if (ButtonStatus* button = Core::instance().window_.input_.getButton(key)) {
     switch (action) {
     case GLFW_PRESS:

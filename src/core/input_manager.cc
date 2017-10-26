@@ -39,7 +39,7 @@ InputManager::~InputManager() {}
 ***                               Public methods                             ***
 *******************************************************************************/
 
-ButtonStatus * InputManager::getButton(const int32 glfw_key_id) {
+ButtonStatus* InputManager::getButton(const int32 glfw_key_id) {
 
   switch (glfw_key_id) {
     case W2D::Input::kKeyboardButton_W: return &keyboard_W_button_; break;
@@ -49,6 +49,12 @@ ButtonStatus * InputManager::getButton(const int32 glfw_key_id) {
     case W2D::Input::kKeyboardButton_Q: return &keyboard_Q_button_; break;
     case W2D::Input::kKeyboardButton_E: return &keyboard_E_button_; break;
     case W2D::Input::kKeyboardButton_Tab: return &keyboard_Tab_button_; break;
+    case W2D::Input::kKeyboardButton_Escape: return &keyboard_Escape_button_; break;
+    case W2D::Input::kKeyboardButton_SpaceBar: return &keyboard_Tab_button_; break;
+    case W2D::Input::kKeyboardButton_Up: return &keyboard_Up_button_; break;
+    case W2D::Input::kKeyboardButton_Down: return &keyboard_Down_button_; break;
+    case W2D::Input::kKeyboardButton_Left: return &keyboard_Left_button_; break;
+    case W2D::Input::kKeyboardButton_Right: return &keyboard_Right_button_; break;
   }
   return nullptr;
 }
@@ -64,6 +70,12 @@ void InputManager::resetInputButtonsStatus() {
   keyboard_Q_button_.resetStatus();
   keyboard_E_button_.resetStatus();
   keyboard_Tab_button_.resetStatus();
+  keyboard_Up_button_.resetStatus();
+  keyboard_Down_button_.resetStatus();
+  keyboard_Left_button_.resetStatus();
+  keyboard_Right_button_.resetStatus();
+  keyboard_Escape_button_.resetStatus();
+  keyboard_SpaceBar_button_.resetStatus();
 }
 
 
@@ -79,6 +91,12 @@ void InputManager::refreshButtonsUp() {
   keyboard_Q_button_.is_up = false;
   keyboard_E_button_.is_up = false;
   keyboard_Tab_button_.is_up = false;
+  keyboard_Up_button_.is_up = false;
+  keyboard_Down_button_.is_up = false;
+  keyboard_Left_button_.is_up = false;
+  keyboard_Right_button_.is_up = false;
+  keyboard_Escape_button_.is_up = false;
+  keyboard_SpaceBar_button_.is_up = false;
 }
 
 bool InputManager::isMouseButtonDown(Input::MouseButton button) {
@@ -141,7 +159,44 @@ bool InputManager::isKeyboardButtonDown(Input::KeyboardButton button) {
       return true;
     }
     break;
+  case Input::kKeyboardButton_Up:
+    if (keyboard_Up_button_.is_down) {
+      keyboard_Up_button_.is_down = false;
+      return true;
+    }
+    break;
+  case Input::kKeyboardButton_Down:
+    if (keyboard_Down_button_.is_down) {
+      keyboard_Down_button_.is_down = false;
+      return true;
+    }
+    break;
+  case Input::kKeyboardButton_Left:
+    if (keyboard_Left_button_.is_down) {
+      keyboard_Left_button_.is_down = false;
+      return true;
+    }
+    break;
+  case Input::kKeyboardButton_Right:
+    if (keyboard_Right_button_.is_down) {
+      keyboard_Right_button_.is_down = false;
+      return true;
+    }
+    break;
+  case Input::kKeyboardButton_Escape:
+    if (keyboard_Escape_button_.is_down) {
+      keyboard_Escape_button_.is_down = false;
+      return true;
+    }
+    break;
+  case Input::kKeyboardButton_SpaceBar:
+    if (keyboard_SpaceBar_button_.is_down) {
+      keyboard_SpaceBar_button_.is_down = false;
+      return true;
+    }
+    break;
   }
+ 
   return false;
 }
 
@@ -154,6 +209,12 @@ bool InputManager::isKeyboardButtonUp(Input::KeyboardButton button) {
   case Input::kKeyboardButton_Q: return keyboard_Q_button_.is_up; break;
   case Input::kKeyboardButton_E: return keyboard_E_button_.is_up; break;
   case Input::kKeyboardButton_Tab: return keyboard_Tab_button_.is_up; break;
+  case Input::kKeyboardButton_Escape: return keyboard_Escape_button_.is_up; break;
+  case Input::kKeyboardButton_SpaceBar: return keyboard_SpaceBar_button_.is_up; break;
+  case Input::kKeyboardButton_Up: return keyboard_Up_button_.is_up; break;
+  case Input::kKeyboardButton_Down: return keyboard_Down_button_.is_up; break;
+  case Input::kKeyboardButton_Left: return keyboard_Left_button_.is_up; break;
+  case Input::kKeyboardButton_Right: return keyboard_Right_button_.is_up; break;
   }
   return false;
 }
@@ -167,6 +228,12 @@ bool InputManager::isKeyboardButtonPressed(Input::KeyboardButton button) {
   case Input::kKeyboardButton_Q: return keyboard_Q_button_.is_pressed; break;
   case Input::kKeyboardButton_E: return keyboard_E_button_.is_pressed; break;
   case Input::kKeyboardButton_Tab: return keyboard_Tab_button_.is_pressed; break;
+  case Input::kKeyboardButton_Escape: return keyboard_Escape_button_.is_pressed; break;
+  case Input::kKeyboardButton_SpaceBar: return keyboard_SpaceBar_button_.is_pressed; break;
+  case Input::kKeyboardButton_Up: return keyboard_Up_button_.is_pressed; break;
+  case Input::kKeyboardButton_Down: return keyboard_Down_button_.is_pressed; break;
+  case Input::kKeyboardButton_Left: return keyboard_Left_button_.is_pressed; break;
+  case Input::kKeyboardButton_Right: return keyboard_Right_button_.is_pressed; break;
   }
   return false;
 }

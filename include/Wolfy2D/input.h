@@ -27,6 +27,12 @@ enum KeyboardButton {
   kKeyboardButton_Q = 81,
   kKeyboardButton_E = 69,
   kKeyboardButton_Tab = 258,
+  kKeyboardButton_Escape = 256,
+  kKeyboardButton_Up = 265,
+  kKeyboardButton_Down = 264,
+  kKeyboardButton_Left = 263,
+  kKeyboardButton_Right = 262,
+  kKeyboardButton_SpaceBar = 32,
 };
 
 ///--------------------------------------------------------------------------
