@@ -70,5 +70,28 @@ void SetupButton(Button& button, const char * display_name) {
   button.set_size(size);
 }
 
+
+void SetupAnimation(Animation& animation, const char* display_name) {
+  Vec2 position = animation.position();
+  Vec2 size = animation.size();
+  float rotation = animation.rotation();
+  int32 ms = (int32)animation.speed();
+
+  ImGui::PushID(&animation);
+  if (ImGui::TreeNode(display_name)) {
+    ImGui::DragFloat2(" Position", &position.x);
+    ImGui::DragFloat2(" Size", &size.x);
+    ImGui::SliderAngle(" Rotation", &rotation);
+    ImGui::DragInt(" Speed - MS per change", &ms, 10.0f, 10, 1000);
+    ImGui::TreePop();
+  }
+  ImGui::PopID();
+
+  animation.set_position(position);
+  animation.set_size(size);
+  animation.set_rotation(rotation);
+  animation.set_speed((uint64)ms);
+}
+
 }/* ImGui */
 }; /* W2D */

@@ -81,8 +81,9 @@ namespace W2D {
   while (Window::IsOpened()) {
     Window::Clear();
     ImGuiEditor::SetupSprite(mario, "SuperMario");
-    ImGuiEditor::SetupText(text, "PACO");
+    ImGuiEditor::SetupText(text, "Text");
     ImGuiEditor::SetupButton(button, "Button");
+    ImGuiEditor::SetupAnimation(animation, "Animation");
         cat.render();    mario.render();    mario.set_rotation(Time() * 0.001f);    text.render("PAQUITORRR");    green_text.render("PAAAAAAAAAAAAAAAACO");    button.render();    if (button.isClicked()) {      printf(" Button clicked\n");    }        Draw::Rect({ 400, 400 }, { 200, 100 });    Draw::Line({ 0.0f, 0.0f }, { 1020, 970 });    animation.render();    Draw::Path(path, 5, { 1.0f, 1.0f, 0.0f, 1.0f }, 2.0f);    cpSpaceStep(world, 16.6);
     cat.set_position({ (float)cpBodyGetPosition(body).x, (float)cpBodyGetPosition(body).y});    Window::Frame();
   }

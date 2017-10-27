@@ -55,7 +55,7 @@ namespace ImGuiEditor {
   /// @param animation Animation which properties we want to see in the ImGui app.
   /// @param display_name Animation name to identify this animation in the list.
   ///--------------------------------------------------------------------------
-  void SetupAnimation(Button& animation, const char* display_name);
+  void SetupAnimation(Animation& animation, const char* display_name);
 
 
 }; /* ImGuiEditor */
