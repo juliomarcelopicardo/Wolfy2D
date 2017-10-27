@@ -29,14 +29,6 @@ class Sprite {
 
  public:
 
-  ///--------------------------------------------------------------------------
-  /// @fn   SetPivot(const SpritePivotPoint pivot);
-  ///
-  /// @brief Sets the position origin when rendering the sorites.
-  /// @param pivot Pivot or local origin.
-  ///--------------------------------------------------------------------------
-  static void SetPivot(const SpritePivotPoint pivot);
-
 /*******************************************************************************
 ***                        Constructor and destructor                        ***
 *******************************************************************************/
@@ -94,6 +86,13 @@ class Sprite {
   /// @param size Size to set.
   ///--------------------------------------------------------------------------
   void set_size(const Vec2 size);
+  ///--------------------------------------------------------------------------
+  /// @fn   set_pivot(const SpritePivotPoint pivot);
+  ///
+  /// @brief Sprite pivot setter.
+  /// @param pivot Pivot to set.
+  ///--------------------------------------------------------------------------
+  void set_pivot(const SpritePivotPoint pivot);
 
   
 /*******************************************************************************
@@ -135,6 +134,13 @@ class Sprite {
   /// @return Original texture id in gpu.
   ///--------------------------------------------------------------------------
   const uint32 textureID();
+  ///--------------------------------------------------------------------------
+  /// @fn   const SpritePivotPoint pivot();
+  ///
+  /// @brief Pivot id getter.
+  /// @return Pivot or origin point of the sprite.
+  ///--------------------------------------------------------------------------
+  const SpritePivotPoint pivot();
 
 /*******************************************************************************
 ***                            Private Attributes                            ***
@@ -153,6 +159,8 @@ class Sprite {
    uint32 texture_id_;
    /// Sets if the texture should be destroyed when the class is destroyed.
    bool release_sprite_when_destroy_;
+   /// Pivot or origin of the position.
+   SpritePivotPoint pivot_;
 
 
 }; /* SPRITE */

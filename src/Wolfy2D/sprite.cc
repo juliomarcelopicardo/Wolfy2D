@@ -10,10 +10,7 @@
 
 namespace W2D {
 
-// STATIC FUNCTION.
-void Sprite::SetPivot(const SpritePivotPoint pivot) {
-  Core::instance().sprite_.set_pivot(pivot);
-}
+
 
 /*******************************************************************************
 ***                        Constructor and destructor                        ***
@@ -26,6 +23,7 @@ Sprite::Sprite() {
   texture_size_ = { 0.0f, 0.0f };
   texture_id_ = 0;
   release_sprite_when_destroy_ = false;
+  pivot_ = kSpritePivotPoint_Center;
 }
 
 Sprite::~Sprite() {
@@ -42,6 +40,7 @@ Sprite& Sprite::operator=(const Sprite& other) {
   texture_size_ = other.texture_size_;
   texture_id_ = other.texture_id_;
   release_sprite_when_destroy_ = false;
+  pivot_ = other.pivot_;
   return *this;
 }
 
@@ -52,6 +51,7 @@ Sprite::Sprite(const Sprite& other) {
   texture_size_ = other.texture_size_;
   texture_id_ = other.texture_id_;
   release_sprite_when_destroy_ = false;
+  pivot_ = other.pivot_;
 }
 
 /*******************************************************************************
@@ -77,6 +77,7 @@ void Sprite::render() {
   sprite.set_texture_size({ texture_size_.x, texture_size_.y });
   sprite.set_size({ size_.x, size_.y });
   sprite.set_rotation(rotation_);
+  sprite.set_pivot(pivot_);
   sprite.render();
 }
 
@@ -94,6 +95,10 @@ void Sprite::set_size(const Vec2 size) {
 
 void Sprite::set_rotation(const float radians) {
   rotation_ = radians;
+}
+
+void Sprite::set_pivot(const SpritePivotPoint pivot) {
+  pivot_ = pivot;
 }
 
 /*******************************************************************************
@@ -118,6 +123,10 @@ const Vec2 Sprite::position() {
 
 const uint32 Sprite::textureID() {
   return texture_id_;
+}
+
+const SpritePivotPoint Sprite::pivot() {
+  return pivot_;
 }
 
 
