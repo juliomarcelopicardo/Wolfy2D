@@ -48,5 +48,27 @@ void SetupText(Text & text, const char * display_name) {
   text.set_size(size);
 }
 
+void SetupButton(Button& button, const char * display_name) {
+  Vec2 position = button.position();
+  Vec2 size = button.size();
+
+  ImGui::PushID(&button);
+  if (ImGui::TreeNode(display_name)) {
+    ImGui::DragFloat2(" Position", &position.x);
+    ImGui::DragFloat2(" Size", &size.x);
+    if (button.is_enabled()) {
+      if (ImGui::Button("DISABLE")) { button.disable(); }
+    }
+    else {
+      if (ImGui::Button("ENABLE")) { button.enable(); }
+    }
+    ImGui::TreePop();
+  }
+  ImGui::PopID();
+
+  button.set_position(position);
+  button.set_size(size);
+}
+
 }/* ImGui */
 }; /* W2D */

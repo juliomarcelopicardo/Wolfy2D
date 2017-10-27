@@ -5,6 +5,7 @@
 *
 */
 
+
  
 #include <string>
 #include "Wolfy2D.h"
@@ -47,6 +48,9 @@ namespace W2D {
     mario.set_rotation(0.3f);
     mario.set_position({ 555, 444 });
 
+    Vec2 path[5] = { { 100.0f, 100.0f },{ 900.0f, 100.0f },{ 900.0f, 900.0f },
+                     { 100.0f, 900.0f },{ 100.0f, 100.0f }};
+
 
     Sprite::SetPivot(kSpritePivotPoint_UpLeft);
 
@@ -78,7 +82,8 @@ namespace W2D {
     Window::Clear();
     ImGuiEditor::SetupSprite(mario, "SuperMario");
     ImGuiEditor::SetupText(text, "PACO");
-        cat.render();    mario.render();    mario.set_rotation(Time() * 0.001f);    text.render("PAQUITORRR");    green_text.render("PAAAAAAAAAAAAAAAACO");    button.render();    if (button.isClicked()) {      printf(" Button clicked\n");    }        Draw::Rect({ 400, 400 }, { 200, 100 });    Draw::Line({ 0.0f, 0.0f }, { 1020, 970 });    animation.render();    cpSpaceStep(world, 16.6);
+    ImGuiEditor::SetupButton(button, "Button");
+        cat.render();    mario.render();    mario.set_rotation(Time() * 0.001f);    text.render("PAQUITORRR");    green_text.render("PAAAAAAAAAAAAAAAACO");    button.render();    if (button.isClicked()) {      printf(" Button clicked\n");    }        Draw::Rect({ 400, 400 }, { 200, 100 });    Draw::Line({ 0.0f, 0.0f }, { 1020, 970 });    animation.render();    Draw::Path(path, 5, { 1.0f, 1.0f, 0.0f, 1.0f }, 2.0f);    cpSpaceStep(world, 16.6);
     cat.set_position({ (float)cpBodyGetPosition(body).x, (float)cpBodyGetPosition(body).y});    Window::Frame();
   }
 
