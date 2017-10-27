@@ -42,6 +42,20 @@ void Rect(const Vec2 center_position, const Vec2 size,
           const Vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f },
           const float32 line_width = 2.0f);
 
+///--------------------------------------------------------------------------
+/// @fn   Path(const Vec2* points, const uint32 num_points,
+///            const Vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f },
+///            const float32 line_width = 2.0f);
+///
+/// @brief  Draws a path, connecting all the points by drawing lines.
+/// @param  points Locations of all the points to connect.
+/// @param  num_points Number of points we want to connect.
+/// @param  color Line color.
+/// @param  line_width Line width.
+///--------------------------------------------------------------------------
+void Path(const Vec2* points, const uint32 num_points,
+          const Vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f },
+          const float32 line_width = 2.0f);
 
 
 }; /* Draw */

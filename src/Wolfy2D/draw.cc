@@ -5,6 +5,7 @@
 */
 
 #include "Wolfy2D/draw.h"
+#include <stdio.h>
 #include "GL/glew.h"
 
 namespace W2D {
@@ -47,6 +48,27 @@ void Rect(const Vec2 center_position,
   glVertex2f(center_position.x + half_size.x, center_position.y + half_size.y);
   glVertex2f(center_position.x - half_size.x, center_position.y + half_size.y);
   glEnd();
+}
+
+void Path(const Vec2* points, 
+          const uint32 num_points, 
+          const Vec4 color, 
+          const float32 line_width) {
+  if (num_points < 3 || !points) {
+    printf("\n ERROR: More than 2 points needed to draw a path.");
+  }
+  else {
+    glLineWidth(line_width);
+    glColor4f(color.x, color.y, color.z, color.w);
+    for (uint32 i = 0; i < num_points; i++) {
+      glBegin(GL_LINES);
+      glVertex2f(points[i - 1].x, points[i - 1].y);
+      glVertex2f(points[i].x, points[i].y);
+      glEnd();
+    }
+  }
+  
+
 }
 
 }; /* Draw */
