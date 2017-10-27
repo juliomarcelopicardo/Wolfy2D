@@ -105,10 +105,17 @@ public:
   ///--------------------------------------------------------------------------
   /// @fn   const Vec2 position();
   ///
-  /// @brief Text position getter.
+  /// @brief Animation position getter.
   /// @return position of the sprite in the window.
   ///--------------------------------------------------------------------------
   const Vec2 position();
+  ///--------------------------------------------------------------------------
+  /// @fn   const uint64 speed();
+  ///
+  /// @brief Animation speed getter (milliseconds per change).
+  /// @return the milliseconds between sprites.
+  ///--------------------------------------------------------------------------
+  const uint64 speed();
 
 /*******************************************************************************
 ***                            Private Attributes                            ***

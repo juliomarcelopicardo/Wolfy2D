@@ -141,4 +141,8 @@ const Vec2 Animation::position() {
   return position_;
 }
 
+const uint64 Animation::speed() {
+  return milliseconds_per_change_;
+}
+
 }; /* W2D */
