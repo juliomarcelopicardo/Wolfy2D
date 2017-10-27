@@ -160,6 +160,10 @@ const Vec2 Button::position() {
   return position_;
 }
 
+const bool Button::is_enabled() {
+  return is_enabled_;
+}
+
 
 
 }; /* W2D */

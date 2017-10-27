@@ -110,11 +110,17 @@ class Button {
   ///--------------------------------------------------------------------------
   /// @fn   const Vec2 position();
   ///
-  /// @brief Text position getter.
+  /// @brief Button position getter.
   /// @return position of the button in the window.
   ///--------------------------------------------------------------------------
   const Vec2 position();
-
+  ///--------------------------------------------------------------------------
+  /// @fn   const bool is_enabled();
+  ///
+  /// @brief Button is enabled getter.
+  /// @return true if enabled, false otherwise.
+  ///--------------------------------------------------------------------------
+  const bool is_enabled();
 
 
 /*******************************************************************************
