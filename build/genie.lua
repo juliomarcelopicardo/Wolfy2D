@@ -21,9 +21,7 @@ solution "Wolfy2D_Solution"
     defines {
       "_DEBUG",
   	  "_GLFW_WIN32",
-      "LUA_COMPAT_MODULE",
       "GLEW_STATIC",
-      "CHIPMUNK_WIN32",
 	  }
 
   configuration "Release"
@@ -34,9 +32,7 @@ solution "Wolfy2D_Solution"
     defines {
       "NDEBUG",
       "_GLFW_WIN32",
-      "LUA_COMPAT_MODULE",
       "GLEW_STATIC",
-      "CHIPMUNK_WIN32",
 	  }
 
 project "Wolfy2D"
@@ -47,15 +43,13 @@ project "Wolfy2D"
     path.join(PROJ_DIR, "include/"),
     path.join(PROJ_DIR, "src/"),
     path.join(PROJ_DIR, "data/"),
+	path.join(PROJ_DIR, "external/"),
     -- GLFW
     path.join(PROJ_DIR, "external/glfw3_2_1/include/"),
   	path.join(PROJ_DIR, "external/glfw3_2_1/src/"),
     -- GLEW
     path.join(PROJ_DIR, "external/glew/include/"),
     path.join(PROJ_DIR, "external/glew/src/"),
-    -- LUA
-    path.join(PROJ_DIR, "external/lua/include/"),
-    path.join(PROJ_DIR, "external/lua/src/"),
     -- IMGUI
     path.join(PROJ_DIR, "external/imgui/include/"),
     path.join(PROJ_DIR, "external/imgui/src/"),
@@ -64,12 +58,9 @@ project "Wolfy2D"
     path.join(PROJ_DIR, "external/glm/src/"),
     -- FontStash
     path.join(PROJ_DIR, "external/fontstash/include/"),
-	  -- STB 
+	-- STB 
     path.join(PROJ_DIR, "external/stb/include/"),
     path.join(PROJ_DIR, "external/stb/src/"),
-    -- Chipmunk
-    path.join(PROJ_DIR, "external/chipmunk/include/"),
-    path.join(PROJ_DIR, "external/chipmunk/src/"),
   }
 
   files {
@@ -85,10 +76,10 @@ project "Wolfy2D"
     path.join(PROJ_DIR, "external/glfw3_2_1/src/*.h"),
     -- GLEW
     path.join(PROJ_DIR, "external/glew/src/*.c"),
-    -- LUA
-    path.join(PROJ_DIR, "external/lua/src/*.*"),
+    -- JMP
+    path.join(PROJ_DIR, "external/jmp/jmp.h"),
     -- ImGui
-	  path.join(PROJ_DIR, "external/imgui/src/*.*"),
+	path.join(PROJ_DIR, "external/imgui/src/*.*"),
     -- GLM
     path.join(PROJ_DIR, "external/glm/include/GLM/detail/*.*"),
     path.join(PROJ_DIR, "external/glm/include/GLM/gtc/*.*"),
@@ -103,9 +94,6 @@ project "Wolfy2D"
     -- STB
     path.join(PROJ_DIR, "external/stb/include/STB/*.h"),
     path.join(PROJ_DIR, "external/stb/src/*.c"),
-    -- Chipmunk
-    path.join(PROJ_DIR, "external/chipmunk/include/*.h"),
-    path.join(PROJ_DIR, "external/chipmunk/src/*.c"),
   }
 
   configuration "Debug"
@@ -129,14 +117,13 @@ function GenerateProject(name)
   includedirs {
     path.join(PROJ_DIR, "include/"),
     path.join(PROJ_DIR, "data/"),
+	path.join(PROJ_DIR, "external/"),
     path.join(PROJ_DIR, "external/glew/include/"),
     path.join(PROJ_DIR, "external/glfw3_2_1/include/"),
-    path.join(PROJ_DIR, "external/lua/include/"),
     path.join(PROJ_DIR, "external/imgui/include/"),
     path.join(PROJ_DIR, "external/glm/include/"),
     path.join(PROJ_DIR, "external/fontstash/include/"),
     path.join(PROJ_DIR, "external/stb/include/"),
-    path.join(PROJ_DIR, "external/chipmunk/include/"),
   }
 
   files {
