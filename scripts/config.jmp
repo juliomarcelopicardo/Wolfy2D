@@ -1,0 +1,4 @@
+VARPACK Window {
+	VAR width = 1024
+	VAR height = 978
+}

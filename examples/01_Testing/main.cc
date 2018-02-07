@@ -5,16 +5,18 @@
 *
 */
 
- #include "Wolfy2D.h"
+#include "Wolfy2D.h"
+#include "jmp\jmp.h"
 
 namespace W2D {
 
 int32 main() {
 
-  Window::Init(1024, 978);
+  JMP::Machine jmp;
+  jmp.processFile("../scripts/config.jmp");
 
-
-
+  Window::Init(jmp.getInteger("width", "Window"), jmp.getInteger("height", "Window"));
+  
   while (Window::IsOpened()) {
     Window::Clear();
     Window::Frame();
