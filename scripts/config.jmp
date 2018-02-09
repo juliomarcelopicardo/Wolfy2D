@@ -2,3 +2,11 @@ VARPACK Window {
 	VAR width = 1024
 	VAR height = 978
 }
+
+FUNC Init() {
+  CreateSprite("example", "../data/mario.png")
+}
+
+FUNC Update() {
+  RenderSprite("example")
+}

@@ -35,8 +35,8 @@ Core::~Core() {}
 
 void Core::calculateProjectionMatrix() {
   projection_matrix_ = glm::ortho(0.0f,
-                       (float)Core::instance().window_.width_,
-                       (float)Core::instance().window_.height_,
+                       (float)window_.width_,
+                       (float)window_.height_,
                        0.0f,
                        -1.0f,
                        1.0f);

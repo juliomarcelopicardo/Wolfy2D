@@ -103,7 +103,8 @@ void Texture::init(const char* texture_path) {
     error += texture_path;
     error += "\" doesn't exists.";
     printf("\n %s", error.c_str());
-    exit(EXIT_FAILURE);
+    //exit(EXIT_FAILURE);
+    texture_id_ = Core::instance().error_texture_.textureID();
   }
 
   texture_size_ = { (float)width, (float)height };
