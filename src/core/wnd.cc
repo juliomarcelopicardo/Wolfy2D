@@ -149,6 +149,7 @@ void Wnd::init(const int32 width, const int32 height, const char * name) {
   width_ = width;
   height_ = height;
   glfw_window_ = glfwCreateWindow(width, height, name, nullptr, nullptr);
+  core.calculateProjectionMatrix();
   if (!glfw_window_) {
     glfwTerminate();
     printf("\n Error: Init window failed.");
@@ -165,7 +166,7 @@ void Wnd::init(const int32 width, const int32 height, const char * name) {
   // Initialize the base objects.
   core.geometry_.init();
   core.material_.init("./../data/materials/shader.lua");
-  core.sprite_.calculateProjectionMatrix(); // we calculate once as it wont change.
+  core.error_texture_.init("./../data/error_texture.jpg");
 
   glfwSetInputMode(glfw_window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
   is_already_initialized_ = true;

@@ -15,6 +15,7 @@
 #include "core/txt.h"
 #include "core/imgui_class.h"
 #include <stdio.h>
+#include <map>
 
 
 namespace W2D {
@@ -45,6 +46,17 @@ class Core {
   ~Core();
 
 /*******************************************************************************
+***                              Core Methods                                ***
+*******************************************************************************/
+
+  ///--------------------------------------------------------------------------
+  /// @fn   calculateProjectionMatrix();
+  ///
+  /// @brief Calculates the camera projection matrix.
+  ///--------------------------------------------------------------------------
+  void calculateProjectionMatrix();
+
+/*******************************************************************************
 ***                               Attributes                                 ***
 *******************************************************************************/
   /// Default window instance.
@@ -55,18 +67,25 @@ class Core {
   Material material_;
   /// Texts base object.
   Txt text_;
-  /// Sprite base object.
-  Texture sprite_;
+  /// Sprite error object, default texture if anyone is not loaded properly.
+  Texture error_texture_;
   /// Imgui properties and manager.
   ImGuiProperties imgui_;
-
+  /// Sprites created.
+  std::map <std::string, Texture> texture_factory_;
+  /// Camera ortographic projection matrix.
+  glm::mat4 projection_matrix_;
   /// Time when the application starts.
   uint64 start_time_;
+
+
+ private:
+
 
 /*******************************************************************************
 ***                         Private Copy Constructor                         ***
 *******************************************************************************/
- private:
+
 
   /// Copy constructor.
   Core(const Core& copy);

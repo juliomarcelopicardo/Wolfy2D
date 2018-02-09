@@ -119,13 +119,7 @@ void Button::render() {
     
     update();
 
-    auto& sprite = Core::instance().sprite_;
-    sprite.set_texture_id(current_texture_id_);
-    sprite.set_position({ position_.x, position_.y });
-    sprite.set_texture_size({ texture_size_.x, texture_size_.y });
-    sprite.set_size({ size_.x, size_.y });
-    sprite.set_rotation(0.0f);
-    sprite.render();
+
   }
   else {
     printf(" ERROR: There aren't any sprites asigned to this button.\n");

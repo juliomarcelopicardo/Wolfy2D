@@ -62,7 +62,7 @@ Animation::Animation(const Animation& other) {
 *******************************************************************************/
 
 void Animation::init(Sprite* sprite_list, const uint32 number_of_sprites) {
-  auto& sprite = Core::instance().sprite_;
+  
 
   if (sprite_list && number_of_sprites > 1) {
     texture_size_ = sprite_list[0].originalTextureSize();
@@ -92,13 +92,7 @@ void Animation::render() {
       timer_ = Time();
     }
     // RENDER
-    auto& sprite = Core::instance().sprite_;
-    sprite.set_texture_id(texture_id_[index_]);
-    sprite.set_position({ position_.x, position_.y });
-    sprite.set_texture_size({ texture_size_.x, texture_size_.y });
-    sprite.set_size({ size_.x, size_.y });
-    sprite.set_rotation(rotation_);
-    sprite.render();
+
   }
   else {
     printf(" ERROR: There aren't any sprites asigned to this animation.\n");

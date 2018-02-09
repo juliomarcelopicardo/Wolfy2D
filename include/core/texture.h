@@ -29,6 +29,10 @@ class Texture {
   Texture();
   /// Default class destructor.
   ~Texture();
+  /// Default copy constructor.
+  Texture(const Texture& copy);
+  /// Assignment operator.
+  Texture& operator=(const Texture& copy);
 
 /*******************************************************************************
 ***                             Sprite methods                               ***
@@ -47,12 +51,6 @@ class Texture {
   /// @brief Renderizes the base sprite.
   ///--------------------------------------------------------------------------
   void render();
-  ///--------------------------------------------------------------------------
-  /// @fn   calculateProjectionMatrix();
-  ///
-  /// @brief Calculates the camera projection matrix.
-  ///--------------------------------------------------------------------------
-  void calculateProjectionMatrix();
   ///--------------------------------------------------------------------------
   /// @fn   releaseTexture();
   ///
@@ -173,15 +171,10 @@ class Texture {
   glm::vec2 texture_size_;
   /// Texture_id or handler.
   uint32 texture_id_;
-  /// Camera ortographic projection matrix.
-  glm::mat4 projection_matrix_;
   /// Sets the pivot or local origin of the texture.
   SpritePivotPoint pivot_;
   
-  /// Default copy constructor.
-  Texture(const Texture& copy);
-  /// Assignment operator.
-  Texture& operator=(const Texture& copy);
+
   
 
 };/* Texture class */

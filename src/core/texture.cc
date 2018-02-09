@@ -30,6 +30,28 @@ Texture::Texture() {
 
 Texture::~Texture() {}
 
+Texture::Texture(const Texture & copy) {
+  position_ = copy.position_;
+  size_ = copy.size_;
+  scale_ = copy.scale_;
+  rotation_ = copy.rotation_;
+  texture_id_ = copy.texture_id_;
+  texture_size_ = copy.texture_size_;
+  pivot_ = copy.pivot_;
+
+}
+
+Texture & Texture::operator=(const Texture & copy) {
+  position_ = copy.position_;
+  size_ = copy.size_;
+  scale_ = copy.scale_;
+  rotation_ = copy.rotation_;
+  texture_id_ = copy.texture_id_;
+  texture_size_ = copy.texture_size_;
+  pivot_ = copy.pivot_;
+  return *this;
+}
+
 
 /******************************************************************************
 ***                                  INIT                                   ***
@@ -198,20 +220,12 @@ void Texture::render() {
   model_matrix = glm::scale(model_matrix, glm::vec3(img_size.x, img_size.y, 1.0f));
   
   material.render(glm::value_ptr(model_matrix),
-                  glm::value_ptr(projection_matrix_),
+                  glm::value_ptr(core.projection_matrix_),
                   texture_id_);
 
   geometry.render();
 }
 
-void Texture::calculateProjectionMatrix() {
-  projection_matrix_ = glm::ortho(0.0f, 
-                                  (float)Core::instance().window_.width_, 
-                                  (float)Core::instance().window_.height_, 
-                                  0.0f, 
-                                  -1.0f,
-                                  1.0f);
-}
 
 void Texture::releaseTexture() {
   if (glIsTexture(texture_id_)) {

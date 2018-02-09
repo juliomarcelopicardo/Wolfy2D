@@ -27,10 +27,7 @@ Sprite::Sprite() {
 }
 
 Sprite::~Sprite() {
-  if (release_sprite_when_destroy_) {
-    Core::instance().sprite_.set_texture_id(texture_id_);
-    Core::instance().sprite_.releaseTexture();
-  }
+
 }
 
 Sprite& Sprite::operator=(const Sprite& other) {
@@ -59,26 +56,11 @@ Sprite::Sprite(const Sprite& other) {
 *******************************************************************************/
 
 void Sprite::init(const char * image_path) {
-  auto& sprite = Core::instance().sprite_;
 
-  sprite.init(image_path);
-  position_ = { sprite.position().x, sprite.position().y };
-  texture_size_ = { sprite.textureSize().x, sprite.textureSize().y };
-  size_ = { sprite.size().x, sprite.size().y };
-  rotation_ = sprite.rotation();
-  texture_id_ = sprite.textureID();
-  release_sprite_when_destroy_ = true;
 }
 
 void Sprite::render() {
-  auto& sprite = Core::instance().sprite_;
-  sprite.set_texture_id(texture_id_);
-  sprite.set_position({ position_.x, position_.y });
-  sprite.set_texture_size({ texture_size_.x, texture_size_.y });
-  sprite.set_size({ size_.x, size_.y });
-  sprite.set_rotation(rotation_);
-  sprite.set_pivot(pivot_);
-  sprite.render();
+
 }
 
 /*******************************************************************************

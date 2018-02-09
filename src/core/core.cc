@@ -5,6 +5,9 @@
 */
 
 #include "core/core.h"
+#include "GLM/gtc/matrix_transform.hpp"
+#include "GLM/gtc/type_ptr.hpp"
+
 
 namespace W2D {
 
@@ -29,5 +32,14 @@ Core& Core::instance() {
 Core::Core() {}
 
 Core::~Core() {}
+
+void Core::calculateProjectionMatrix() {
+  projection_matrix_ = glm::ortho(0.0f,
+                       (float)Core::instance().window_.width_,
+                       (float)Core::instance().window_.height_,
+                       0.0f,
+                       -1.0f,
+                       1.0f);
+}
 
 };/* JI */
