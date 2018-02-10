@@ -68,7 +68,7 @@ void SpriteSetRotation(std::vector<JMP::Value>& p) {
 
 
 int32 main() {
-
+  system("pause");
   float time = (float32)Time();
   JMP::Machine jmp;
   jmp.processFile("../scripts/config.jmp");

@@ -21,11 +21,10 @@ namespace W2D {
 Texture::Texture() {
   position_ = { 0.0f, 0.0f };
   size_ = { 0.0f, 0.0f };
-  scale_ = { 1.0f, 1.0f };
   rotation_ = 0.0f;
   texture_id_ = 0;
-  texture_size_ = { 0.0f, 0.0f };
   pivot_ = kSpritePivotPoint_Center;
+  updateModelMatrix();
 }
 
 Texture::~Texture() {}
@@ -33,22 +32,19 @@ Texture::~Texture() {}
 Texture::Texture(const Texture & copy) {
   position_ = copy.position_;
   size_ = copy.size_;
-  scale_ = copy.scale_;
   rotation_ = copy.rotation_;
   texture_id_ = copy.texture_id_;
-  texture_size_ = copy.texture_size_;
   pivot_ = copy.pivot_;
-
+  model_matrix_ = copy.model_matrix_;
 }
 
 Texture & Texture::operator=(const Texture & copy) {
   position_ = copy.position_;
   size_ = copy.size_;
-  scale_ = copy.scale_;
   rotation_ = copy.rotation_;
   texture_id_ = copy.texture_id_;
-  texture_size_ = copy.texture_size_;
   pivot_ = copy.pivot_;
+  model_matrix_ = copy.model_matrix_;
   return *this;
 }
 
@@ -59,7 +55,7 @@ Texture & Texture::operator=(const Texture & copy) {
 void Texture::init(const char* texture_path) {
 
   position_ = { 0.0f, 0.0f };
-  scale_ = { 1.0f, 1.0f };
+  size_ = { 0.0f, 0.0f };
   rotation_ = 0.0f;
 
   //Loading the image, we have to do this before generate the identifier:
@@ -96,7 +92,7 @@ void Texture::init(const char* texture_path) {
     glBindTexture(GL_TEXTURE_2D, 0); //Unbind the texture.
                                      //Releasing the image data:
     stbi_image_free(tmp_texture);
-
+    size_ = { (float)width, (float)height };
   }
   else {
     std::string error(" ERROR: Texture incorrect, file \"");
@@ -104,11 +100,14 @@ void Texture::init(const char* texture_path) {
     error += "\" doesn't exists.";
     printf("\n %s", error.c_str());
     //exit(EXIT_FAILURE);
-    texture_id_ = Core::instance().error_texture_.textureID();
+    Texture& t = Core::instance().error_texture_;
+    texture_id_ = t.textureID();
+    size_ = t.size_;
+    rotation_ = t.rotation_;
+    pivot_ = t.pivot_;
   }
 
-  texture_size_ = { (float)width, (float)height };
-  size_ = texture_size_;
+  updateModelMatrix();
 }
 
 
@@ -118,20 +117,17 @@ void Texture::init(const char* texture_path) {
 ******************************************************************************/
 void Texture::set_position(const glm::vec2 pos) {
   position_ = pos;
+  updateModelMatrix();
 }
 
 void Texture::set_rotation(const float rotation) {
   rotation_ = rotation;
+  updateModelMatrix();
 }
 
 void Texture::set_size(const glm::vec2 size) {
   size_ = size;
-  scale_.x = size.x / texture_size_.x;
-  scale_.y = size.y / texture_size_.y;
-}
-
-void Texture::set_texture_size(const glm::vec2 texture_size) {
-  texture_size_ = texture_size;
+  updateModelMatrix();
 }
 
 void Texture::set_texture_id(const uint32 texture_id) {
@@ -140,6 +136,7 @@ void Texture::set_texture_id(const uint32 texture_id) {
 
 void Texture::set_pivot(const SpritePivotPoint pivot) {
   pivot_ = pivot;
+  updateModelMatrix();
 }
 
 const glm::vec2 Texture::position() {
@@ -148,10 +145,6 @@ const glm::vec2 Texture::position() {
 
 const glm::vec2 Texture::size() {
   return size_;
-}
-
-const glm::vec2 Texture::textureSize() {
-  return texture_size_;
 }
 
 const float Texture::rotation() {
@@ -166,6 +159,51 @@ const SpritePivotPoint Texture::pivot() {
   return pivot_;
 }
 
+void Texture::updateModelMatrix() {
+
+  model_matrix_ = glm::mat4(1.0f);
+  glm::vec2 position = position_;
+  glm::vec2 half_size = size_ * 0.5f;
+  switch (pivot_) {
+  case W2D::kSpritePivotPoint_UpLeft: {
+    position.x = position.x + half_size.x;
+    position.y = position.y + half_size.y;
+  }break;
+  case W2D::kSpritePivotPoint_Up: {
+    position.x = position.x;
+    position.y = position.y + half_size.y;
+  }break;
+  case W2D::kSpritePivotPoint_UpRight: {
+    position.x = position.x - half_size.x;
+    position.y = position.y + half_size.y;
+  }break;
+  case W2D::kSpritePivotPoint_Right: {
+    position.x = position.x - half_size.x;
+    position.y = position.y;
+  }break;
+  case W2D::kSpritePivotPoint_Downight: {
+    position.x = position.x - half_size.x;
+    position.y = position.y - half_size.y;
+  }break;
+  case W2D::kSpritePivotPoint_Down: {
+    position.x = position.x;
+    position.y = position.y - half_size.y;
+  }break;
+  case W2D::kSpritePivotPoint_DownLeft: {
+    position.x = position.x + half_size.x;
+    position.y = position.y - half_size.y;
+  }break;
+  case W2D::kSpritePivotPoint_Left: {
+    position.x = position.x + half_size.x;
+    position.y = position.y;
+  }break;
+  }
+
+  model_matrix_ = glm::translate(model_matrix_, glm::vec3(position.x, position.y, 0.0f));
+  model_matrix_ = glm::rotate(model_matrix_, rotation_, glm::vec3(0.0f, 0.0f, 1.0f));
+  model_matrix_ = glm::scale(model_matrix_, glm::vec3(size_.x, size_.y, 1.0f));
+}
+
 
 /******************************************************************************
 ***                                RENDER                                   ***
@@ -173,58 +211,12 @@ const SpritePivotPoint Texture::pivot() {
 void Texture::render() {
 
   auto& core = Core::instance();
-  auto& material = core.material_;
-  auto& geometry = core.geometry_;
-
-  glm::vec2 img_size = { size_.x * scale_.x, size_.y * scale_.y };
-
-  glm::vec2 position = position_;
-  glm::vec2 half_size = img_size * 0.5f;
-  switch (pivot_) {
-    case W2D::kSpritePivotPoint_UpLeft: {
-      position.x = position.x + half_size.x;
-      position.y = position.y + half_size.y;
-    }break;
-    case W2D::kSpritePivotPoint_Up: {
-      position.x = position.x;
-      position.y = position.y + half_size.y;
-    }break;
-    case W2D::kSpritePivotPoint_UpRight: {
-      position.x = position.x - half_size.x;
-      position.y = position.y + half_size.y;
-    }break;
-    case W2D::kSpritePivotPoint_Right: {
-      position.x = position.x - half_size.x;
-      position.y = position.y;
-    }break;
-    case W2D::kSpritePivotPoint_Downight: {
-      position.x = position.x - half_size.x;
-      position.y = position.y - half_size.y;
-    }break;
-    case W2D::kSpritePivotPoint_Down: {
-      position.x = position.x;
-      position.y = position.y - half_size.y;
-    }break;
-    case W2D::kSpritePivotPoint_DownLeft: {
-      position.x = position.x + half_size.x;
-      position.y = position.y - half_size.y;
-    }break;
-    case W2D::kSpritePivotPoint_Left: {
-      position.x = position.x + half_size.x;
-      position.y = position.y;
-    }break;
-  }
-
-  glm::mat4 model_matrix(1.0f);
-  model_matrix = glm::translate(model_matrix, glm::vec3(position.x, position.y, 0.0f));
-  model_matrix = glm::rotate(model_matrix, rotation_, glm::vec3(0.0f, 0.0f, 1.0f));
-  model_matrix = glm::scale(model_matrix, glm::vec3(img_size.x, img_size.y, 1.0f));
   
-  material.render(glm::value_ptr(model_matrix),
-                  glm::value_ptr(core.projection_matrix_),
-                  texture_id_);
+  core.material_.render(glm::value_ptr(model_matrix_),
+                        glm::value_ptr(core.projection_matrix_),
+                        texture_id_);
 
-  geometry.render();
+  core.geometry_.render();
 }
 
 

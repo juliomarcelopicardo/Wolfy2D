@@ -51,8 +51,7 @@ project "Wolfy2D"
     path.join(PROJ_DIR, "external/glew/include/"),
     path.join(PROJ_DIR, "external/glew/src/"),
     -- IMGUI
-    path.join(PROJ_DIR, "external/imgui/include/"),
-    path.join(PROJ_DIR, "external/imgui/src/"),
+    path.join(PROJ_DIR, "external/imgui/"),
     -- GLM
     path.join(PROJ_DIR, "external/glm/include/"),
     path.join(PROJ_DIR, "external/glm/src/"),
@@ -80,7 +79,7 @@ project "Wolfy2D"
     -- JMP
     path.join(PROJ_DIR, "external/jmp/jmp.h"),
     -- ImGui
-	path.join(PROJ_DIR, "external/imgui/src/*.*"),
+	path.join(PROJ_DIR, "external/imgui/*.*"),
     -- GLM
     path.join(PROJ_DIR, "external/glm/include/GLM/detail/*.*"),
     path.join(PROJ_DIR, "external/glm/include/GLM/gtc/*.*"),
@@ -122,7 +121,7 @@ function GenerateProject(name)
 	path.join(PROJ_DIR, "external/"),
     path.join(PROJ_DIR, "external/glew/include/"),
     path.join(PROJ_DIR, "external/glfw3_2_1/include/"),
-    path.join(PROJ_DIR, "external/imgui/include/"),
+    path.join(PROJ_DIR, "external/imgui/"),
     path.join(PROJ_DIR, "external/glm/include/"),
     path.join(PROJ_DIR, "external/fontstash/include/"),
     path.join(PROJ_DIR, "external/stb/include/"),

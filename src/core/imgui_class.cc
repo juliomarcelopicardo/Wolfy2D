@@ -6,12 +6,16 @@
 
 
 #include "core/imgui_class.h"
-#include "IMGUI/imgui.h"
+#include "imgui\imgui_dock.h"
+#include "imgui.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "core/core.h"
+#include "core\texture.h"
+#include <map>
 
 namespace W2D {
+
 
 #pragma region IMGUI FUNCTIONS
 /*******************************************************************************
@@ -41,6 +45,53 @@ void InitImGui() {
   io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
   io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
   io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
+
+  ImVec4* colors = ImGui::GetStyle().Colors;
+  colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
+  colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
+  colors[ImGuiCol_WindowBg] = ImVec4(0.06f, 0.06f, 0.06f, 0.94f);
+  colors[ImGuiCol_ChildBg] = ImVec4(1.00f, 1.00f, 1.00f, 0.00f);
+  colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
+  colors[ImGuiCol_Border] = ImVec4(0.43f, 0.43f, 0.50f, 0.50f);
+  colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+  colors[ImGuiCol_FrameBg] = ImVec4(0.16f, 0.29f, 0.48f, 0.54f);
+  colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+  colors[ImGuiCol_FrameBgActive] = ImVec4(0.26f, 0.59f, 0.98f, 0.67f);
+  colors[ImGuiCol_TitleBg] = ImVec4(0.04f, 0.04f, 0.04f, 1.00f);
+  colors[ImGuiCol_TitleBgActive] = ImVec4(0.16f, 0.29f, 0.48f, 1.00f);
+  colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.00f, 0.00f, 0.00f, 0.51f);
+  colors[ImGuiCol_MenuBarBg] = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
+  colors[ImGuiCol_ScrollbarBg] = ImVec4(0.02f, 0.02f, 0.02f, 0.53f);
+  colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.31f, 0.31f, 0.31f, 1.00f);
+  colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.41f, 0.41f, 0.41f, 1.00f);
+  colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.51f, 0.51f, 0.51f, 1.00f);
+  colors[ImGuiCol_CheckMark] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+  colors[ImGuiCol_SliderGrab] = ImVec4(0.24f, 0.52f, 0.88f, 1.00f);
+  colors[ImGuiCol_SliderGrabActive] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+  colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+  colors[ImGuiCol_ButtonHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+  colors[ImGuiCol_ButtonActive] = ImVec4(0.06f, 0.53f, 0.98f, 1.00f);
+  colors[ImGuiCol_Header] = ImVec4(0.26f, 0.59f, 0.98f, 0.31f);
+  colors[ImGuiCol_HeaderHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.80f);
+  colors[ImGuiCol_HeaderActive] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+  colors[ImGuiCol_Separator] = ImVec4(0.43f, 0.43f, 0.50f, 0.50f);
+  colors[ImGuiCol_SeparatorHovered] = ImVec4(0.10f, 0.40f, 0.75f, 0.78f);
+  colors[ImGuiCol_SeparatorActive] = ImVec4(0.10f, 0.40f, 0.75f, 1.00f);
+  colors[ImGuiCol_ResizeGrip] = ImVec4(0.26f, 0.59f, 0.98f, 0.25f);
+  colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.67f);
+  colors[ImGuiCol_ResizeGripActive] = ImVec4(0.26f, 0.59f, 0.98f, 0.95f);
+  colors[ImGuiCol_CloseButton] = ImVec4(0.41f, 0.41f, 0.41f, 0.50f);
+  colors[ImGuiCol_CloseButtonHovered] = ImVec4(0.98f, 0.39f, 0.36f, 1.00f);
+  colors[ImGuiCol_CloseButtonActive] = ImVec4(0.98f, 0.39f, 0.36f, 1.00f);
+  colors[ImGuiCol_PlotLines] = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);
+  colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
+  colors[ImGuiCol_PlotHistogram] = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
+  colors[ImGuiCol_PlotHistogramHovered] = ImVec4(1.00f, 0.60f, 0.00f, 1.00f);
+  colors[ImGuiCol_TextSelectedBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.35f);
+  colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
+  colors[ImGuiCol_DragDropTarget] = ImVec4(1.00f, 1.00f, 0.00f, 0.90f);
+
+
 
   io.RenderDrawListsFn = RenderDrawListsImGui; // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
   io.SetClipboardTextFn = SetClipboardTextImGui;
@@ -96,8 +147,14 @@ void FrameImGui() {
   // Start the frame
   ImGui::NewFrame();
 
+
+  /*
+
   ImGui::Text("Wolfy2D speed: %.3f ms/frame (%.1f FPS)",
     1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+  */
+
+  SetupSprites();
 }
 
 void ShutdownImGui() {
@@ -107,6 +164,152 @@ void ShutdownImGui() {
 
 void RenderImGui() {
   ImGui::Render();
+}
+
+void SetupSprites() {
+
+  auto size = ImGui::GetIO().DisplaySize;
+  //int menu_height = toolbar();
+
+  //ImGui::SetWindowPos("Editor", { 0.0f, static_cast<float>(menu_height) });
+  //ImGui::SetWindowSize("Editor", { size.x, size.y - static_cast<float>(menu_height) - 25.0f });
+
+  ///////////////////////////////////////////////////////////////////////////////
+  // Draw Docking Windows
+  ///////////////////////////////////////////////////////////////////////////////
+
+  if (ImGui::Begin("Editor", nullptr)) {
+    // dock layout by hard-coded or .ini file
+    ImGui::BeginDockspace();
+
+    if (ImGui::BeginDock("Scene")) {
+      /* OPENGL
+      void EditorInterface::drawSceneRenderTarget() {
+
+      // Get available size of the current window (dock)
+      // and adjust the texture size if it has changed
+      // keep cam_height constant
+      ImVec2 size = ImGui::GetContentRegionAvail();
+      if (window_width_ != size.x || window_height_ != size.y) {
+      window_width_ = (int)size.x;
+      window_height_ = (int)size.y;
+      }
+
+      // Draw the image/texture, filling the whole window
+      Compositor *c = scene_->GetCompositor();
+      if(c) {
+      ImGui::Image((ImTextureID)(c->TextureID()), size, ImVec2(0, 0), ImVec2(1, -1));
+      }
+
+
+      if (ImGui::IsItemHovered()) {
+      if (ImGui::IsMouseDoubleClicked(0)) {
+      EDITOR_MODULE.ToggleFullScreen();
+      }
+      }
+
+      }
+      */
+      ImGui::Image((ImTextureID)Core::instance().error_texture_.textureID(), { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - 16.0f });
+    }
+    ImGui::EndDock();
+
+    if (ImGui::BeginDock("Log")) {
+      //Core::instance().logger_module()->Draw("Logger");
+    }
+    ImGui::EndDock();
+
+    if (ImGui::BeginDock("SceneHierarchy")) {
+      /*
+      ImGui::SetNextTreeNodeOpen(1, ImGuiSetCond_Once);
+      if (ImGui::CollapsingHeader("Camera")) {
+        auto* cam = &Core::instance().cam_;
+        ImGui::PushID(&cam);
+        ImGui::SetNextTreeNodeOpen(1, ImGuiSetCond_Once);
+        if (ImGui::TreeNode("GoPro")) {
+          displayCameraInfo(cam);
+          ImGui::TreePop();
+        }
+        ImGui::PopID();
+      }
+
+      ImGui::SetNextTreeNodeOpen(1, ImGuiSetCond_Once);
+      if (ImGui::CollapsingHeader("Objects")) {
+        if (root_ != nullptr) {
+          ImGui::SetNextTreeNodeOpen(1, ImGuiSetCond_Once);
+          exploreSceneNodes(root_);
+        }
+      }
+      */
+    }
+    ImGui::EndDock();
+
+    if (ImGui::BeginDock("EditorConfig")) {
+      ImGui::ShowStyleEditor();
+    }
+    ImGui::EndDock();
+
+    if (ImGui::BeginDock("Inspector")) {
+      /*
+      if (clicked_node_ != nullptr) {
+        displayNodeInfo();
+      }
+      */
+      auto& map = Core::instance().texture_factory_;
+      for (const auto& pair : map) {
+        ImGui::PushID(&pair.second);
+        if (ImGui::TreeNode(pair.first.c_str())) {
+          auto& texture = map[pair.first.c_str()];
+          ImGui::Image((ImTextureID)texture.textureID(), { 50.0f, 50.0f });
+          glm::vec2 temp = texture.size();
+          if (ImGui::DragFloat2("Size", &temp.x)) { texture.set_size(temp); }
+          temp = texture.position();
+          if (ImGui::DragFloat2("Position", &temp.x)) { texture.set_position(temp); }
+          temp.x = texture.rotation();
+          if (ImGui::DragFloat("Rotation", &temp.x, 0.01f)) { texture.set_rotation(temp.x); }
+          ImGui::TreePop();
+
+        }
+        ImGui::PopID();
+      }
+    }
+
+    ImGui::EndDock();
+
+
+    ImGui::EndDockspace();
+  }
+  ImGui::End();
+
+  ///////////////////////////////////////////////////////////////////////////////
+  // Draw Status bar (no docking)
+  ///////////////////////////////////////////////////////////////////////////////
+
+  ImGui::SetNextWindowSize(ImVec2(size.x, 25.0f), ImGuiSetCond_Always);
+  ImGui::SetNextWindowPos(ImVec2(0, size.y - 25.0f), ImGuiSetCond_Always);
+  ImGui::Begin("statusbar", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoResize);
+  ImGui::Text("FPS: %f", ImGui::GetIO().Framerate);
+  ImGui::End();
+
+  /*
+  auto& map = Core::instance().texture_factory_;
+  for (const auto& pair : map) {
+    ImGui::PushID(&pair.second);
+    if (ImGui::TreeNode(pair.first.c_str())) {
+      auto& texture = map[pair.first.c_str()];
+      ImGui::Image((ImTextureID)texture.textureID(), { 50.0f, 50.0f });
+      glm::vec2 temp = texture.size();
+      if (ImGui::DragFloat2("Size", &temp.x)) { texture.set_size(temp); } 
+      temp = texture.position();
+      if (ImGui::DragFloat2("Position", &temp.x)) { texture.set_position(temp); }
+      temp.x = texture.rotation();
+      if (ImGui::DragFloat("Rotation", &temp.x, 0.01f)) { texture.set_rotation(temp.x); }
+      ImGui::TreePop();
+
+    }
+    ImGui::PopID();
+  }
+  */
 }
 
 #pragma endregion

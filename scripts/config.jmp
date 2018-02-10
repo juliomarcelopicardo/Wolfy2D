@@ -6,10 +6,18 @@ VARPACK Window {
 FUNC Init() {
   CreateSprite("example", "../data/mario.png")
   SpriteSetPosition("example", 400, 300)
-  SpriteSetSize("example", 500, 300)
+  SpriteSetSize("example", 200, 200)
+  CreateSprite("example2", "../data/right1.png")
+  SpriteSetPosition("example2", 100, 100)
+  SpriteSetSize("example2", 200, 200)
+  CreateSprite("example3", "../data/texture.png")
+  SpriteSetPosition("example3", 600, 700)
+  SpriteSetSize("example3", 200, 200)
 }
 
 FUNC Update() {
   SpriteSetRotation("example", time)
   RenderSprite("example")
+  RenderSprite("example2")
+  RenderSprite("example3")
 }

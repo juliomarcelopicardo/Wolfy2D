@@ -53,7 +53,7 @@ void InputKeyCB(GLFWwindow* window, int32 key, int32 scancode, int32 action, int
       break;
     }
   }
-
+  
   ImGuiIO& io = ImGui::GetIO();
   if (action == GLFW_PRESS) { io.KeysDown[key] = true; }    
   if (action == GLFW_RELEASE) { io.KeysDown[key] = false; }
@@ -64,11 +64,14 @@ void InputKeyCB(GLFWwindow* window, int32 key, int32 scancode, int32 action, int
   io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
   io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
   io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+  
 }
 
 void InputCharCB(GLFWwindow* window, uint32 c) {
+  
   ImGuiIO& io = ImGui::GetIO();
   if (c > 0 && c < 0x10000) { io.AddInputCharacter((uint16)c); }
+  
 }
 
 

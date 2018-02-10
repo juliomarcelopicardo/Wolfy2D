@@ -4,11 +4,12 @@
 *  @author Julio Marcelo Picardo <juliomarcelopicardo@gmail.com>
 */
 
+
 #ifndef __IMGUI_CLASS_H__
 #define __IMGUI_CLASS_H__ 1
 
 #include "Wolfy2D/globals.h"
-#include "IMGUI/imgui.h"
+#include "imgui.h"
 
 namespace W2D {
 
@@ -41,6 +42,12 @@ namespace W2D {
   /// @brief  Renders Imgui application.
   ///--------------------------------------------------------------------------
   void RenderImGui();
+  ///--------------------------------------------------------------------------
+  /// @fn   SetupSprites();
+  ///
+  /// @brief  Setup all the sprites found in the engine.
+  ///--------------------------------------------------------------------------
+  void SetupSprites();
 
 /*******************************************************************************
 ***                            IMGUI PROPERTIES                              ***
@@ -137,5 +144,6 @@ void SetClipboardTextImGui(void* user_data, const char* text);
 
 
 }; /* W2D */
+
 
 #endif 

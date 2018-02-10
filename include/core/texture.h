@@ -84,13 +84,6 @@ class Texture {
   ///--------------------------------------------------------------------------
   void set_size(const glm::vec2 size);
   ///--------------------------------------------------------------------------
-  /// @fn   set_size(const glm::vec2 texture_size);
-  ///
-  /// @brief Texture Size setter.
-  /// @param size Size to set.
-  ///--------------------------------------------------------------------------
-  void set_texture_size(const glm::vec2 texture_size);
-  ///--------------------------------------------------------------------------
   /// @fn   set_texture_id(const uint32 texture_id);
   ///
   /// @brief Texture id setter.
@@ -120,13 +113,6 @@ class Texture {
   ///--------------------------------------------------------------------------
   const glm::vec2 size();
   ///--------------------------------------------------------------------------
-  /// @fn   const glm::vec2 textureSize();
-  ///
-  /// @brief Texture size getter.
-  /// @return the size of the texture.
-  ///--------------------------------------------------------------------------
-  const glm::vec2 textureSize();
-  ///--------------------------------------------------------------------------
   /// @fn   const float rotation();
   ///
   /// @brief Rotation getter )in radians).
@@ -147,6 +133,7 @@ class Texture {
   /// @return the pivot or origin of the texture in the gpu.
   ///--------------------------------------------------------------------------
   const SpritePivotPoint pivot();
+
   
 
 /*******************************************************************************
@@ -154,27 +141,36 @@ class Texture {
 *******************************************************************************/
 
 
+ private:
+
 /*******************************************************************************
 ***                          	Private attributes                             ***
 *******************************************************************************/
- private:
+
+  ///--------------------------------------------------------------------------
+  /// @fn   updateModelMatrix();
+  ///
+  /// @brief Renderizes the base sprite.
+  ///--------------------------------------------------------------------------
+  void updateModelMatrix();
+
+/*******************************************************************************
+***                          	Private attributes                             ***
+*******************************************************************************/
 
   /// Sprite position.
   glm::vec2 position_;
   /// Sprite size
   glm::vec2 size_;
-  /// Sprite scale.
-  glm::vec2 scale_;
   /// Sprite rotation in radians.
   float rotation_;
-  /// Original texture size.
-  glm::vec2 texture_size_;
   /// Texture_id or handler.
   uint32 texture_id_;
   /// Sets the pivot or local origin of the texture.
   SpritePivotPoint pivot_;
+  /// Model matrix
+  glm::mat4 model_matrix_;
   
-
   
 
 };/* Texture class */
