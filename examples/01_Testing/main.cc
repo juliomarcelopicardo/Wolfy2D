@@ -68,7 +68,7 @@ void SpriteSetRotation(std::vector<JMP::Value>& p) {
 
 
 int32 main() {
-  system("pause");
+
   float time = (float32)Time();
   JMP::Machine jmp;
   jmp.processFile("../scripts/config.jmp");
@@ -84,7 +84,7 @@ int32 main() {
 
   while (Window::IsOpened()) {
     Window::Clear();
-    time = (float32)Time() * 0.0001f;
+    time = (float32)Time();
     jmp.runFunction("Update()");    if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_SpaceBar)) {      jmp.reload();      jmp.runFunction("Init()");    }    Window::Frame();
   }
 

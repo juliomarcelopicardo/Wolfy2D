@@ -16,6 +16,8 @@ FUNC Init() {
 }
 
 FUNC Update() {
+  time = time * 0.005
+  time = SIN(time) * 2.0
   SpriteSetRotation("example", time)
   RenderSprite("example")
   RenderSprite("example2")
