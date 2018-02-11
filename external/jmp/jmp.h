@@ -238,7 +238,7 @@ void ReportWarning(std::string warning) {
 void PrintReport(Report& report, uint32 line_number = 0) {
   switch (report) {
     case kReport_EmptyLine: {
-      //ReportWarning("Line " + std::to_string(line_number) + ": Nothing to compile..");
+      ReportWarning("Line " + std::to_string(line_number) + ": Nothing to compile..");
       report = kReport_NoErrors;
     } break;
     case kReport_NoTokensToCompile: {
@@ -392,6 +392,48 @@ class Value {
     case kValueType_Integer: { printf("%d\n", integer_); } break;
     case kValueType_Text: { printf("%s\n", text_.c_str()); } break;
     }
+  }
+
+  float32 Sin() {
+    if (type_ == kValueType_Float) { return sinf(float_); }
+    if (type_ == kValueType_Integer) { return sinf((float32)integer_); }
+    ReportWarning(" Trying to calculate a SIN of a non number value");
+    return INITIALIZATION_VALUE;
+  }
+
+  float32 Cos() {
+    if (type_ == kValueType_Float) { return cosf(float_); }
+    if (type_ == kValueType_Integer) { return cosf((float32)integer_); }
+    ReportWarning(" Trying to calculate a COS of a non number value");
+    return INITIALIZATION_VALUE;
+  }
+
+  float32 Tan() {
+    if (type_ == kValueType_Float) { return tanf(float_); }
+    if (type_ == kValueType_Integer) { return tanf((float32)integer_); }
+    ReportWarning(" Trying to calculate a TAN of a non number value");
+    return INITIALIZATION_VALUE;
+  }
+
+  float32 ASin() {
+    if (type_ == kValueType_Float) { return asinf(float_); }
+    if (type_ == kValueType_Integer) { return asinf((float32)integer_); }
+    ReportWarning(" Trying to calculate a ASIN of a non number value");
+    return INITIALIZATION_VALUE;
+  }
+
+  float32 ACos() {
+    if (type_ == kValueType_Float) { return acosf(float_); }
+    if (type_ == kValueType_Integer) { return acosf((float32)integer_); }
+    ReportWarning(" Trying to calculate a ACOS of a non number value");
+    return INITIALIZATION_VALUE;
+  }
+
+  float32 ATan() {
+    if (type_ == kValueType_Float) { return atanf(float_); }
+    if (type_ == kValueType_Integer) { return atanf((float32)integer_); }
+    ReportWarning(" Trying to calculate a ATAN of a non number value");
+    return INITIALIZATION_VALUE;
   }
 
 }; /* Value */
@@ -1798,7 +1840,7 @@ public:
 
     // TOKEN ANALYZE: We will get the token type and the token text.
 
-    // Text between quotes, then we will ignore separators, etc.
+    // Text between quotes, then we will ignore separators, etc. 
     if (sentence_[sentence_index_] == '\"') {
       current_token_.text_.push_back(sentence_[sentence_index_]);
       sentence_index_++;
@@ -1806,7 +1848,7 @@ public:
         current_token_.text_.push_back(sentence_[sentence_index_]);
         if (sentence_[sentence_index_] == '\"') {
           sentence_index_++;
-          break; 
+          break;
         }
         sentence_index_++;
       }
@@ -1814,7 +1856,7 @@ public:
       current_token_.type_ = kTokenType_Variable;
     }
 
-    // Separators
+    // Separators 
     else if (isSeparator(sentence_[sentence_index_])) {
       // Operators "==", "!=", "<=", ">=" checking
       if (sentence_[sentence_index_] == '=' ||
@@ -2908,6 +2950,48 @@ Report Command::executeFunctionCall(Machine* machine, int32& next_cmd_id) {
     return kReport_NoErrors;
   }
 
+  // First step will be checking if the function is called SIN.
+  if (name_ == "SIN") {
+    machine->addValueToTheStack(machine->getAndRemoveTheLastAddedStackValue().Sin());
+    next_cmd_id++; // Jump to the next command
+    return kReport_NoErrors;
+  }
+
+  // First step will be checking if the function is called COS.
+  if (name_ == "COS") {
+    machine->addValueToTheStack(machine->getAndRemoveTheLastAddedStackValue().Cos());
+    next_cmd_id++; // Jump to the next command
+    return kReport_NoErrors;
+  }
+
+  // First step will be checking if the function is called TAN.
+  if (name_ == "TAN") {
+    machine->addValueToTheStack(machine->getAndRemoveTheLastAddedStackValue().Tan());
+    next_cmd_id++; // Jump to the next command
+    return kReport_NoErrors;
+  }
+
+  // First step will be checking if the function is called ASIN.
+  if (name_ == "ASIN") {
+    machine->addValueToTheStack(machine->getAndRemoveTheLastAddedStackValue().ASin());
+    next_cmd_id++; // Jump to the next command
+    return kReport_NoErrors;
+  }
+
+  // First step will be checking if the function is called ACOS.
+  if (name_ == "ACOS") {
+    machine->addValueToTheStack(machine->getAndRemoveTheLastAddedStackValue().ACos());
+    next_cmd_id++; // Jump to the next command
+    return kReport_NoErrors;
+  }
+
+  // First step will be checking if the function is called ATAN.
+  if (name_ == "ATAN") {
+    machine->addValueToTheStack(machine->getAndRemoveTheLastAddedStackValue().ATan());
+    next_cmd_id++; // Jump to the next command
+    return kReport_NoErrors;
+  }
+
   RegisteredFunction* function = machine->getRegisteredFunction(name_);
   if (function) {
     // Get the num of params. (do this because of the order of them.
@@ -3146,7 +3230,7 @@ Report Compiler::compile(Machine* machine,
   // Allocates all the tokens in the manager.
   TokenManager token_manager;
   generateTokens(sentence, token_manager);
-  //token_manager.printTokenList();
+  token_manager.printTokenList();
 
   // Compile all these tokens.
   Report report = compileTokens(machine, token_manager);
