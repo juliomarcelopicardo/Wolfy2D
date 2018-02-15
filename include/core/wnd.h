@@ -12,6 +12,7 @@
 
 #include "GLFW/glfw3.h"
 #include "GLM/glm.hpp"
+#include "core\frame_buffer.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -38,6 +39,8 @@ class Wnd {
   bool is_already_initialized_;
   /// Input instance.
   InputManager input_;
+
+  FrameBuffer frame_buffer_;
 
   /*******************************************************************************
   ***                        Constructor and destructor                        ***

@@ -174,6 +174,8 @@ void Wnd::init(const int32 width, const int32 height, const char * name) {
   glfwSetInputMode(glfw_window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
   is_already_initialized_ = true;
   is_opened_ = true;
+
+  frame_buffer_.init();
 }
 
 
@@ -185,7 +187,7 @@ void Wnd::close() {
 }
 
 void Wnd::frame() {
-
+  frame_buffer_.close();
   RenderImGui();
   glfwSwapBuffers(glfw_window_);
   is_opened_ = !glfwWindowShouldClose(glfw_window_);
@@ -202,6 +204,7 @@ void Wnd::clear(float red, float green, float blue) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(red, green, blue, 1.0f); 
   FrameImGui();
+  frame_buffer_.begin();
 }
 
 

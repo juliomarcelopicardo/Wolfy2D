@@ -210,7 +210,7 @@ void SetupSprites() {
 
       }
       */
-      ImGui::Image((ImTextureID)Core::instance().error_texture_.textureID(), { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - 16.0f });
+      ImGui::Image((ImTextureID)Core::instance().window_.frame_buffer_.texture(), { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - 16.0f });
     }
     ImGui::EndDock();
 
