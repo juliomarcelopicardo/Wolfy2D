@@ -1,3 +1,7 @@
+# JMP Scripting Language.
+# Author: Julio Marcelo Picardo Peña
+# Contact: juliomarcelopicardo@gmail.com
+
 VARPACK Window {
 	VAR width = 1024
 	VAR height = 978
