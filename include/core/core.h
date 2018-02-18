@@ -7,14 +7,13 @@
 #ifndef __WOLFY2D_CORE_H__
 #define __WOLFY2D_CORE_H__ 1
 
-#include "Wolfy2D.h"
 #include "core/wnd.h"
 #include "core/geometry.h"
 #include "core/material.h"
 #include "core/texture.h"
+#include "core/sprite.h"
 #include "core/txt.h"
 #include "core/imgui_class.h"
-#include <stdio.h>
 #include <map>
 
 
@@ -71,8 +70,10 @@ class Core {
   Texture error_texture_;
   /// Imgui properties and manager.
   ImGuiProperties imgui_;
-  /// Sprites created.
+  /// Textures created.
   std::map <std::string, Texture> texture_factory_;
+  /// Sprites created.
+  std::map <std::string, Sprite> sprite_factory_;
   /// Camera ortographic projection matrix.
   glm::mat4 projection_matrix_;
   /// Time when the application starts.

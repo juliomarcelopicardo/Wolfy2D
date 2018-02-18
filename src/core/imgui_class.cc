@@ -255,18 +255,18 @@ void SetupSprites() {
         displayNodeInfo();
       }
       */
-      auto& map = Core::instance().texture_factory_;
+      auto& map = Core::instance().sprite_factory_;
       for (const auto& pair : map) {
         ImGui::PushID(&pair.second);
         if (ImGui::TreeNode(pair.first.c_str())) {
-          auto& texture = map[pair.first.c_str()];
-          ImGui::Image((ImTextureID)texture.textureID(), { 50.0f, 50.0f });
-          glm::vec2 temp = texture.size();
-          if (ImGui::DragFloat2("Size", &temp.x)) { texture.set_size(temp); }
-          temp = texture.position();
-          if (ImGui::DragFloat2("Position", &temp.x)) { texture.set_position(temp); }
-          temp.x = texture.rotation();
-          if (ImGui::DragFloat("Rotation", &temp.x, 0.01f)) { texture.set_rotation(temp.x); }
+          auto& sprite = map[pair.first];
+          ImGui::Image((ImTextureID)sprite.textureID(), { 50.0f, 50.0f });
+          glm::vec2 temp = sprite.size();
+          if (ImGui::DragFloat2("Size", &temp.x)) { sprite.set_size(temp); }
+          temp = sprite.position();
+          if (ImGui::DragFloat2("Position", &temp.x)) { sprite.set_position(temp); }
+          temp.x = sprite.rotation();
+          if (ImGui::DragFloat("Rotation", &temp.x, 0.01f)) { sprite.set_rotation(temp.x); }
           ImGui::TreePop();
 
         }

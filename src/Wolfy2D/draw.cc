@@ -31,7 +31,7 @@ void Rect(const Vec2 center_position,
   
   glLineWidth(line_width);
   glColor4f(color.x, color.y, color.z, color.w);
-  Vec2 half_size = { size.x * 0.5f, size.y * 0.5f };
+  const Vec2 half_size = { size.x * 0.5f, size.y * 0.5f };
   glBegin(GL_LINES);
   glVertex2f(center_position.x - half_size.x, center_position.y + half_size.y);
   glVertex2f(center_position.x - half_size.x, center_position.y - half_size.y);

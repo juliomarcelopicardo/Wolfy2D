@@ -7,23 +7,40 @@ VARPACK Window {
 	VAR height = 978
 }
 
+VARPACK TexturePath {
+  VAR mario = "../data/mario.png"
+  VAR rainbow_cat = "../data/texture.png"
+}
+
+VARPACK SpriteName {
+  VAR mario = "mar"
+  VAR rainbow_cat = "cat"
+}
+
 FUNC Init() {
-  CreateSprite("example", "../data/mario.png")
-  SpriteSetPosition("example", 400, 300)
-  SpriteSetSize("example", 200, 200)
-  CreateSprite("example2", "../data/right1.png")
-  SpriteSetPosition("example2", 100, 100)
-  SpriteSetSize("example2", 200, 200)
-  CreateSprite("example3", "../data/texture.png")
-  SpriteSetPosition("example3", 600, 700)
-  SpriteSetSize("example3", 200, 200)
+
+  # Initializing Mario Sprite
+  CreateSprite(SpriteName.mario, TexturePath.mario)
+  SpriteSetPosition(SpriteName.mario, 400.0, 300.0)
+  SpriteSetSize(SpriteName.mario, 200.0, 200.0)
+  
+  # Initializing Rainbow Cat Sprite.
+  CreateSprite(SpriteName.rainbow_cat, TexturePath.rainbow_cat)
+  SpriteSetPosition(SpriteName.rainbow_cat, 600.0, 700.0)
+  SpriteSetSize(SpriteName.rainbow_cat, 200.0, 200.0)
 }
 
 FUNC Update() {
+
   time = time * 0.005
   time = SIN(time) * 2.0
-  SpriteSetRotation("example", time)
-  RenderSprite("example")
-  RenderSprite("example2")
-  RenderSprite("example3")
+
+  SpriteSetRotation(SpriteName.mario, time)
+
+  Render()
+}
+
+FUNC Render() {
+  RenderSprite(SpriteName.mario)
+  RenderSprite(SpriteName.rainbow_cat)
 }

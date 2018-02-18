@@ -16,54 +16,56 @@ namespace W2D {
 
 void CreateSprite(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
-  Texture texture;
-  texture.init(p[1].text_.c_str());
-  texture.set_pivot(kSpritePivotPoint_UpLeft);
-  texture.set_position({ 100.0f, 100.0f });
-  texture.set_size({ 100.0f, 100.0f });
-  core.texture_factory_[p[0].text_] = texture;
+
+  if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
+    Sprite sprite;
+    sprite.init(p[1].text_.c_str());
+    core.sprite_factory_[p[0].text_] = sprite;;
+    return;
+  }
+  printf("Warning: Sprite name : \"%s\", multiple creation\n", p[0].text_.c_str());
 }
 
 void RenderSprite(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
-  if (core.texture_factory_.find(p[0].text_) == core.texture_factory_.end()) {
-    printf("ERROR: Couldnt find sprite name : \"%s\"", p[0].text_.c_str());
+  if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
+    printf("ERROR: Couldnt find sprite name : \"%s\"\n", p[0].text_.c_str());
     return;
   }
-  core.texture_factory_[p[0].text_].render();
+  core.sprite_factory_[p[0].text_].render();
 }
 
 void SpriteSetPosition(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
-  if (core.texture_factory_.find(p[0].text_) == core.texture_factory_.end()) {
-    printf("ERROR: Couldnt find sprite name : \"%s\"", p[0].text_.c_str());
+  if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
+    printf("ERROR: Couldnt find sprite name : \"%s\"\n", p[0].text_.c_str());
     return;
   }
   glm::vec2 position = { p[1].float_, p[2].float_ };
   if (p[1].type_ == JMP::kValueType_Integer) { position.x = (float32)p[1].integer_; }
   if (p[2].type_ == JMP::kValueType_Integer) { position.y = (float32)p[2].integer_; }
-  core.texture_factory_[p[0].text_].set_position(position);
+  core.sprite_factory_[p[0].text_].set_position(position);
 }
 
 void SpriteSetSize(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
-  if (core.texture_factory_.find(p[0].text_) == core.texture_factory_.end()) {
-    printf("ERROR: Couldnt find sprite name : \"%s\"", p[0].text_.c_str());
+  if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
+    printf("ERROR: Couldnt find sprite name : \"%s\"\n", p[0].text_.c_str());
     return;
   }
   glm::vec2 size = { p[1].float_, p[2].float_ };
   if (p[1].type_ == JMP::kValueType_Integer) { size.x = (float32)p[1].integer_; }
   if (p[2].type_ == JMP::kValueType_Integer) { size.y = (float32)p[2].integer_; }
-  core.texture_factory_[p[0].text_].set_size(size);
+  core.sprite_factory_[p[0].text_].set_size(size);
 }
 
 void SpriteSetRotation(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
-  if (core.texture_factory_.find(p[0].text_) == core.texture_factory_.end()) {
-    printf("ERROR: Couldnt find sprite name : \"%s\"", p[0].text_.c_str());
+  if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
+    printf("ERROR: Couldnt find sprite name : \"%s\"\n", p[0].text_.c_str());
     return;
   }
-  core.texture_factory_[p[0].text_].set_rotation(p[1].float_);
+  core.sprite_factory_[p[0].text_].set_rotation(p[1].float_);
 }
 
 
