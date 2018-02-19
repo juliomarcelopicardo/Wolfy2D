@@ -6,10 +6,9 @@
 */
 
 #include "Wolfy2D.h"
-#include "core\core.h"
+#include "core/core.h"
 #include <map>
-#include "core\texture.h"
-#include "jmp\jmp.h"
+#include "jmp/jmp.h"
 
 
 namespace W2D {
@@ -41,9 +40,7 @@ void SpriteSetPosition(std::vector<JMP::Value>& p) {
     printf("ERROR: Couldnt find sprite name : \"%s\"\n", p[0].text_.c_str());
     return;
   }
-  glm::vec2 position = { p[1].float_, p[2].float_ };
-  if (p[1].type_ == JMP::kValueType_Integer) { position.x = (float32)p[1].integer_; }
-  if (p[2].type_ == JMP::kValueType_Integer) { position.y = (float32)p[2].integer_; }
+  const glm::vec2 position = { p[1].getAsFloat(), p[2].getAsFloat() };
   core.sprite_factory_[p[0].text_].set_position(position);
 }
 
@@ -53,9 +50,7 @@ void SpriteSetSize(std::vector<JMP::Value>& p) {
     printf("ERROR: Couldnt find sprite name : \"%s\"\n", p[0].text_.c_str());
     return;
   }
-  glm::vec2 size = { p[1].float_, p[2].float_ };
-  if (p[1].type_ == JMP::kValueType_Integer) { size.x = (float32)p[1].integer_; }
-  if (p[2].type_ == JMP::kValueType_Integer) { size.y = (float32)p[2].integer_; }
+  const glm::vec2 size = { p[1].getAsFloat(), p[2].getAsFloat() };
   core.sprite_factory_[p[0].text_].set_size(size);
 }
 
@@ -68,10 +63,21 @@ void SpriteSetRotation(std::vector<JMP::Value>& p) {
   core.sprite_factory_[p[0].text_].set_rotation(p[1].float_);
 }
 
+void DrawLine(std::vector<JMP::Value>& p) {
+  const Vec2 origin = { p[0].getAsFloat(), p[1].getAsFloat() };
+  const Vec2 destiny = { p[2].getAsFloat(), p[3].getAsFloat() };
+  Draw::Line(origin, destiny);
+}
+
+void DrawRect(std::vector<JMP::Value>& p) {
+  const Vec2 origin = { p[0].getAsFloat(), p[1].getAsFloat() };
+  const Vec2 destiny = { p[2].getAsFloat(), p[3].getAsFloat() };
+  Draw::Line(origin, destiny);
+}
 
 int32 main() {
 
-  float time = (float32)Time();
+  float32 time = (float32)Time();
   JMP::Machine jmp;
   jmp.processFile("../scripts/config.jmp");
   jmp.registerVariable("time", JMP::kValueType_Float, &time);
@@ -80,6 +86,7 @@ int32 main() {
   jmp.registerFunction("SpriteSetPosition", &SpriteSetPosition);
   jmp.registerFunction("SpriteSetRotation", &SpriteSetRotation);
   jmp.registerFunction("SpriteSetSize", &SpriteSetSize);
+  jmp.registerFunction("DrawLine", &DrawLine);
 
   Window::Init(jmp.getInteger("width", "Window"), jmp.getInteger("height", "Window"));
   jmp.runFunction("Init()");
@@ -87,7 +94,9 @@ int32 main() {
   while (Window::IsOpened()) {
     Window::Clear();
     time = (float32)Time();
-    jmp.runFunction("Update()");    if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_SpaceBar)) {      jmp.reload();      jmp.runFunction("Init()");    }    Window::Frame();
+    jmp.runFunction("Update()");    Draw::Rect({ 500, 500 }, { 100, 100 });
+    Vec2 path[4] = { {100.0f, 100.0f}, { 200.0f, 100.0f }, { 200.0f, 200.0f }, { 100.0f, 200.0f } };
+    Draw::Path(path, 4);    if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_SpaceBar)) {      jmp.reload();      jmp.runFunction("Init()");    }    Window::Frame();
   }
 
   Window::Close();

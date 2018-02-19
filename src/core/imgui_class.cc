@@ -131,7 +131,7 @@ void FrameImGui() {
     io.MousePos = ImVec2(-1, -1);
   }
 
-  for (int32 i = 0; i < 3; i++) {
+  for (int32 i = 0; i < 3; ++i) {
     // If a mouse press event came, always pass it as "mouse held this frame", so we don't miss click-release events that are shorter than 1 frame.
     io.MouseDown[i] = core.window_.input_.mouse_button_[i].is_down
       || glfwGetMouseButton(core.window_.glfw_window_, i) != 0;
@@ -148,11 +148,10 @@ void FrameImGui() {
   ImGui::NewFrame();
 
 
-  /*
-
+  
   ImGui::Text("Wolfy2D speed: %.3f ms/frame (%.1f FPS)",
     1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-  */
+  
 
   SetupSprites();
 }

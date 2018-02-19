@@ -10,14 +10,25 @@ VARPACK Window {
 VARPACK TexturePath {
   VAR mario = "../data/mario.png"
   VAR rainbow_cat = "../data/texture.png"
+  VAR logo = "../data/logo.jpg"
 }
 
 VARPACK SpriteName {
-  VAR mario = "mar"
-  VAR rainbow_cat = "cat"
+  VAR mario = "Mario"
+  VAR rainbow_cat = "Cat"
+  VAR logo = "Logo"
 }
 
 FUNC Init() {
+
+  DrawPolygon(1.0, 2.0, 3.0)
+  VAR half_width = Window.width * 0.5
+  VAR half_height = Window.height * 0.5
+
+  # Initializing Logo Sprite
+  CreateSprite(SpriteName.logo, TexturePath.logo)
+  SpriteSetPosition(SpriteName.logo, half_width, half_height)
+  SpriteSetSize(SpriteName.logo, Window.width, Window.height)
 
   # Initializing Mario Sprite
   CreateSprite(SpriteName.mario, TexturePath.mario)
@@ -41,6 +52,15 @@ FUNC Update() {
 }
 
 FUNC Render() {
+  # RenderSprite(SpriteName.logo)
   RenderSprite(SpriteName.mario)
   RenderSprite(SpriteName.rainbow_cat)
+
+  DrawLine(0.0, 0.0, 1000.0, 960.0)
+}
+
+FUNC DrawPolygon(center_x, center_y, radius) {
+  PRINT(center_x)
+  PRINT(center_y)
+  PRINT(radius)
 }
