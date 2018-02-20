@@ -14,6 +14,10 @@ void Init(const int32 width, const int32 height, const char* display_name) {
   Core::instance().window_.init(width, height, display_name);
 }
 
+void InitMaximized(const char * display_name, const bool full_screen_mode) {
+  Core::instance().window_.initMaximized(display_name, full_screen_mode);
+}
+
 void Close() {
   Core::instance().window_.close();
 }
@@ -33,6 +37,7 @@ int32 Height() {
 int32 Width() {
   return Core::instance().window_.width_;
 }
+
 
 bool IsOpened() {
   return Core::instance().window_.is_opened_;

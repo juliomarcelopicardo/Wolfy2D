@@ -88,10 +88,11 @@ int32 main() {
   jmp.registerFunction("SpriteSetSize", &SpriteSetSize);
   jmp.registerFunction("DrawLine", &DrawLine);
 
-  Window::Init(jmp.getInteger("width", "Window"), jmp.getInteger("height", "Window"));
+  //Window::Init(jmp.getInteger("width", "Window"), jmp.getInteger("height", "Window"));
+  Window::InitMaximized("Wolfy2D Engine: JMP Scripting Language demo.", true);
   jmp.runFunction("Init()");
 
-  while (Window::IsOpened()) {
+  while (Window::IsOpened() && !Input::IsKeyboardButtonDown(Input::kKeyboardButton_Escape)) {
     Window::Clear();
     time = (float32)Time();
     jmp.runFunction("Update()");    Draw::Rect({ 500, 500 }, { 100, 100 });

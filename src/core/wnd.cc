@@ -143,6 +143,7 @@ void Wnd::init(const int32 width, const int32 height, const char * name) {
   auto& core = Core::instance();
 
   if (is_already_initialized_) {
+    printf("\n Error: Window already initialized.");
     exit(EXIT_FAILURE);
   }
 
@@ -159,6 +160,55 @@ void Wnd::init(const int32 width, const int32 height, const char * name) {
     exit(EXIT_FAILURE);
   }
   glfwSetWindowPos(glfw_window_, 30, 30);
+
+  // Window and Input Callbacks
+  SetWindowCallbacks();
+
+  InitGLEW();
+  InitImGui();
+
+  // Initialize the base objects.
+  core.geometry_.init();
+  core.material_.init("./../data/materials/shader.lua");
+  core.error_texture_.init("./../data/error_texture.jpg");
+
+  glfwSetInputMode(glfw_window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+  is_already_initialized_ = true;
+  is_opened_ = true;
+
+  frame_buffer_.init();
+}
+
+void Wnd::initMaximized(const char * name, const bool full_screen) {
+
+  auto& core = Core::instance();
+
+  if (is_already_initialized_) {
+    printf("\n Error: Window already initialized.");
+    exit(EXIT_FAILURE);
+  }
+
+  InitGLFW();
+  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+  const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+  GLFWmonitor* monitor = nullptr;
+  if (full_screen) { monitor = glfwGetPrimaryMonitor(); }
+  
+
+  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+  width_ = mode->width;;
+  height_ = mode->height;
+  glfw_window_ = glfwCreateWindow(width_, height_, name, monitor, nullptr);
+
+  core.calculateProjectionMatrix();
+  if (!glfw_window_) {
+    glfwTerminate();
+    printf("\n Error: Init window failed.");
+    exit(EXIT_FAILURE);
+  }
+  glfwSetWindowPos(glfw_window_, 0, 0);
 
   // Window and Input Callbacks
   SetWindowCallbacks();

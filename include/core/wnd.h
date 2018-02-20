@@ -67,6 +67,15 @@ class Wnd {
   void init(const int32 width, const int32 height, const char* name);
 
   ///--------------------------------------------------------------------------
+  /// @fn     void initMaximized(const char* name, const bool full_screen = false);
+  ///
+  /// @brief  Initializes the window with the specified width, height and window name.
+  /// @param  name name of the window.
+  /// @param  full_screen Determine if its will be windowed or full screen mode.
+  ///--------------------------------------------------------------------------
+  void initMaximized(const char* name, const bool full_screen = false);
+
+  ///--------------------------------------------------------------------------
   /// @fn   close();
   ///
   /// @brief  Deallocates all the elements related to window such as imgui.

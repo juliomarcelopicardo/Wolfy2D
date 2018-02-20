@@ -25,6 +25,16 @@ void Init(const int32 width = 800,
           const char* display_name = "Wolfy2D Window");
 
 ///--------------------------------------------------------------------------
+/// @fn   initMaximized(const int32 width, const int32 height, const char* name);
+///
+/// @brief  Initializes the window with the specified width, height and window name.
+/// @param  display_name name of the window.
+/// @param  full_screen_mode Determines if windowed or full screen mode.
+///--------------------------------------------------------------------------
+void InitMaximized(const char* display_name = "Wolfy2D Window", 
+                   const bool full_screen_mode = false);
+
+///--------------------------------------------------------------------------
 /// @fn   bool IsOpened();
 ///
 /// @brief  Opened status getter.
