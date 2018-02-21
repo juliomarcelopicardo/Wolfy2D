@@ -6,17 +6,18 @@
 */
 
 
-#ifndef __CORE_TEXTURE_H__
-#define __CORE_TEXTURE_H__ 1
+#ifndef __CORE_IMGUI_USER_INTERFACE_H__
+#define __CORE_IMGUI_USER_INTERFACE_H__ 1
 
 #include "Wolfy2D/globals.h"
+#include "imgui/imgui.h"
 
 
 namespace W2D {
 
-/// Texture / sprite base class.
-class Texture {
- public:
+/// UserInterface / Imgui user interface editor.
+class UserInterface {
+public:
 
 
 /*******************************************************************************
@@ -24,16 +25,16 @@ class Texture {
 *******************************************************************************/
 
   /// Default class constructor.
-  Texture();
+  UserInterface();
   /// Default class destructor.
-  ~Texture();
+  ~UserInterface();
   /// Default copy constructor.
-  Texture(const Texture& copy);
+  UserInterface(const UserInterface& copy) = delete;
   /// Assignment operator.
-  Texture& operator=(const Texture& copy);
+  UserInterface& operator=(const UserInterface& copy) = delete;
 
 /*******************************************************************************
-***                             Sprite methods                               ***
+***                         User Interface methods                           ***
 *******************************************************************************/
 
   ///--------------------------------------------------------------------------
@@ -43,52 +44,55 @@ class Texture {
   /// @param texture_path texture path of the original picture.
   ///--------------------------------------------------------------------------
   void init(const char* texture_path);
-
   ///--------------------------------------------------------------------------
-  /// @fn   releaseTexture() const;
+  /// @fn   render();
   ///
-  /// @brief Releases the texture from the gpu memory.
+  /// @brief Renderizes the base sprite.
   ///--------------------------------------------------------------------------
-  void releaseTexture() const;
+  void render();
 
   ///--------------------------------------------------------------------------
-  /// @fn   set_texture_id(const uint32 texture_id);
+  /// @fn   setupColors() const;
   ///
-  /// @brief Texture id setter.
-  /// @param texture_id Texture gpu handler or id.
+  /// @brief Setup the editor colors.
   ///--------------------------------------------------------------------------
-  void set_texture_id(const uint32 texture_id);
+  void setupColors() const;
 
   ///--------------------------------------------------------------------------
-  /// @fn   uint32 textureID() const;
+  /// @fn   setupInputKeys() const;
   ///
-  /// @brief Texture id getter.
-  /// @return the id or handler of the texture in the gpu.
+  /// @brief Setup the input keys.
   ///--------------------------------------------------------------------------
-  uint32 textureID() const;
-
-
-  
+  void setupInputKeys() const;
 
 /*******************************************************************************
-***                          	Public attributes                              ***
+***                     UserInterface Setters & Getters                      ***
 *******************************************************************************/
 
 
- private:
+
+/*******************************************************************************
+***                          	Public attributes                             ***
+*******************************************************************************/
+
+
+private:
+
+/*******************************************************************************
+***                            Private methods                               ***
+*******************************************************************************/
+
 
 
 /*******************************************************************************
 ***                          	Private attributes                             ***
 *******************************************************************************/
 
-  /// Texture_id or handler.
-  uint32 texture_id_;
 
-  
-  
 
-};/* Texture class */
+
+
+};/* UserInterface class */
 
 }; /* W2D */
 

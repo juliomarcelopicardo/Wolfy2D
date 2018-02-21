@@ -1,6 +1,6 @@
 /** Copyright Julio Marcelo Picardo. 2017-18, all rights reserved.
 *
-*  @project Wolfy2D
+*  @project Wolfy2D - Including JMP scripting language.
 *  @author Julio Marcelo Picardo <juliomarcelopicardo@gmail.com>
 *
 */

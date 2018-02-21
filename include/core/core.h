@@ -1,6 +1,6 @@
 /** Copyright Julio Marcelo Picardo 2017-18, all rights reserved.
 *
-*  @project Wolfy2D
+*  @project Wolfy2D - Including JMP scripting language.
 *  @author Julio Marcelo Picardo <juliomarcelopicardo@gmail.com>
 */
 
@@ -14,6 +14,7 @@
 #include "core/sprite.h"
 #include "core/txt.h"
 #include "core/imgui_class.h"
+#include "core/user_interface.h"
 #include "jmp/include/jmp.h"
 #include <map>
 
@@ -81,8 +82,16 @@ class Core {
   /// Time when the application starts.
   uint64 start_time_;
 
+///////////////////////////// IMGUI USER INTERFACE /////////////////////////////
+
+  /// ImGui User interface 
+  UserInterface user_interface_;
+  
 ///////////////////////////////////// DEMO /////////////////////////////////////
+
+  /// JMP scripting language machine.
   JMP::Machine machine_;
+  /// Code from the JMP script loaded using the machine. Edited using imgui.
   char8 script_code_[SCRIPT_CODE_MAX_LENGTH];
 
  private:
