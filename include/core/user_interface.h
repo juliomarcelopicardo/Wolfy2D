@@ -37,20 +37,6 @@ public:
 *******************************************************************************/
 
   ///--------------------------------------------------------------------------
-  /// @fn   init(const char* texture_path);
-  ///
-  /// @brief Initializes the base texture / sprite class.
-  /// @param texture_path texture path of the original picture.
-  ///--------------------------------------------------------------------------
-  void init(const char* texture_path);
-  ///--------------------------------------------------------------------------
-  /// @fn   render();
-  ///
-  /// @brief Renderizes the base sprite.
-  ///--------------------------------------------------------------------------
-  void render();
-
-  ///--------------------------------------------------------------------------
   /// @fn   setupColors() const;
   ///
   /// @brief Setup the editor colors.
@@ -72,18 +58,19 @@ public:
   void updateTopBar();
 
   ///--------------------------------------------------------------------------
-  /// @fn   updateBottomBar();
+  /// @fn   updateBottomBar() const;
   ///
   /// @brief Updates the bottom bar of the editor.
   ///--------------------------------------------------------------------------
-  void updateBottomBar();
+  void updateBottomBar() const;
 
   ///--------------------------------------------------------------------------
-  /// @fn   updateEditor();
+  /// @fn   updateEditor() const;
   ///
   /// @brief Updates the editor layout.
   ///--------------------------------------------------------------------------
-  void updateEditorLayout();
+  void updateEditorLayout() const;
+
 
 /*******************************************************************************
 ***                     UserInterface Setters & Getters                      ***
@@ -102,15 +89,35 @@ private:
 ***                            Private methods                               ***
 *******************************************************************************/
 
-  /// Height or size in Y axis of the top bar.
-  float32 top_bar_height_;
-  /// Height or size in Y axis of the bottom bar.
-  float32 bottom_bar_height_;
+  ///--------------------------------------------------------------------------
+  /// @fn   updateSceneDock() const;
+  ///
+  /// @brief Updates the scene dock, from the editor layout.
+  ///--------------------------------------------------------------------------
+  void updateSceneDock() const;
+
+  ///--------------------------------------------------------------------------
+  /// @fn   updateHierarchyDock() const;
+  ///
+  /// @brief Updates the hierarchy dock, from the editor layout.
+  ///--------------------------------------------------------------------------
+  void updateHierarchyDock() const;
+
+  ///--------------------------------------------------------------------------
+  /// @fn   updateScriptDock() const;
+  ///
+  /// @brief Updates the JMP script dock, from the editor layout.
+  ///--------------------------------------------------------------------------
+  void updateScriptDock() const;
 
 /*******************************************************************************
 ***                          	Private attributes                             ***
 *******************************************************************************/
 
+  /// Height or size in Y axis of the top bar.
+  float32 top_bar_height_;
+  /// Height or size in Y axis of the bottom bar.
+  float32 bottom_bar_height_;
 
 
 

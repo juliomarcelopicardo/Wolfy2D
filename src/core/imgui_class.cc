@@ -28,6 +28,7 @@ void InitImGui() {
 
   user_interface.setupInputKeys();
   user_interface.setupColors();
+  ImGui::LoadDock();
 
   ImGuiIO& io = ImGui::GetIO();
   io.RenderDrawListsFn = RenderDrawListsImGui; // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.

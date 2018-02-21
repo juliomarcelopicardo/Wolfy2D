@@ -115,8 +115,10 @@ void UserInterface::setupInputKeys() const {
 void UserInterface::updateTopBar() {
   auto& core = Core::instance();
 
-  
   if (ImGui::BeginMainMenuBar()) {
+
+    top_bar_height_ = ImGui::GetWindowSize().y;
+    bottom_bar_height_ = top_bar_height_ + 8.0f;
 
     if (ImGui::BeginMenu("Application")) {
       if (ImGui::MenuItem("Quit", "ESC")) {
@@ -128,9 +130,12 @@ void UserInterface::updateTopBar() {
     if (ImGui::BeginMenu("Script")) {
       if (ImGui::MenuItem("Save")) {
         printf("SAVING FILE");
+        ImGui::SaveDock();
       }
       if (ImGui::MenuItem("Recompile")) {
         printf("RECOMPILE FILE");
+        core.machine_.reloadFromString(core.script_code_);
+        core.machine_.runFunction("Init()");
       }
       ImGui::EndMenu();
     }
@@ -143,14 +148,12 @@ void UserInterface::updateTopBar() {
       ImGui::EndMenu();
     }
 
-    top_bar_height_ = ImGui::GetWindowSize().y;
-    bottom_bar_height_ = top_bar_height_;
 
     ImGui::EndMainMenuBar();
   }
 }
 
-void UserInterface::updateEditorLayout() {
+void UserInterface::updateEditorLayout() const {
 
   auto& core = Core::instance();
   ImVec2 editor_size = ImGui::GetIO().DisplaySize;
@@ -167,37 +170,9 @@ void UserInterface::updateEditorLayout() {
     // dock layout by hard-coded or .ini file
     ImGui::BeginDockspace();
 
-    if (ImGui::BeginDock("Scene")) {
-
-      ImGui::Image((ImTextureID)Core::instance().window_.frame_buffer_.texture(), { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - 16.0f });
-    }
-    ImGui::EndDock();
-
-    if (ImGui::BeginDock("Script")) {
-      ImGui::Text("config.jmp");
-      ImGui::InputTextMultiline("", core.script_code_, SCRIPT_CODE_MAX_LENGTH, { 1000.0f, 1000.0f });
-    }
-    ImGui::EndDock();
-
-    if (ImGui::BeginDock("SceneHierarchy")) {
-      auto& map = Core::instance().sprite_factory_;
-      for (const auto& pair : map) {
-        ImGui::PushID(&pair.second);
-        if (ImGui::TreeNode(pair.first.c_str())) {
-          auto& sprite = map[pair.first];
-          ImGui::Image((ImTextureID)sprite.textureID(), { 50.0f, 50.0f });
-          glm::vec2 temp = sprite.size();
-          if (ImGui::DragFloat2("Size", &temp.x)) { sprite.set_size(temp); }
-          temp = sprite.position();
-          if (ImGui::DragFloat2("Position", &temp.x)) { sprite.set_position(temp); }
-          temp.x = sprite.rotation();
-          if (ImGui::DragFloat("Rotation", &temp.x, 0.01f)) { sprite.set_rotation(temp.x); }
-          ImGui::TreePop();
-        }
-        ImGui::PopID();
-      }
-    }
-    ImGui::EndDock();
+    updateSceneDock();
+    updateScriptDock();
+    updateHierarchyDock();
 
     if (ImGui::BeginDock("EditorConfig")) {
       ImGui::ShowStyleEditor();
@@ -211,7 +186,7 @@ void UserInterface::updateEditorLayout() {
   ImGui::End();
 }
 
-void UserInterface::updateBottomBar() {
+void UserInterface::updateBottomBar() const {
 
   const ImVec2 display_size = ImGui::GetIO().DisplaySize;
   const ImGuiWindowFlags flags = ImGuiWindowFlags_NoBringToFrontOnFocus |
@@ -228,5 +203,45 @@ void UserInterface::updateBottomBar() {
 
 }
 
+
+void UserInterface::updateHierarchyDock() const {
+
+  if (ImGui::BeginDock("SceneHierarchy")) {
+    auto& map = Core::instance().sprite_factory_;
+    for (const auto& pair : map) {
+      ImGui::PushID(&pair.second);
+      if (ImGui::TreeNode(pair.first.c_str())) {
+        auto& sprite = map[pair.first];
+        ImGui::Image((ImTextureID)sprite.textureID(), { 50.0f, 50.0f });
+        glm::vec2 temp = sprite.position();
+        if (ImGui::DragFloat2("Position", &temp.x)) { sprite.set_position(temp); }
+        temp = sprite.size();
+        if (ImGui::DragFloat2("Size", &temp.x)) { sprite.set_size(temp); }
+        temp.x = sprite.rotation();
+        if (ImGui::DragFloat("Rotation", &temp.x, 0.01f)) { sprite.set_rotation(temp.x); }
+        ImGui::TreePop();
+      }
+      ImGui::PopID();
+    }
+  }
+  ImGui::EndDock();
+}
+
+void UserInterface::updateScriptDock() const {
+
+  if (ImGui::BeginDock("JMP Scripting Language")) {
+    ImGui::Text("config.jmp");
+    ImGui::InputTextMultiline("", Core::instance().script_code_, SCRIPT_CODE_MAX_LENGTH, ImGui::GetContentRegionAvail());
+  }
+  ImGui::EndDock();
+}
+
+void UserInterface::updateSceneDock() const {
+
+  if (ImGui::BeginDock("Scene")) {
+    ImGui::Image((ImTextureID)Core::instance().window_.frame_buffer_.texture(), ImGui::GetContentRegionAvail());
+  }
+  ImGui::EndDock();
+}
 
 }; /* W2D */

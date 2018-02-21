@@ -189,17 +189,14 @@ void Wnd::initMaximized(const char * name, const bool full_screen) {
   }
 
   InitGLFW();
-  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+  glfwWindowHint(GLFW_TRUE, GL_FALSE);
 
   const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
   GLFWmonitor* monitor = nullptr;
   if (full_screen) { monitor = glfwGetPrimaryMonitor(); }
-  
 
-  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
-  width_ = mode->width;;
-  height_ = mode->height;
+  width_ = mode->width;
+  height_ = mode->height - 60;
   glfw_window_ = glfwCreateWindow(width_, height_, name, monitor, nullptr);
 
   core.calculateProjectionMatrix();
@@ -208,7 +205,7 @@ void Wnd::initMaximized(const char * name, const bool full_screen) {
     printf("\n Error: Init window failed.");
     exit(EXIT_FAILURE);
   }
-  glfwSetWindowPos(glfw_window_, 0, 0);
+  glfwSetWindowPos(glfw_window_, 0, 30);
 
   // Window and Input Callbacks
   SetWindowCallbacks();

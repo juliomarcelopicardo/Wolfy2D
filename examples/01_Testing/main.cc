@@ -79,7 +79,7 @@ int32 main() {
   
   auto& core = Core::instance();
   JMP::Machine& jmp = core.machine_;
-  jmp.processFile("../scripts/config.jmp");
+  jmp.processFile(kScriptFilename);
   strncpy_s(core.script_code_, SCRIPT_CODE_MAX_LENGTH, jmp.getCurrentScript().c_str(), SCRIPT_CODE_MAX_LENGTH);
   float32 time = (float32)Time();
   jmp.registerVariable("time", JMP::kValueType_Float, &time);
@@ -102,8 +102,11 @@ int32 main() {
     time = (float32)Time();
     jmp.runFunction("Update()");    Draw::Rect({ 500, 500 }, { 100, 100 });
     Vec2 path[4] = { {100.0f, 100.0f}, { 200.0f, 100.0f }, { 200.0f, 200.0f }, { 100.0f, 200.0f } };
-    Draw::Path(path, 4);    if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_SpaceBar)) {      jmp.reload();
-      strncpy_s(core.script_code_, SCRIPT_CODE_MAX_LENGTH, jmp.getCurrentScript().c_str(), SCRIPT_CODE_MAX_LENGTH);      jmp.runFunction("Init()");    }    Window::Frame();
+    Draw::Path(path, 4);
+    /*
+     *
+    if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_SpaceBar)) {      jmp.reload();
+      strncpy_s(core.script_code_, SCRIPT_CODE_MAX_LENGTH, jmp.getCurrentScript().c_str(), SCRIPT_CODE_MAX_LENGTH);      jmp.runFunction("Init()");    }     */    Window::Frame();
   }
 
   Window::Close();
