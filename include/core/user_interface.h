@@ -10,7 +10,6 @@
 #define __CORE_IMGUI_USER_INTERFACE_H__ 1
 
 #include "Wolfy2D/globals.h"
-#include "imgui/imgui.h"
 
 
 namespace W2D {
@@ -65,6 +64,27 @@ public:
   ///--------------------------------------------------------------------------
   void setupInputKeys() const;
 
+  ///--------------------------------------------------------------------------
+  /// @fn   updateTopBar();
+  ///
+  /// @brief Updates the top bar of the editor.
+  ///--------------------------------------------------------------------------
+  void updateTopBar();
+
+  ///--------------------------------------------------------------------------
+  /// @fn   updateBottomBar();
+  ///
+  /// @brief Updates the bottom bar of the editor.
+  ///--------------------------------------------------------------------------
+  void updateBottomBar();
+
+  ///--------------------------------------------------------------------------
+  /// @fn   updateEditor();
+  ///
+  /// @brief Updates the editor layout.
+  ///--------------------------------------------------------------------------
+  void updateEditorLayout();
+
 /*******************************************************************************
 ***                     UserInterface Setters & Getters                      ***
 *******************************************************************************/
@@ -82,7 +102,10 @@ private:
 ***                            Private methods                               ***
 *******************************************************************************/
 
-
+  /// Height or size in Y axis of the top bar.
+  float32 top_bar_height_;
+  /// Height or size in Y axis of the bottom bar.
+  float32 bottom_bar_height_;
 
 /*******************************************************************************
 ***                          	Private attributes                             ***

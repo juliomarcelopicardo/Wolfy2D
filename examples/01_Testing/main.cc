@@ -90,8 +90,8 @@ int32 main() {
   jmp.registerFunction("SpriteSetSize", &SpriteSetSize);
   jmp.registerFunction("DrawLine", &DrawLine);
 
-  Window::Init(1200,978);
-  //Window::InitMaximized("Wolfy2D Engine: JMP Scripting Language demo.", true);
+  //Window::Init(1200,978);
+  Window::InitMaximized("Wolfy2D Engine: JMP Scripting Language demo.", true);
   Vec2 window_size = { (float32)Window::Width(), (float32)Window::Height() };
   jmp.registerVariable("window_width", JMP::kValueType_Float, &window_size.x);
   jmp.registerVariable("window_height", JMP::kValueType_Float, &window_size.y);

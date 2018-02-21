@@ -84,7 +84,10 @@ void FrameImGui() {
   // Start the frame
   ImGui::NewFrame();
   
-  SetupSprites();
+  core.user_interface_.updateTopBar();
+  core.user_interface_.updateEditorLayout();
+  core.user_interface_.updateBottomBar();
+
 }
 
 void ShutdownImGui() {
@@ -96,96 +99,7 @@ void RenderImGui() {
   ImGui::Render();
 }
 
-void SetupSprites() {
 
-  auto& core = Core::instance();
-  auto size = ImGui::GetIO().DisplaySize;
-  //int menu_height = toolbar();
-
-  //ImGui::SetWindowPos("Editor", { 0.0f, static_cast<float>(menu_height) });
-  //ImGui::SetWindowSize("Editor", { size.x, size.y - static_cast<float>(menu_height) - 25.0f });
-
-  ///////////////////////////////////////////////////////////////////////////////
-  // Draw Docking Windows
-  ///////////////////////////////////////////////////////////////////////////////
-
-  if (ImGui::Begin("Editor", nullptr)) {
-    // dock layout by hard-coded or .ini file
-    ImGui::BeginDockspace();
-
-    if (ImGui::BeginDock("Scene")) {
-
-      ImGui::Image((ImTextureID)Core::instance().window_.frame_buffer_.texture(), { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - 16.0f });
-    }
-    ImGui::EndDock();
-
-    if (ImGui::BeginDock("Script")) {
-      ImGui::Text("config.jmp");
-      ImGui::InputTextMultiline("", core.script_code_, SCRIPT_CODE_MAX_LENGTH, { 1000.0f, 1000.0f });
-    }
-    ImGui::EndDock();
-
-    if (ImGui::BeginDock("SceneHierarchy")) {
-      auto& map = Core::instance().sprite_factory_;
-      for (const auto& pair : map) {
-        ImGui::PushID(&pair.second);
-        if (ImGui::TreeNode(pair.first.c_str())) {
-          auto& sprite = map[pair.first];
-          ImGui::Image((ImTextureID)sprite.textureID(), { 50.0f, 50.0f });
-          glm::vec2 temp = sprite.size();
-          if (ImGui::DragFloat2("Size", &temp.x)) { sprite.set_size(temp); }
-          temp = sprite.position();
-          if (ImGui::DragFloat2("Position", &temp.x)) { sprite.set_position(temp); }
-          temp.x = sprite.rotation();
-          if (ImGui::DragFloat("Rotation", &temp.x, 0.01f)) { sprite.set_rotation(temp.x); }
-          ImGui::TreePop();
-        }
-        ImGui::PopID();
-      }
-    }
-    ImGui::EndDock();
-
-    if (ImGui::BeginDock("EditorConfig")) {
-      ImGui::ShowStyleEditor();
-    }
-    ImGui::EndDock();
-
-
-
-    ImGui::EndDockspace();
-  }
-  ImGui::End();
-
-  ///////////////////////////////////////////////////////////////////////////////
-  // Draw Status bar (no docking)
-  ///////////////////////////////////////////////////////////////////////////////
-
-  ImGui::SetNextWindowSize(ImVec2(size.x, 25.0f), ImGuiSetCond_Always);
-  ImGui::SetNextWindowPos(ImVec2(0, size.y - 25.0f), ImGuiSetCond_Always);
-  ImGui::Begin("statusbar", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoResize);
-  ImGui::Text("FPS: %f", ImGui::GetIO().Framerate);
-  ImGui::End();
-
-  /*
-  auto& map = Core::instance().texture_factory_;
-  for (const auto& pair : map) {
-    ImGui::PushID(&pair.second);
-    if (ImGui::TreeNode(pair.first.c_str())) {
-      auto& texture = map[pair.first.c_str()];
-      ImGui::Image((ImTextureID)texture.textureID(), { 50.0f, 50.0f });
-      glm::vec2 temp = texture.size();
-      if (ImGui::DragFloat2("Size", &temp.x)) { texture.set_size(temp); } 
-      temp = texture.position();
-      if (ImGui::DragFloat2("Position", &temp.x)) { texture.set_position(temp); }
-      temp.x = texture.rotation();
-      if (ImGui::DragFloat("Rotation", &temp.x, 0.01f)) { texture.set_rotation(temp.x); }
-      ImGui::TreePop();
-
-    }
-    ImGui::PopID();
-  }
-  */
-}
 
 #pragma endregion
 

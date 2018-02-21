@@ -9,6 +9,8 @@
 #include "core/user_interface.h"
 #include "GLFW/glfw3.h"
 #include "imgui.h"
+#include "imgui_dock.h"
+#include "core/core.h"
 
 
 namespace W2D {
@@ -19,8 +21,8 @@ namespace W2D {
 *******************************************************************************/
 
 UserInterface::UserInterface() {
-    
-
+  top_bar_height_ = 0.0f;
+  bottom_bar_height_ = 30.0f;
 }
 
 
@@ -84,8 +86,9 @@ void UserInterface::setupColors() const {
 }
 
 void UserInterface::setupInputKeys() const {
-  // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array.
+  
   ImGuiIO& io = ImGui::GetIO();
+
   io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
   io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
   io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
@@ -109,6 +112,121 @@ void UserInterface::setupInputKeys() const {
 
 
 
+void UserInterface::updateTopBar() {
+  auto& core = Core::instance();
+
+  
+  if (ImGui::BeginMainMenuBar()) {
+
+    if (ImGui::BeginMenu("Application")) {
+      if (ImGui::MenuItem("Quit", "ESC")) {
+        core.window_.is_opened_ = false;
+      }
+      ImGui::EndMenu();
+    }
+    
+    if (ImGui::BeginMenu("Script")) {
+      if (ImGui::MenuItem("Save")) {
+        printf("SAVING FILE");
+      }
+      if (ImGui::MenuItem("Recompile")) {
+        printf("RECOMPILE FILE");
+      }
+      ImGui::EndMenu();
+    }
+
+    if (ImGui::BeginMenu("Layout")) {
+      if (ImGui::MenuItem("Save")) {
+        ImGui::SaveDock();
+        printf("EDITOR STYLE SAVED");
+      }
+      ImGui::EndMenu();
+    }
+
+    top_bar_height_ = ImGui::GetWindowSize().y;
+    bottom_bar_height_ = top_bar_height_;
+
+    ImGui::EndMainMenuBar();
+  }
+}
+
+void UserInterface::updateEditorLayout() {
+
+  auto& core = Core::instance();
+  ImVec2 editor_size = ImGui::GetIO().DisplaySize;
+  editor_size.y -= top_bar_height_ + bottom_bar_height_;
+
+  ImGui::SetWindowPos("UserInterface", { 0.0f, top_bar_height_ });
+  ImGui::SetWindowSize("UserInterface", editor_size);
+
+  const ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoResize |
+                                        ImGuiWindowFlags_NoTitleBar |
+                                        ImGuiWindowFlags_NoMove;
+
+  if (ImGui::Begin("UserInterface", nullptr, window_flags)) {
+    // dock layout by hard-coded or .ini file
+    ImGui::BeginDockspace();
+
+    if (ImGui::BeginDock("Scene")) {
+
+      ImGui::Image((ImTextureID)Core::instance().window_.frame_buffer_.texture(), { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - 16.0f });
+    }
+    ImGui::EndDock();
+
+    if (ImGui::BeginDock("Script")) {
+      ImGui::Text("config.jmp");
+      ImGui::InputTextMultiline("", core.script_code_, SCRIPT_CODE_MAX_LENGTH, { 1000.0f, 1000.0f });
+    }
+    ImGui::EndDock();
+
+    if (ImGui::BeginDock("SceneHierarchy")) {
+      auto& map = Core::instance().sprite_factory_;
+      for (const auto& pair : map) {
+        ImGui::PushID(&pair.second);
+        if (ImGui::TreeNode(pair.first.c_str())) {
+          auto& sprite = map[pair.first];
+          ImGui::Image((ImTextureID)sprite.textureID(), { 50.0f, 50.0f });
+          glm::vec2 temp = sprite.size();
+          if (ImGui::DragFloat2("Size", &temp.x)) { sprite.set_size(temp); }
+          temp = sprite.position();
+          if (ImGui::DragFloat2("Position", &temp.x)) { sprite.set_position(temp); }
+          temp.x = sprite.rotation();
+          if (ImGui::DragFloat("Rotation", &temp.x, 0.01f)) { sprite.set_rotation(temp.x); }
+          ImGui::TreePop();
+        }
+        ImGui::PopID();
+      }
+    }
+    ImGui::EndDock();
+
+    if (ImGui::BeginDock("EditorConfig")) {
+      ImGui::ShowStyleEditor();
+    }
+    ImGui::EndDock();
+
+
+
+    ImGui::EndDockspace();
+  }
+  ImGui::End();
+}
+
+void UserInterface::updateBottomBar() {
+
+  const ImVec2 display_size = ImGui::GetIO().DisplaySize;
+  const ImGuiWindowFlags flags = ImGuiWindowFlags_NoBringToFrontOnFocus |
+                                 ImGuiWindowFlags_NoResize |
+                                 ImGuiWindowFlags_NoTitleBar |
+                                 ImGuiWindowFlags_NoSavedSettings;
+
+  ImGui::SetNextWindowPos({ 0.0f, display_size.y - bottom_bar_height_ }, ImGuiSetCond_Always);
+  ImGui::SetNextWindowSize({ display_size.x, bottom_bar_height_ }, ImGuiSetCond_Always);
+  ImGui::Begin("statusbar", nullptr, flags);
+  ImGui::Text("FPS: %f", ImGui::GetIO().Framerate);
+  ImGui::End();
+
+
+}
 
 
 }; /* W2D */

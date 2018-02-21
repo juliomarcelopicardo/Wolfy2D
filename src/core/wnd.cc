@@ -240,7 +240,7 @@ void Wnd::frame() {
   frame_buffer_.close();
   RenderImGui();
   glfwSwapBuffers(glfw_window_);
-  is_opened_ = !glfwWindowShouldClose(glfw_window_);
+  if (glfwWindowShouldClose(glfw_window_)) { is_opened_ = false; }
   double x, y;
   glfwGetCursorPos(glfw_window_, &x, &y);
   input_.mouse_position_ = { (float)x, (float)y };
