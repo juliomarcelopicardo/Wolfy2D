@@ -60,6 +60,9 @@ project "Wolfy2D"
 	-- STB 
     path.join(PROJ_DIR, "external/stb/include/"),
     path.join(PROJ_DIR, "external/stb/src/"),
+	-- JMP 
+    path.join(PROJ_DIR, "external/jmp/include/"),
+    path.join(PROJ_DIR, "external/jmp/src/"),
   }
 
   files {
@@ -76,8 +79,6 @@ project "Wolfy2D"
     path.join(PROJ_DIR, "external/glfw3_2_1/src/*.h"),
     -- GLEW
     path.join(PROJ_DIR, "external/glew/src/*.c"),
-    -- JMP
-    path.join(PROJ_DIR, "external/jmp/jmp.h"),
     -- ImGui
 	path.join(PROJ_DIR, "external/imgui/*.*"),
     -- GLM
@@ -94,6 +95,9 @@ project "Wolfy2D"
     -- STB
     path.join(PROJ_DIR, "external/stb/include/STB/*.h"),
     path.join(PROJ_DIR, "external/stb/src/*.c"),
+	-- JMP 
+    path.join(PROJ_DIR, "external/jmp/include/*h"),
+    path.join(PROJ_DIR, "external/jmp/src/*cc"),
   }
 
   configuration "Debug"

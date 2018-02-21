@@ -2,11 +2,6 @@
 # Author: Julio Marcelo Picardo Peña
 # Contact: juliomarcelopicardo@gmail.com
 
-VARPACK Window {
-	VAR width = 1024
-	VAR height = 978
-}
-
 VARPACK TexturePath {
   VAR mario = "../data/mario.png"
   VAR rainbow_cat = "../data/texture.png"
@@ -19,26 +14,32 @@ VARPACK SpriteName {
   VAR logo = "Logo"
 }
 
+# Initializing Mario Sprite
+FUNC InitMarioSprite() {
+  CreateSprite(SpriteName.mario, TexturePath.mario)
+  SpriteSetPosition(SpriteName.mario, 400.0, 300.0)
+  SpriteSetSize(SpriteName.mario, 200.0, 200.0)
+}
+
+# Initializing Rainbow Cat Sprite
+FUNC InitCatSprite() {
+  CreateSprite(SpriteName.rainbow_cat, TexturePath.rainbow_cat)
+  SpriteSetPosition(SpriteName.rainbow_cat, 600.0, 700.0)
+  SpriteSetSize(SpriteName.rainbow_cat, 200.0, 200.0)
+}
+
 FUNC Init() {
 
-  DrawPolygon(1.0, 2.0, 3.0)
-  VAR half_width = Window.width * 0.5
-  VAR half_height = Window.height * 0.5
+  VAR half_width = window_width * 0.5
+  VAR half_height = window_height * 0.5
 
   # Initializing Logo Sprite
   CreateSprite(SpriteName.logo, TexturePath.logo)
   SpriteSetPosition(SpriteName.logo, half_width, half_height)
-  SpriteSetSize(SpriteName.logo, Window.width, Window.height)
+  SpriteSetSize(SpriteName.logo, window_width, window_height)
 
-  # Initializing Mario Sprite
-  CreateSprite(SpriteName.mario, TexturePath.mario)
-  SpriteSetPosition(SpriteName.mario, 400.0, 300.0)
-  SpriteSetSize(SpriteName.mario, 200.0, 200.0)
-  
-  # Initializing Rainbow Cat Sprite.
-  CreateSprite(SpriteName.rainbow_cat, TexturePath.rainbow_cat)
-  SpriteSetPosition(SpriteName.rainbow_cat, 600.0, 700.0)
-  SpriteSetSize(SpriteName.rainbow_cat, 200.0, 200.0)
+  InitMarioSprite()
+  InitCatSprite()
 }
 
 FUNC Update() {

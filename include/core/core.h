@@ -14,8 +14,10 @@
 #include "core/sprite.h"
 #include "core/txt.h"
 #include "core/imgui_class.h"
+#include "jmp/include/jmp.h"
 #include <map>
 
+#define SCRIPT_CODE_MAX_LENGTH 10240
 
 namespace W2D {
   
@@ -79,9 +81,13 @@ class Core {
   /// Time when the application starts.
   uint64 start_time_;
 
+///////////////////////////////////// DEMO /////////////////////////////////////
+  JMP::Machine machine_;
+  char8 script_code_[SCRIPT_CODE_MAX_LENGTH];
 
  private:
 
+   
 
 /*******************************************************************************
 ***                         Private Copy Constructor                         ***

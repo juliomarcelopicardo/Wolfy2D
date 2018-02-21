@@ -6,12 +6,12 @@
 
 
 #include "core/imgui_class.h"
-#include "imgui\imgui_dock.h"
+#include "imgui/imgui_dock.h"
 #include "imgui.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "core/core.h"
-#include "core\texture.h"
+#include "core/texture.h"
 #include <map>
 
 namespace W2D {
@@ -146,15 +146,7 @@ void FrameImGui() {
 
   // Start the frame
   ImGui::NewFrame();
-
-
-  /*
-
-  ImGui::Text("Wolfy2D speed: %.3f ms/frame (%.1f FPS)",
-    1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-   */
   
-
   SetupSprites();
 }
 
@@ -169,6 +161,7 @@ void RenderImGui() {
 
 void SetupSprites() {
 
+  auto& core = Core::instance();
   auto size = ImGui::GetIO().DisplaySize;
   //int menu_height = toolbar();
 
@@ -184,78 +177,18 @@ void SetupSprites() {
     ImGui::BeginDockspace();
 
     if (ImGui::BeginDock("Scene")) {
-      /* OPENGL
-      void EditorInterface::drawSceneRenderTarget() {
 
-      // Get available size of the current window (dock)
-      // and adjust the texture size if it has changed
-      // keep cam_height constant
-      ImVec2 size = ImGui::GetContentRegionAvail();
-      if (window_width_ != size.x || window_height_ != size.y) {
-      window_width_ = (int)size.x;
-      window_height_ = (int)size.y;
-      }
-
-      // Draw the image/texture, filling the whole window
-      Compositor *c = scene_->GetCompositor();
-      if(c) {
-      ImGui::Image((ImTextureID)(c->TextureID()), size, ImVec2(0, 0), ImVec2(1, -1));
-      }
-
-
-      if (ImGui::IsItemHovered()) {
-      if (ImGui::IsMouseDoubleClicked(0)) {
-      EDITOR_MODULE.ToggleFullScreen();
-      }
-      }
-
-      }
-      */
       ImGui::Image((ImTextureID)Core::instance().window_.frame_buffer_.texture(), { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - 16.0f });
     }
     ImGui::EndDock();
 
-    if (ImGui::BeginDock("Log")) {
-      //Core::instance().logger_module()->Draw("Logger");
+    if (ImGui::BeginDock("Script")) {
+      ImGui::Text("config.jmp");
+      ImGui::InputTextMultiline("", core.script_code_, SCRIPT_CODE_MAX_LENGTH, { 1000.0f, 1000.0f });
     }
     ImGui::EndDock();
 
     if (ImGui::BeginDock("SceneHierarchy")) {
-      /*
-      ImGui::SetNextTreeNodeOpen(1, ImGuiSetCond_Once);
-      if (ImGui::CollapsingHeader("Camera")) {
-        auto* cam = &Core::instance().cam_;
-        ImGui::PushID(&cam);
-        ImGui::SetNextTreeNodeOpen(1, ImGuiSetCond_Once);
-        if (ImGui::TreeNode("GoPro")) {
-          displayCameraInfo(cam);
-          ImGui::TreePop();
-        }
-        ImGui::PopID();
-      }
-
-      ImGui::SetNextTreeNodeOpen(1, ImGuiSetCond_Once);
-      if (ImGui::CollapsingHeader("Objects")) {
-        if (root_ != nullptr) {
-          ImGui::SetNextTreeNodeOpen(1, ImGuiSetCond_Once);
-          exploreSceneNodes(root_);
-        }
-      }
-      */
-    }
-    ImGui::EndDock();
-
-    if (ImGui::BeginDock("EditorConfig")) {
-      ImGui::ShowStyleEditor();
-    }
-    ImGui::EndDock();
-
-    if (ImGui::BeginDock("Inspector")) {
-      /*
-      if (clicked_node_ != nullptr) {
-        displayNodeInfo();
-      }
-      */
       auto& map = Core::instance().sprite_factory_;
       for (const auto& pair : map) {
         ImGui::PushID(&pair.second);
@@ -269,13 +202,17 @@ void SetupSprites() {
           temp.x = sprite.rotation();
           if (ImGui::DragFloat("Rotation", &temp.x, 0.01f)) { sprite.set_rotation(temp.x); }
           ImGui::TreePop();
-
         }
         ImGui::PopID();
       }
     }
-
     ImGui::EndDock();
+
+    if (ImGui::BeginDock("EditorConfig")) {
+      ImGui::ShowStyleEditor();
+    }
+    ImGui::EndDock();
+
 
 
     ImGui::EndDockspace();

@@ -8,12 +8,12 @@
 #include "Wolfy2D.h"
 #include "core/core.h"
 #include <map>
-#include "jmp/jmp.h"
+
 
 
 namespace W2D {
 
-void CreateSprite(std::vector<JMP::Value>& p) {
+  void CreateSprite(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
 
   if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
@@ -76,10 +76,12 @@ void DrawRect(std::vector<JMP::Value>& p) {
 }
 
 int32 main() {
-
-  float32 time = (float32)Time();
-  JMP::Machine jmp;
+  
+  auto& core = Core::instance();
+  JMP::Machine& jmp = core.machine_;
   jmp.processFile("../scripts/config.jmp");
+  strncpy_s(core.script_code_, SCRIPT_CODE_MAX_LENGTH, jmp.getCurrentScript().c_str(), SCRIPT_CODE_MAX_LENGTH);
+  float32 time = (float32)Time();
   jmp.registerVariable("time", JMP::kValueType_Float, &time);
   jmp.registerFunction("CreateSprite", &CreateSprite);
   jmp.registerFunction("RenderSprite", &RenderSprite);
@@ -88,8 +90,11 @@ int32 main() {
   jmp.registerFunction("SpriteSetSize", &SpriteSetSize);
   jmp.registerFunction("DrawLine", &DrawLine);
 
-  //Window::Init(jmp.getInteger("width", "Window"), jmp.getInteger("height", "Window"));
-  Window::InitMaximized("Wolfy2D Engine: JMP Scripting Language demo.", true);
+  Window::Init(1200,978);
+  //Window::InitMaximized("Wolfy2D Engine: JMP Scripting Language demo.", true);
+  Vec2 window_size = { (float32)Window::Width(), (float32)Window::Height() };
+  jmp.registerVariable("window_width", JMP::kValueType_Float, &window_size.x);
+  jmp.registerVariable("window_height", JMP::kValueType_Float, &window_size.y);
   jmp.runFunction("Init()");
 
   while (Window::IsOpened() && !Input::IsKeyboardButtonDown(Input::kKeyboardButton_Escape)) {
@@ -97,10 +102,12 @@ int32 main() {
     time = (float32)Time();
     jmp.runFunction("Update()");    Draw::Rect({ 500, 500 }, { 100, 100 });
     Vec2 path[4] = { {100.0f, 100.0f}, { 200.0f, 100.0f }, { 200.0f, 200.0f }, { 100.0f, 200.0f } };
-    Draw::Path(path, 4);    if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_SpaceBar)) {      jmp.reload();      jmp.runFunction("Init()");    }    Window::Frame();
+    Draw::Path(path, 4);    if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_SpaceBar)) {      jmp.reload();
+      strncpy_s(core.script_code_, SCRIPT_CODE_MAX_LENGTH, jmp.getCurrentScript().c_str(), SCRIPT_CODE_MAX_LENGTH);      jmp.runFunction("Init()");    }    Window::Frame();
   }
 
   Window::Close();
+
 
   return 0;
 }
