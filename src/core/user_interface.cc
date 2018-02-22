@@ -11,6 +11,7 @@
 #include "imgui.h"
 #include "imgui_dock.h"
 #include "core/core.h"
+#include <fstream>
 
 
 namespace W2D {
@@ -23,33 +24,48 @@ namespace W2D {
 UserInterface::UserInterface() {
   top_bar_height_ = 0.0f;
   bottom_bar_height_ = 30.0f;
+  save_mode_ = 0;
 }
 
 
-UserInterface::~UserInterface() {
-
-
-}
+UserInterface::~UserInterface() {}
 
 /*******************************************************************************
 ***                            Public Methods                                ***
 *******************************************************************************/
 
+void UserInterface::init() const {
+  setupInputKeys();
+  setupColors();
+  setupStyle();
+}
+
+void UserInterface::update() {
+  updateTopBar();
+  updateEditorLayout();
+  updateBottomBar();
+}
+
+
+
+/*******************************************************************************
+***                            Private Methods                                ***
+*******************************************************************************/
 
 void UserInterface::setupColors() const {
 
   ImVec4* colors = ImGui::GetStyle().Colors;
-  
+
   colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
-  colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
-  colors[ImGuiCol_WindowBg] = ImVec4(0.06f, 0.06f, 0.06f, 0.94f);
+  colors[ImGuiCol_TextDisabled] = ImVec4(0.59f, 0.59f, 0.59f, 1.00f);
+  colors[ImGuiCol_WindowBg] = ImVec4(0.06f, 0.06f, 0.06f, 1.00f);
   colors[ImGuiCol_ChildBg] = ImVec4(1.00f, 1.00f, 1.00f, 0.00f);
   colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
-  colors[ImGuiCol_Border] = ImVec4(0.43f, 0.43f, 0.50f, 0.50f);
+  colors[ImGuiCol_Border] = ImVec4(0.43f, 0.43f, 0.50f, 1.00f);
   colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-  colors[ImGuiCol_FrameBg] = ImVec4(0.16f, 0.29f, 0.48f, 0.54f);
-  colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-  colors[ImGuiCol_FrameBgActive] = ImVec4(0.26f, 0.59f, 0.98f, 0.67f);
+  colors[ImGuiCol_FrameBg] = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
+  colors[ImGuiCol_FrameBgHovered] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_FrameBgActive] = ImVec4(0.79f, 0.32f, 0.00f, 0.78f);
   colors[ImGuiCol_TitleBg] = ImVec4(0.04f, 0.04f, 0.04f, 1.00f);
   colors[ImGuiCol_TitleBgActive] = ImVec4(0.16f, 0.29f, 0.48f, 1.00f);
   colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.00f, 0.00f, 0.00f, 0.51f);
@@ -58,31 +74,32 @@ void UserInterface::setupColors() const {
   colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.31f, 0.31f, 0.31f, 1.00f);
   colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.41f, 0.41f, 0.41f, 1.00f);
   colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.51f, 0.51f, 0.51f, 1.00f);
-  colors[ImGuiCol_CheckMark] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-  colors[ImGuiCol_SliderGrab] = ImVec4(0.24f, 0.52f, 0.88f, 1.00f);
-  colors[ImGuiCol_SliderGrabActive] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-  colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
-  colors[ImGuiCol_ButtonHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-  colors[ImGuiCol_ButtonActive] = ImVec4(0.06f, 0.53f, 0.98f, 1.00f);
-  colors[ImGuiCol_Header] = ImVec4(0.26f, 0.59f, 0.98f, 0.31f);
-  colors[ImGuiCol_HeaderHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.80f);
-  colors[ImGuiCol_HeaderActive] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-  colors[ImGuiCol_Separator] = ImVec4(0.43f, 0.43f, 0.50f, 0.50f);
-  colors[ImGuiCol_SeparatorHovered] = ImVec4(0.10f, 0.40f, 0.75f, 0.78f);
-  colors[ImGuiCol_SeparatorActive] = ImVec4(0.10f, 0.40f, 0.75f, 1.00f);
-  colors[ImGuiCol_ResizeGrip] = ImVec4(0.26f, 0.59f, 0.98f, 0.25f);
-  colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.67f);
-  colors[ImGuiCol_ResizeGripActive] = ImVec4(0.26f, 0.59f, 0.98f, 0.95f);
-  colors[ImGuiCol_CloseButton] = ImVec4(0.41f, 0.41f, 0.41f, 0.50f);
+  colors[ImGuiCol_CheckMark] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_SliderGrab] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_SliderGrabActive] = ImVec4(0.79f, 0.32f, 0.00f, 0.78f);
+  colors[ImGuiCol_Button] = ImVec4(0.31f, 0.31f, 0.31f, 1.00f);
+  colors[ImGuiCol_ButtonHovered] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_ButtonActive] = ImVec4(0.79f, 0.32f, 0.00f, 0.78f);
+  colors[ImGuiCol_Header] = ImVec4(0.41f, 0.41f, 0.41f, 1.00f);
+  colors[ImGuiCol_HeaderHovered] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_HeaderActive] = ImVec4(0.79f, 0.32f, 0.00f, 0.78f);
+  colors[ImGuiCol_Separator] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_SeparatorHovered] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_SeparatorActive] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_ResizeGrip] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_ResizeGripActive] = ImVec4(0.79f, 0.32f, 0.00f, 0.95f);
+  colors[ImGuiCol_CloseButton] = ImVec4(0.92f, 1.00f, 0.00f, 1.00f);
   colors[ImGuiCol_CloseButtonHovered] = ImVec4(0.98f, 0.39f, 0.36f, 1.00f);
   colors[ImGuiCol_CloseButtonActive] = ImVec4(0.98f, 0.39f, 0.36f, 1.00f);
-  colors[ImGuiCol_PlotLines] = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);
-  colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.00f, 0.43f, 0.35f, 1.00f);
-  colors[ImGuiCol_PlotHistogram] = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
-  colors[ImGuiCol_PlotHistogramHovered] = ImVec4(1.00f, 0.60f, 0.00f, 1.00f);
-  colors[ImGuiCol_TextSelectedBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.35f);
-  colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
+  colors[ImGuiCol_PlotLines] = ImVec4(0.92f, 1.00f, 0.00f, 1.00f);
+  colors[ImGuiCol_PlotLinesHovered] = ImVec4(0.92f, 1.00f, 0.00f, 1.00f);
+  colors[ImGuiCol_PlotHistogram] = ImVec4(0.92f, 1.00f, 0.00f, 1.00f);
+  colors[ImGuiCol_PlotHistogramHovered] = ImVec4(0.92f, 1.00f, 0.00f, 1.00f);
+  colors[ImGuiCol_TextSelectedBg] = ImVec4(0.79f, 0.32f, 0.00f, 1.00f);
+  colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.92f, 1.00f, 0.00f, 1.00f);
   colors[ImGuiCol_DragDropTarget] = ImVec4(1.00f, 1.00f, 0.00f, 0.90f);
+  
 }
 
 void UserInterface::setupInputKeys() const {
@@ -110,6 +127,42 @@ void UserInterface::setupInputKeys() const {
   io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 }
 
+void UserInterface::setupStyle() const {
+  
+  ImGuiStyle& style = ImGui::GetStyle();
+
+  style.WindowBorderSize;
+  style.FrameBorderSize;
+  style.PopupBorderSize;
+  
+  // Rendering
+  style.AntiAliasedLines;
+  style.AntiAliasedFill;
+  style.CurveTessellationTol;
+  style.Alpha;
+
+  // Editor style
+  style.WindowPadding;
+  style.PopupRounding;
+  style.FramePadding;
+  style.ItemSpacing;
+  style.ItemInnerSpacing;
+  style.TouchExtraPadding;
+  style.IndentSpacing;
+  style.ScrollbarSize;
+  style.GrabMinSize;
+  style.WindowBorderSize;
+  style.ChildBorderSize;
+  style.PopupBorderSize;
+  style.FrameBorderSize;
+  style.WindowRounding;
+  style.ChildRounding;
+  style.FrameRounding;
+  style.ScrollbarRounding;
+  style.GrabRounding;
+  style.WindowTitleAlign;
+  style.ButtonTextAlign;
+}
 
 
 void UserInterface::updateTopBar() {
@@ -127,10 +180,11 @@ void UserInterface::updateTopBar() {
       ImGui::EndMenu();
     }
     
+    /*
+  
     if (ImGui::BeginMenu("Script")) {
       if (ImGui::MenuItem("Save")) {
         printf("SAVING FILE");
-        ImGui::SaveDock();
       }
       if (ImGui::MenuItem("Recompile")) {
         printf("RECOMPILE FILE");
@@ -139,9 +193,10 @@ void UserInterface::updateTopBar() {
       }
       ImGui::EndMenu();
     }
+     */
 
-    if (ImGui::BeginMenu("Layout")) {
-      if (ImGui::MenuItem("Save")) {
+    if (ImGui::BeginMenu("Editor")) {
+      if (ImGui::MenuItem("Save Layout")) {
         ImGui::SaveDock();
         printf("EDITOR STYLE SAVED");
       }
@@ -197,7 +252,15 @@ void UserInterface::updateBottomBar() const {
   ImGui::SetNextWindowPos({ 0.0f, display_size.y - bottom_bar_height_ }, ImGuiSetCond_Always);
   ImGui::SetNextWindowSize({ display_size.x, bottom_bar_height_ }, ImGuiSetCond_Always);
   ImGui::Begin("statusbar", nullptr, flags);
-  ImGui::Text("FPS: %f", ImGui::GetIO().Framerate);
+  ImGui::TextColored({ 202,81,0,255 }, "Wolfy2D & JMP Scripting Language Project"); ImGui::SameLine();
+  ImGui::Text("    "); ImGui::SameLine();
+  ImGui::Text("Author: Julio Marcelo Picardo Pena"); ImGui::SameLine();
+  ImGui::Text("    "); ImGui::SameLine();
+  ImGui::Text("Contact: juliomarcelopicardo@gmail.com"); ImGui::SameLine();
+  ImGui::Text("    "); ImGui::SameLine();
+  ImGui::Text("Student Number: 27026027"); ImGui::SameLine();
+  ImGui::Text("    "); ImGui::SameLine();
+  ImGui::Text("BSc in Computer Science for Games - Sheffield Hallam University"); ImGui::SameLine();
   ImGui::End();
 
 
@@ -229,8 +292,39 @@ void UserInterface::updateHierarchyDock() const {
 
 void UserInterface::updateScriptDock() const {
 
+  auto& core = Core::instance();
+  std::string text = "Compiles and executes the existing code";
+
   if (ImGui::BeginDock("JMP Scripting Language")) {
-    ImGui::Text("config.jmp");
+
+    if (ImGui::Button("Compile")) {
+      printf("RECOMPILE FILE");
+      core.machine_.reloadFromString(core.script_code_);
+      core.machine_.runFunction("Init()");
+    }
+    showLastItemDescriptionTooltip(text.c_str());
+    
+    ImGui::SameLine();
+    if (ImGui::Button("Save")) {
+      printf("RECOMPILE FILE");
+      if (save_mode_ == 0) {
+        ImGui::SetClipboardText(core.script_code_);
+      }
+      else {
+        std::ofstream file(kScriptFilename, std::ios_base::out);
+        if (file.is_open()) {
+          file << core.script_code_;
+        }
+        file.close();
+      }
+    }
+    text = "Save mode: \nClipbard - Will copy the whole script text into the clipboard\nFile - Save and overwrite file \"";
+    text = text + kScriptFilename;
+    text = text + '\"';
+    showLastItemDescriptionTooltip(text.c_str());
+    ImGui::SameLine();
+    ImGui::Combo("##destination", (int*)&save_mode_, "Clipboard\0File\0");
+
     ImGui::InputTextMultiline("", Core::instance().script_code_, SCRIPT_CODE_MAX_LENGTH, ImGui::GetContentRegionAvail());
   }
   ImGui::EndDock();
@@ -242,6 +336,16 @@ void UserInterface::updateSceneDock() const {
     ImGui::Image((ImTextureID)Core::instance().window_.frame_buffer_.texture(), ImGui::GetContentRegionAvail());
   }
   ImGui::EndDock();
+}
+
+void UserInterface::showLastItemDescriptionTooltip(const char* description) const {
+  if (ImGui::IsItemHovered()) {
+    ImGui::BeginTooltip();
+    ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+    ImGui::TextUnformatted(description);
+    ImGui::PopTextWrapPos();
+    ImGui::EndTooltip();
+  }
 }
 
 }; /* W2D */

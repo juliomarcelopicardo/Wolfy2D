@@ -26,11 +26,12 @@ void InitImGui() {
 
   auto& user_interface = Core::instance().user_interface_;
 
-  user_interface.setupInputKeys();
-  user_interface.setupColors();
+  user_interface.init();
   ImGui::LoadDock();
 
   ImGuiIO& io = ImGui::GetIO();
+  io.Fonts->AddFontFromFileTTF("../data/fonts/gothic.ttf", 15);
+
   io.RenderDrawListsFn = RenderDrawListsImGui; // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
   io.SetClipboardTextFn = SetClipboardTextImGui;
   io.GetClipboardTextFn = GetClipboardTextImGui;
@@ -85,9 +86,7 @@ void FrameImGui() {
   // Start the frame
   ImGui::NewFrame();
   
-  core.user_interface_.updateTopBar();
-  core.user_interface_.updateEditorLayout();
-  core.user_interface_.updateBottomBar();
+  core.user_interface_.update();
 
 }
 
