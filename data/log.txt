@@ -12258,3 +12258,7 @@ SpriteSetRotation: Couldnt find sprite name : "pepe"
 Compiling and executing script...
 SpriteSetPosition: Couldnt find sprite name : "Logo"
 SpriteSetSize: Couldnt find sprite name : "Logo"
+0-------------------------
+Editor layout style saved.
+0-------------------------
+Editor layout style saved.

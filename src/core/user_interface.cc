@@ -132,37 +132,31 @@ void UserInterface::setupStyle() const {
   
   ImGuiStyle& style = ImGui::GetStyle();
 
-  style.WindowBorderSize;
-  style.FrameBorderSize;
-  style.PopupBorderSize;
-  
-  // Rendering
-  style.AntiAliasedLines;
-  style.AntiAliasedFill;
-  style.CurveTessellationTol;
-  style.Alpha;
-
   // Editor style
-  style.WindowPadding;
-  style.PopupRounding;
-  style.FramePadding;
-  style.ItemSpacing;
-  style.ItemInnerSpacing;
-  style.TouchExtraPadding;
-  style.IndentSpacing;
-  style.ScrollbarSize;
-  style.GrabMinSize;
-  style.WindowBorderSize;
-  style.ChildBorderSize;
-  style.PopupBorderSize;
-  style.FrameBorderSize;
-  style.WindowRounding;
-  style.ChildRounding;
-  style.FrameRounding;
-  style.ScrollbarRounding;
-  style.GrabRounding;
-  style.WindowTitleAlign;
-  style.ButtonTextAlign;
+  style.FrameRounding = 6.0f;
+  style.WindowRounding = 7.0f;
+  style.ChildRounding = 0.0f;
+  style.ScrollbarRounding = 9.0f;
+  style.GrabRounding = 6.0f;
+  style.PopupRounding = 16.0f;
+
+  style.WindowPadding = { 8.0f, 8.0f };
+  style.FramePadding = { 4.0f, 3.0f };
+  style.TouchExtraPadding = { 0.0f, 0.0f };
+
+  style.ItemSpacing = { 8.0f, 4.0f };
+  style.ItemInnerSpacing = { 4.0f, 4.0f };
+  style.IndentSpacing = 24.0f;
+
+  style.ScrollbarSize = 15.0f;
+  style.GrabMinSize = 12.0f;
+  style.WindowBorderSize = 1.0f;
+  style.ChildBorderSize = 1.0f;
+  style.PopupBorderSize = 1.0f;
+  style.FrameBorderSize = 0.0f;
+
+  style.WindowTitleAlign = { 0.0f, 0.5f };
+  style.ButtonTextAlign = { 0.5f, 0.5f };
 }
 
 
@@ -234,13 +228,16 @@ void UserInterface::updateEditorLayout() {
     updateScriptDock();
     updateHierarchyDock();
 
+    /* 
+     
     if (ImGui::BeginDock("EditorConfig")) {
       ImGui::ShowStyleEditor();
     }
     ImGui::EndDock();
+    */
 
     if (ImGui::BeginDock("Log")) {
-      log_.Draw("PEPITO");
+      log_.Draw("Wolfy2D log");
     }
     ImGui::EndDock();
 
