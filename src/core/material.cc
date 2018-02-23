@@ -6,11 +6,9 @@
 */
 
 #include "GL/glew.h"
-#include "GLFW/glfw3.h"
 #include "core/material.h"
 #include "core/core.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "imgui/logger_module.h"
 #include <string>
 #include <vector>
 
@@ -182,7 +180,7 @@ void Material::logShaderError(const uint32 shader_id_) {
       
     std::string log_error("Shader ERROR: ");
     log_error += error_message.data();
-    printf("\n %s", log_error.c_str());
+    Core::instance().user_interface_.log_.AddLog_E(log_error);
     exit(EXIT_FAILURE);
   }
 }
@@ -200,7 +198,7 @@ void Material::logProgramError() {
       
     std::string log_error("Shader ERROR: ");
     log_error += error_message.data();
-    printf("\n %s", log_error.c_str());
+    Core::instance().user_interface_.log_.AddLog_E(log_error);
     exit(EXIT_FAILURE);
   }
 }

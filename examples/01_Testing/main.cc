@@ -22,13 +22,17 @@ namespace W2D {
     core.sprite_factory_[p[0].text_] = sprite;;
     return;
   }
-  printf("Warning: Sprite name : \"%s\", multiple creation\n", p[0].text_.c_str());
+  std::string warning = "Sprite name : \"";
+  warning.append(p[0].text_ + "\", multiple creation");
+  core.user_interface_.log_.AddLog_W(warning);
 }
 
 void RenderSprite(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
   if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
-    printf("ERROR: Couldnt find sprite name : \"%s\"\n", p[0].text_.c_str());
+    std::string warning = "RenderSprite: Couldnt find sprite name : \"";
+    warning.append(p[0].text_ + "\"");
+    core.user_interface_.log_.AddLog_W(warning);
     return;
   }
   core.sprite_factory_[p[0].text_].render();
@@ -37,7 +41,9 @@ void RenderSprite(std::vector<JMP::Value>& p) {
 void SpriteSetPosition(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
   if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
-    printf("ERROR: Couldnt find sprite name : \"%s\"\n", p[0].text_.c_str());
+    std::string warning = "SpriteSetPosition: Couldnt find sprite name : \"";
+    warning.append(p[0].text_ + "\"");
+    core.user_interface_.log_.AddLog_W(warning);
     return;
   }
   const glm::vec2 position = { p[1].getAsFloat(), p[2].getAsFloat() };
@@ -47,7 +53,9 @@ void SpriteSetPosition(std::vector<JMP::Value>& p) {
 void SpriteSetSize(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
   if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
-    printf("ERROR: Couldnt find sprite name : \"%s\"\n", p[0].text_.c_str());
+    std::string warning = "SpriteSetSize: Couldnt find sprite name : \"";
+    warning.append(p[0].text_ + "\"");
+    core.user_interface_.log_.AddLog_W(warning);
     return;
   }
   const glm::vec2 size = { p[1].getAsFloat(), p[2].getAsFloat() };
@@ -57,7 +65,9 @@ void SpriteSetSize(std::vector<JMP::Value>& p) {
 void SpriteSetRotation(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
   if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
-    printf("ERROR: Couldnt find sprite name : \"%s\"\n", p[0].text_.c_str());
+    std::string warning = "SpriteSetRotation: Couldnt find sprite name : \"";
+    warning.append(p[0].text_ + "\"");
+    core.user_interface_.log_.AddLog_W(warning);
     return;
   }
   core.sprite_factory_[p[0].text_].set_rotation(p[1].float_);
@@ -100,13 +110,7 @@ int32 main() {
   while (Window::IsOpened() && !Input::IsKeyboardButtonDown(Input::kKeyboardButton_Escape)) {
     Window::Clear();
     time = (float32)Time();
-    jmp.runFunction("Update()");    Draw::Rect({ 500, 500 }, { 100, 100 });
-    Vec2 path[4] = { {100.0f, 100.0f}, { 200.0f, 100.0f }, { 200.0f, 200.0f }, { 100.0f, 200.0f } };
-    Draw::Path(path, 4);
-    /*
-     *
-    if (Input::IsKeyboardButtonDown(Input::kKeyboardButton_SpaceBar)) {      jmp.reload();
-      strncpy_s(core.script_code_, SCRIPT_CODE_MAX_LENGTH, jmp.getCurrentScript().c_str(), SCRIPT_CODE_MAX_LENGTH);      jmp.runFunction("Init()");    }     */    Window::Frame();
+    jmp.runFunction("Update()");    Window::Frame();
   }
 
   Window::Close();

@@ -8,16 +8,18 @@
 */
 
 #include "report.h"
-
+#include "core/core.h"
 
 namespace JMP {
 
 void ReportError(const std::string& error) {
-  ReportMsg(" ERROR: " + error + ".\n");
+  //ReportMsg(" ERROR: " + error + ".\n");
+  W2D::Core::instance().user_interface_.log_.AddLog_E(error);
 }
 
 void ReportWarning(const std::string& warning) {
-  ReportMsg(" WARNING: " + warning + ".\n");
+  //ReportMsg(" WARNING: " + warning + ".\n");
+  W2D::Core::instance().user_interface_.log_.AddLog_W(warning);
 }
 
 void PrintReport(Report& report, uint32 line_number) {
@@ -82,7 +84,7 @@ void PrintReport(Report& report, uint32 line_number) {
 }
 
 void ReportMsg(const std::string& msg) {
-  printf(msg.c_str());
+  W2D::Core::instance().user_interface_.log_.AddLog_I(msg);
 }
 
 }; /* JMP_PROJECT */

@@ -12,6 +12,7 @@
 #include "compiler.h"
 #include <Windows.h>
 #include <string>
+#include "core/core.h"
 
 namespace JMP {
 
@@ -171,14 +172,14 @@ int32 TokenManager::getNextCloseParenthesisIndex(int32 open_parenthesis_index) {
 
 void TokenManager::printToken(int32 id) {
 
-  OutputDebugString(" Type: ");
+  std::string info(" Type: ");
   switch (token_list_[id].type_) {
-    case JMP::kTokenType_None: { OutputDebugString("None \t\t"); }break;
-    case JMP::kTokenType_Keyword: { OutputDebugString("Keyword \t\t"); }break;
-    case JMP::kTokenType_Number: { OutputDebugString("Number \t\t"); }break;
-    case JMP::kTokenType_Separator: { OutputDebugString("Separator \t"); }break;
-    case JMP::kTokenType_Variable: { OutputDebugString("Variable \t"); }break;
-    default: { OutputDebugString("None \t\t"); }break;
+    case JMP::kTokenType_None: { info.append("None \t\t"); }break;
+    case JMP::kTokenType_Keyword: { info.append("Keyword \t\t"); }break;
+    case JMP::kTokenType_Number: { info.append("Number \t\t"); }break;
+    case JMP::kTokenType_Separator: { info.append("Separator \t"); }break;
+    case JMP::kTokenType_Variable: { info.append("Variable \t"); }break;
+    default: { info.append("None \t\t"); }break;
   }
 
   char priority[32] = "";
@@ -188,12 +189,12 @@ void TokenManager::printToken(int32 id) {
   else {
     sprintf_s(priority, 32, "Priority: %d\t", token_list_[id].priority_);
   }
-  OutputDebugString(priority);
+  info.append(priority);
   
-  OutputDebugString("Token: \"");
-  OutputDebugString(token_list_[id].text_.c_str());
-  OutputDebugString("\"\n");
-
+  info.append("Token: \"");
+  info.append(token_list_[id].text_);
+  info.append("\"\n");
+  W2D::Core::instance().user_interface_.log_.AddLog_I(info);
 }
 
 void TokenManager::printTokenList() {

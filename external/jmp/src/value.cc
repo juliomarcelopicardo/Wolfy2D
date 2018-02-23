@@ -10,6 +10,7 @@
 #include "value.h"
 #include "report.h"
 #include <cmath>
+#include "core/core.h"
 
 namespace JMP {
 
@@ -78,9 +79,9 @@ Value& Value::operator=(const Value& copy) {
 
 void Value::print() const {
   switch (type_) {
-    case JMP::kValueType_Float: { printf("%f\n", float_); }  break;
-    case JMP::kValueType_Integer: { printf("%d\n", integer_); } break;
-    case JMP::kValueType_Text: { printf("%s\n", text_.c_str()); } break;
+    case JMP::kValueType_Float: { W2D::Core::instance().user_interface_.log_.AddLog_I(std::to_string(float_)); }  break;
+    case JMP::kValueType_Integer: { W2D::Core::instance().user_interface_.log_.AddLog_I(std::to_string(integer_)); } break;
+    case JMP::kValueType_Text: { W2D::Core::instance().user_interface_.log_.AddLog_I(text_); } break;
   default: {}
   }
 }

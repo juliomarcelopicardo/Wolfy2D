@@ -25,6 +25,7 @@ UserInterface::UserInterface() {
   top_bar_height_ = 0.0f;
   bottom_bar_height_ = 30.0f;
   save_mode_ = 0;
+  log_.set_active(true);
 }
 
 
@@ -177,6 +178,7 @@ void UserInterface::updateTopBar() {
       if (ImGui::MenuItem("Quit", "ESC")) {
         core.window_.is_opened_ = false;
       }
+      showLastItemDescriptionTooltip("Exit application and closes window");
       ImGui::EndMenu();
     }
     
@@ -184,10 +186,10 @@ void UserInterface::updateTopBar() {
   
     if (ImGui::BeginMenu("Script")) {
       if (ImGui::MenuItem("Save")) {
-        printf("SAVING FILE");
+        log_.AddLog_I("SAVING FILE");
       }
       if (ImGui::MenuItem("Recompile")) {
-        printf("RECOMPILE FILE");
+        log_.AddLog_I("RECOMPILE FILE");
         core.machine_.reloadFromString(core.script_code_);
         core.machine_.runFunction("Init()");
       }
@@ -198,8 +200,11 @@ void UserInterface::updateTopBar() {
     if (ImGui::BeginMenu("Editor")) {
       if (ImGui::MenuItem("Save Layout")) {
         ImGui::SaveDock();
-        printf("EDITOR STYLE SAVED");
+        log_.AddLog_I("Editor layout style saved.");
       }
+      showLastItemDescriptionTooltip("Saves the editor layout in a configuration file.\n"
+                                     "So next time that we execute the program, this last\n"
+                                     "configuration saved will be loaded.");
       ImGui::EndMenu();
     }
 
@@ -208,7 +213,7 @@ void UserInterface::updateTopBar() {
   }
 }
 
-void UserInterface::updateEditorLayout() const {
+void UserInterface::updateEditorLayout() {
 
   auto& core = Core::instance();
   ImVec2 editor_size = ImGui::GetIO().DisplaySize;
@@ -234,7 +239,10 @@ void UserInterface::updateEditorLayout() const {
     }
     ImGui::EndDock();
 
-
+    if (ImGui::BeginDock("Log")) {
+      log_.Draw("PEPITO");
+    }
+    ImGui::EndDock();
 
     ImGui::EndDockspace();
   }
@@ -290,7 +298,7 @@ void UserInterface::updateHierarchyDock() const {
   ImGui::EndDock();
 }
 
-void UserInterface::updateScriptDock() const {
+void UserInterface::updateScriptDock() {
 
   auto& core = Core::instance();
   std::string text = "Compiles and executes the existing code";
@@ -298,7 +306,9 @@ void UserInterface::updateScriptDock() const {
   if (ImGui::BeginDock("JMP Scripting Language")) {
 
     if (ImGui::Button("Compile")) {
-      printf("RECOMPILE FILE");
+      log_.AddLog_I("Compiling and executing script...");
+      core.texture_factory_.clear();
+      core.sprite_factory_.clear();
       core.machine_.reloadFromString(core.script_code_);
       core.machine_.runFunction("Init()");
     }
@@ -306,9 +316,9 @@ void UserInterface::updateScriptDock() const {
     
     ImGui::SameLine();
     if (ImGui::Button("Save")) {
-      printf("RECOMPILE FILE");
       if (save_mode_ == 0) {
         ImGui::SetClipboardText(core.script_code_);
+        log_.AddLog_I("Script copied to clipboard.");
       }
       else {
         std::ofstream file(kScriptFilename, std::ios_base::out);
@@ -316,6 +326,11 @@ void UserInterface::updateScriptDock() const {
           file << core.script_code_;
         }
         file.close();
+        // log
+        std::string info = "Script saved into file: \"";
+        info = info + kScriptFilename;
+        info = info + '\"';
+        log_.AddLog_I(info);
       }
     }
     text = "Save mode: \nClipbard - Will copy the whole script text into the clipboard\nFile - Save and overwrite file \"";

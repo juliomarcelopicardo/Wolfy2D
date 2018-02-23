@@ -10,6 +10,7 @@
 #define __CORE_IMGUI_USER_INTERFACE_H__ 1
 
 #include "Wolfy2D/globals.h"
+#include "imgui/logger_module.h"
 
 
 namespace W2D {
@@ -56,6 +57,8 @@ public:
 
   /// Interface script save mode
   int32 save_mode_;
+  /// Editor Log
+  KYO::LoggerModule log_;
 
 private:
 
@@ -99,11 +102,11 @@ private:
   void updateBottomBar() const;
 
   ///--------------------------------------------------------------------------
-  /// @fn   updateEditor() const;
+  /// @fn   updateEditor();
   ///
   /// @brief Updates the editor layout.
   ///--------------------------------------------------------------------------
-  void updateEditorLayout() const;
+  void updateEditorLayout();
 
   ///--------------------------------------------------------------------------
   /// @fn   updateSceneDock() const;
@@ -120,11 +123,11 @@ private:
   void updateHierarchyDock() const;
 
   ///--------------------------------------------------------------------------
-  /// @fn   updateScriptDock() const;
+  /// @fn   updateScriptDock();
   ///
   /// @brief Updates the JMP script dock, from the editor layout.
   ///--------------------------------------------------------------------------
-  void updateScriptDock() const;
+  void updateScriptDock();
 
   ///--------------------------------------------------------------------------
   /// @fn   showLastItemDescriptionTooltip(const char* description) const;
@@ -141,7 +144,6 @@ private:
   float32 top_bar_height_;
   /// Height or size in Y axis of the bottom bar.
   float32 bottom_bar_height_;
-
 
 
 

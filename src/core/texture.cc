@@ -7,7 +7,7 @@
 
 #include "GL/glew.h"
 #include "core/texture.h"
-#include "core/material.h"
+#include "imgui/logger_module.h"
 #include "core/core.h"
 #include "STB/stb_image.h"
 
@@ -76,7 +76,7 @@ void Texture::init(const char* texture_path) {
     std::string error(" WARNING: Loading Texture, file \"");
     error += texture_path;
     error += "\" doesn't exists.";
-    printf("\n %s", error.c_str());
+    Core::instance().user_interface_.log_.AddLog_W(error);
     //exit(EXIT_FAILURE);
     texture_id_ = Core::instance().error_texture_.textureID();
   }
