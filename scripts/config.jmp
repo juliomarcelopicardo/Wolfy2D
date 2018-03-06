@@ -58,6 +58,7 @@ FUNC Render() {
   RenderSprite(SpriteName.rainbow_cat)
 
   DrawLine(0.0, 0.0, 1000.0, 960.0)
+  DrawText("EXAMPLE", 200.0, 200.0)
 }
 
 FUNC DrawPolygon(center_x, center_y, radius) {

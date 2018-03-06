@@ -38,7 +38,7 @@ void Texture::init(const char* texture_path) {
   //Loading the image, we have to do this before generate the identifier:
   int32 channels = 0;
 
-  //stbi_set_flip_vertically_on_load(true);
+  stbi_set_flip_vertically_on_load(true);
   int32 width, height;
   unsigned char* tmp_texture = stbi_load(texture_path, &width, &height, &channels, STBI_rgb_alpha);
   if (tmp_texture) {

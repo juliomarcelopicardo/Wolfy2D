@@ -23,6 +23,7 @@
 namespace W2D {
   
 const char kScriptFilename[] = "../scripts/config.jmp";
+const char kFontFilename[] = "../data/fonts/gothic.ttf";
 
 /*******************************************************************************
 ********************************************************************************

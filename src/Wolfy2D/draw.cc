@@ -12,31 +12,22 @@
 namespace W2D {
 namespace Draw {
 
-/*
- * This functions is because coordinates in opengl goes from... 
- * (0,0) is the center. 1 and -1 de borders
- */
-Vec2 ConvertToLocalScreenCoordinates(const Vec2 value) {
-  auto& wnd = Core::instance().window_;
-  return{ ((value.x * 2.0f) / wnd.width_) - 1.0f, ((value.y * 2.0f) / wnd.height_) - 1.0f };
-}
+
 
 void Line(const Vec2 origin, 
           const Vec2 destiny, 
           const Vec4 color, 
           const float32 line_width) {
 
-  const Vec2 start = ConvertToLocalScreenCoordinates(origin);
-  const Vec2 end = ConvertToLocalScreenCoordinates(destiny);
   glLineWidth(line_width);
   glColor4f(color.x, color.y, color.z, color.w);
   glBegin(GL_LINES);
-  glVertex2f(start.x, start.y);
-  glVertex2f(end.x, end.y);
+  glVertex2f(origin.x, origin.y);
+  glVertex2f(destiny.x, destiny.y);
   glEnd();
 }
 
-void Rect(const Vec2 center_position, 
+void Rect(const Vec2 center, 
           const Vec2 size, 
           const Vec4 color, 
           const float32 line_width) {
@@ -45,7 +36,7 @@ void Rect(const Vec2 center_position,
   glColor4f(color.x, color.y, color.z, color.w);
   auto& wnd = Core::instance().window_;
   const Vec2 half_size = { size.x / (float32)wnd.width_, size.y / (float32)wnd.height_ };
-  const Vec2 center = ConvertToLocalScreenCoordinates(center_position);
+
   glBegin(GL_LINES);
   glVertex2f(center.x - half_size.x, center.y + half_size.y);
   glVertex2f(center.x - half_size.x, center.y - half_size.y);

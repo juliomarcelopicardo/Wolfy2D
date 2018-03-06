@@ -13,7 +13,14 @@
 
 namespace W2D {
 
-  void CreateSprite(std::vector<JMP::Value>& p) {
+void DrawText(std::vector<JMP::Value>& p) {
+  auto& text = Core::instance().text_;
+  text.set_position({ p[1].getAsFloat(), p[2].getAsFloat() });
+  text.set_size(40);
+  text.render(p[0].text_.c_str());
+}
+
+void CreateSprite(std::vector<JMP::Value>& p) {
   auto& core = Core::instance();
 
   if (core.sprite_factory_.find(p[0].text_) == core.sprite_factory_.end()) {
@@ -99,6 +106,7 @@ int32 main() {
   jmp.registerFunction("SpriteSetRotation", &SpriteSetRotation);
   jmp.registerFunction("SpriteSetSize", &SpriteSetSize);
   jmp.registerFunction("DrawLine", &DrawLine);
+  jmp.registerFunction("DrawText", &DrawText);
 
   //Window::Init(1400,978);
   Window::InitMaximized("Wolfy2D Engine: JMP Scripting Language demo.", true);

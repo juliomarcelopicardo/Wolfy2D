@@ -171,6 +171,7 @@ void Wnd::init(const int32 width, const int32 height, const char * name) {
   core.geometry_.init();
   core.material_.init("./../data/materials/shader.lua");
   core.error_texture_.init("./../data/error_texture.jpg");
+  core.text_.init(kFontFilename);
 
   glfwSetInputMode(glfw_window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
   is_already_initialized_ = true;
@@ -217,6 +218,7 @@ void Wnd::initMaximized(const char * name, const bool full_screen) {
   core.geometry_.init();
   core.material_.init("./../data/materials/shader.lua");
   core.error_texture_.init("./../data/error_texture.jpg");
+  core.text_.init(kFontFilename);
 
   glfwSetInputMode(glfw_window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
   is_already_initialized_ = true;

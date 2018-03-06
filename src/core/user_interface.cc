@@ -263,8 +263,6 @@ void UserInterface::updateBottomBar() const {
   ImGui::Text("    "); ImGui::SameLine();
   ImGui::Text("Contact: juliomarcelopicardo@gmail.com"); ImGui::SameLine();
   ImGui::Text("    "); ImGui::SameLine();
-  ImGui::Text("Student Number: 27026027"); ImGui::SameLine();
-  ImGui::Text("    "); ImGui::SameLine();
   ImGui::Text("BSc in Computer Science for Games - Sheffield Hallam University"); ImGui::SameLine();
   ImGui::End();
 
@@ -345,7 +343,7 @@ void UserInterface::updateScriptDock() {
 void UserInterface::updateSceneDock() const {
 
   if (ImGui::BeginDock("Scene")) {
-    ImGui::Image((ImTextureID)Core::instance().window_.frame_buffer_.texture(), ImGui::GetContentRegionAvail());
+    ImGui::Image((ImTextureID)Core::instance().window_.frame_buffer_.texture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
   }
   ImGui::EndDock();
 }
