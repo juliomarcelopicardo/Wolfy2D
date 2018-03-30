@@ -38,11 +38,11 @@ public:
 *******************************************************************************/
 
   ///--------------------------------------------------------------------------
-  /// @fn   init() const;
+  /// @fn   init();
   ///
   /// @brief Initializes the setup of the editor.
   ///--------------------------------------------------------------------------
-  void init() const;
+  void init();
 
   ///--------------------------------------------------------------------------
   /// @fn   update();
@@ -88,6 +88,13 @@ private:
   void setupStyle() const;
 
   ///--------------------------------------------------------------------------
+  /// @fn   setupUsersGuideText();
+  ///
+  /// @brief Setup the jmp scripting language users guid text.
+  ///--------------------------------------------------------------------------
+  void setupUsersGuideText();
+
+  ///--------------------------------------------------------------------------
   /// @fn   updateTopBar();
   ///
   /// @brief Updates the top bar of the editor.
@@ -130,6 +137,13 @@ private:
   void updateScriptDock();
 
   ///--------------------------------------------------------------------------
+  /// @fn   updateUsersGuideDock() const;
+  ///
+  /// @brief Updates the jmp languague user's guide tab of the editor.
+  ///--------------------------------------------------------------------------
+  void updateUsersGuideDock() const;
+
+  ///--------------------------------------------------------------------------
   /// @fn   showLastItemDescriptionTooltip(const char* description) const;
   ///
   /// @brief Shows a tooltip when the last imgui item added is hovered.
@@ -144,7 +158,8 @@ private:
   float32 top_bar_height_;
   /// Height or size in Y axis of the bottom bar.
   float32 bottom_bar_height_;
-
+  /// Users guide string
+  std::string users_guide_text_;
 
 
 };/* UserInterface class */

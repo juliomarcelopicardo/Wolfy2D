@@ -114,7 +114,6 @@ int32 main() {
   jmp.registerVariable("window_width", JMP::kValueType_Float, &window_size.x);
   jmp.registerVariable("window_height", JMP::kValueType_Float, &window_size.y);
   jmp.runFunction("Init()");
-
   while (Window::IsOpened() && !Input::IsKeyboardButtonDown(Input::kKeyboardButton_Escape)) {
     Window::Clear();
     time = (float32)Time();

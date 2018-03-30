@@ -30,7 +30,7 @@ void InitImGui() {
   ImGui::LoadDock();
 
   ImGuiIO& io = ImGui::GetIO();
-  io.Fonts->AddFontFromFileTTF(kFontFilename, 15);
+  io.Fonts->AddFontFromFileTTF(kFontFilename, 18);
 
   io.RenderDrawListsFn = RenderDrawListsImGui; // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
   io.SetClipboardTextFn = SetClipboardTextImGui;

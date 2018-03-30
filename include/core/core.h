@@ -24,6 +24,7 @@ namespace W2D {
   
 const char kScriptFilename[] = "../scripts/config.jmp";
 const char kFontFilename[] = "../data/fonts/gothic.ttf";
+const char kUsersGuideFilename[] = "../data/JMP_users_guide.txt";
 
 /*******************************************************************************
 ********************************************************************************
@@ -95,6 +96,7 @@ class Core {
   JMP::Machine machine_;
   /// Code from the JMP script loaded using the machine. Edited using imgui.
   char8 script_code_[SCRIPT_CODE_MAX_LENGTH];
+
 
  private:
 

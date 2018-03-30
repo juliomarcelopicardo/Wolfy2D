@@ -35,10 +35,11 @@ UserInterface::~UserInterface() {}
 ***                            Public Methods                                ***
 *******************************************************************************/
 
-void UserInterface::init() const {
+void UserInterface::init() {
   setupInputKeys();
   setupColors();
   setupStyle();
+  setupUsersGuideText();
 }
 
 void UserInterface::update() {
@@ -159,6 +160,13 @@ void UserInterface::setupStyle() const {
   style.ButtonTextAlign = { 0.5f, 0.5f };
 }
 
+void UserInterface::setupUsersGuideText() {
+  std::ifstream ug(kUsersGuideFilename);
+  std::string temp{ std::istreambuf_iterator<char>(ug), std::istreambuf_iterator<char>() };
+  users_guide_text_ = temp;
+}
+
+
 
 void UserInterface::updateTopBar() {
   auto& core = Core::instance();
@@ -227,6 +235,7 @@ void UserInterface::updateEditorLayout() {
     updateSceneDock();
     updateScriptDock();
     updateHierarchyDock();
+    updateUsersGuideDock();
 
     /* 
      
@@ -336,6 +345,14 @@ void UserInterface::updateScriptDock() {
     ImGui::Combo("##destination", (int*)&save_mode_, "Clipboard\0File\0");
 
     ImGui::InputTextMultiline("", Core::instance().script_code_, SCRIPT_CODE_MAX_LENGTH, ImGui::GetContentRegionAvail());
+  }
+  ImGui::EndDock();
+}
+
+void UserInterface::updateUsersGuideDock() const {
+
+  if (ImGui::BeginDock("User's Guide")) {
+    ImGui::TextUnformatted(users_guide_text_.c_str());
   }
   ImGui::EndDock();
 }
