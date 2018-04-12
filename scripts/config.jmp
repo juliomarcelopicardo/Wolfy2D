@@ -2,44 +2,59 @@
 # Author: Julio Marcelo Picardo Peña
 # Contact: juliomarcelopicardo@gmail.com
 
-VARPACK TexturePath {
+
+
+VARPACK Texture {
   VAR mario = "../data/mario.png"
-  VAR rainbow_cat = "../data/texture.png"
-  VAR logo = "../data/logo.jpg"
+  VAR observer = "../data/observer.png"
+  VAR small_cloud = "../data/smallcloud.png"
+  VAR pipe = "../data/pipe.png"
+  VAR background = "../data/background.jpg"
+  VAR big_cloud = "../data/bigcloud.png"
 }
 
-VARPACK SpriteName {
+VARPACK Sprite {
   VAR mario = "Mario"
-  VAR rainbow_cat = "Cat"
-  VAR logo = "Logo"
+  VAR observer = "Observer"
+  VAR small_cloud = "Smallcloud"
+  VAR pipe = "Pipe"
+  VAR background = "BackGround"
+  VAR big_cloud = "BigCloud"
+}
+
+# Initializing Observer Sprite
+FUNC InitObserverSprite() {
+  CreateSprite(Sprite.observer, Texture.observer)
+  SpriteSetPosition(Sprite.observer, 100.0, 300.0)
+  SpriteSetSize(Sprite.observer, 100.0, 100.0)
 }
 
 # Initializing Mario Sprite
 FUNC InitMarioSprite() {
-  CreateSprite(SpriteName.mario, TexturePath.mario)
-  SpriteSetPosition(SpriteName.mario, 400.0, 300.0)
-  SpriteSetSize(SpriteName.mario, 200.0, 200.0)
+  CreateSprite(Sprite.mario, Texture.mario)
+  SpriteSetPosition(Sprite.mario, 190.0, 834.0)
+  SpriteSetSize(Sprite.mario, 100.0, 100.0)
 }
 
-# Initializing Rainbow Cat Sprite
-FUNC InitCatSprite() {
-  CreateSprite(SpriteName.rainbow_cat, TexturePath.rainbow_cat)
-  SpriteSetPosition(SpriteName.rainbow_cat, 600.0, 700.0)
-  SpriteSetSize(SpriteName.rainbow_cat, 200.0, 200.0)
+# Initializing Background Sprite
+FUNC InitBackgroundSprite() {
+  CreateSprite(Sprite.background, Texture.background)
+  SpriteSetPosition(Sprite.background, center_x, center_y)
+  SpriteSetSize(Sprite.background, width, height)
+}
+
+# Initializing Big Cloud Sprite
+FUNC InitBigCloudSprite() {
+  CreateSprite(Sprite.big_cloud, Texture.big_cloud)
+  SpriteSetPosition(Sprite.big_cloud, center_x, 200.0)
+  SpriteSetSize(Sprite.big_cloud, 400.0, 200.0)
 }
 
 FUNC Init() {
-
-  VAR half_width = window_width * 0.5
-  VAR half_height = window_height * 0.5
-
-  # Initializing Logo Sprite
-  CreateSprite(SpriteName.logo, TexturePath.logo)
-  SpriteSetPosition(SpriteName.logo, half_width, half_height)
-  SpriteSetSize(SpriteName.logo, window_width, window_height)
-
   InitMarioSprite()
-  InitCatSprite()
+  InitBackgroundSprite()
+  InitBigCloudSprite()
+  InitObserverSprite()
 }
 
 FUNC Update() {
@@ -47,22 +62,17 @@ FUNC Update() {
   time = time * 0.005
   time = SIN(time) * 2.0
 
-  SpriteSetRotation(SpriteName.mario, time)
+  #SpriteSetRotation(SpriteName.mario, time)
 
   Render()
 }
 
 FUNC Render() {
-  # RenderSprite(SpriteName.logo)
-  RenderSprite(SpriteName.mario)
-  RenderSprite(SpriteName.rainbow_cat)
+  RenderSprite(Sprite.background)
+  RenderSprite(Sprite.mario)
+  RenderSprite(Sprite.big_cloud)
+  RenderSprite(Sprite.observer)
 
-  DrawLine(0.0, 0.0, 1000.0, 960.0)
-  DrawText("EXAMPLE", 200.0, 200.0)
-}
-
-FUNC DrawPolygon(center_x, center_y, radius) {
-  PRINT(center_x)
-  PRINT(center_y)
-  PRINT(radius)
+  DrawLine(0.0, 50.0, width, 50.0)
+  DrawText("EXAMPLE - SUPER MARIO SCENE", 30, 5.0)
 }

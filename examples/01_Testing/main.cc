@@ -108,11 +108,14 @@ int32 main() {
   jmp.registerFunction("DrawLine", &DrawLine);
   jmp.registerFunction("DrawText", &DrawText);
 
-  //Window::Init(1400,978);
-  Window::InitMaximized("Wolfy2D Engine: JMP Scripting Language demo.", true);
+  Window::Init(1800,1024);
+  //Window::InitMaximized("Wolfy2D Engine: JMP Scripting Language demo.", true);
   Vec2 window_size = { (float32)Window::Width(), (float32)Window::Height() };
-  jmp.registerVariable("window_width", JMP::kValueType_Float, &window_size.x);
-  jmp.registerVariable("window_height", JMP::kValueType_Float, &window_size.y);
+  jmp.registerVariable("width", JMP::kValueType_Float, &window_size.x);
+  jmp.registerVariable("height", JMP::kValueType_Float, &window_size.y);
+  Vec2 screen_center = { window_size.x * 0.5f, window_size.y * 0.5f };
+  jmp.registerVariable("center_x", JMP::kValueType_Float, &screen_center.x);
+  jmp.registerVariable("center_y", JMP::kValueType_Float, &screen_center.y);
   jmp.runFunction("Init()");
   while (Window::IsOpened() && !Input::IsKeyboardButtonDown(Input::kKeyboardButton_Escape)) {
     Window::Clear();
