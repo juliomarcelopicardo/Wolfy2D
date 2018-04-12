@@ -62,24 +62,44 @@ FUNC LoadSprites() {
 
 # Set the position of the sprites
 FUNC SetupPositions() {
-  SetPosition(Sprite.mario, 190.0, 834.0)
+  VAR x = width * 0.1
+  VAR y = height * 0.817
+  SetPosition(Sprite.mario, x, y)
+  x = x * 2.0
+  y = height * 0.25
+  SetPosition(Sprite.observer, x, y)
   SetPosition(Sprite.background, center_x, center_y)
-  SetPosition(Sprite.big_cloud, center_x, 200.0)
-  SetPosition(Sprite.small_cloud, 1500, 200.0)
-  SetPosition(Sprite.pipe, 1761, 732.0)
-  SetPosition(Sprite.observer, 200, 300.0)
-  SetPosition(Sprite.bricks, 950, 600.0)
+  y = height * 0.2
+  SetPosition(Sprite.big_cloud, center_x, y)
+  x = width * 0.80
+  y = height * 0.22
+  SetPosition(Sprite.small_cloud, x, y)
+  x = width * 0.92
+  y = height * 0.7152
+  SetPosition(Sprite.pipe, x, y)
+  y = height * 0.6
+  SetPosition(Sprite.bricks, center_x, y)
 }
 
 # Set the sizes of the sprites
 FUNC SetupSizes() {
-  SetSize(Sprite.mario, 100.0, 100.0)
+  VAR w = width * 0.06
+  VAR h = height * 0.1
+  SetSize(Sprite.mario, w, h)
+  SetSize(Sprite.observer, w, h)
   SetSize(Sprite.background, width, height)
-  SetSize(Sprite.big_cloud, 400.0, 200.0)
-  SetSize(Sprite.small_cloud, 200, 200.0)
-  SetSize(Sprite.pipe, 200, 300.0)
-  SetSize(Sprite.observer, 100, 100.0)
-  SetSize(Sprite.bricks, 500, 100.0)
+  w = w * 4.0
+  h = height * 0.2
+  SetSize(Sprite.big_cloud, w, h)
+  w = w * 0.5
+  h = h * 0.9
+  SetSize(Sprite.small_cloud, w, h)
+  w = width * 0.125
+  h = height * 0.3
+  SetSize(Sprite.pipe, w, h)
+  w = width * 0.25
+  h = height * 0.075
+  SetSize(Sprite.bricks, w, h)
 }
 
 # Render sprites in the scene.

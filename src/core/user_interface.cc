@@ -184,21 +184,6 @@ void UserInterface::updateTopBar() {
       ImGui::EndMenu();
     }
     
-    /*
-  
-    if (ImGui::BeginMenu("Script")) {
-      if (ImGui::MenuItem("Save")) {
-        log_.AddLog_I("SAVING FILE");
-      }
-      if (ImGui::MenuItem("Recompile")) {
-        log_.AddLog_I("RECOMPILE FILE");
-        core.machine_.reloadFromString(core.script_code_);
-        core.machine_.runFunction("Init()");
-      }
-      ImGui::EndMenu();
-    }
-     */
-
     if (ImGui::BeginMenu("Editor")) {
       if (ImGui::MenuItem("Save Layout")) {
         ImGui::SaveDock();
@@ -266,7 +251,7 @@ void UserInterface::updateBottomBar() const {
   ImGui::SetNextWindowPos({ 0.0f, display_size.y - bottom_bar_height_ }, ImGuiSetCond_Always);
   ImGui::SetNextWindowSize({ display_size.x, bottom_bar_height_ }, ImGuiSetCond_Always);
   ImGui::Begin("statusbar", nullptr, flags);
-  ImGui::TextColored({ 202,81,0,255 }, "Wolfy2D & JMP Scripting Language Project"); ImGui::SameLine();
+  ImGui::TextColored({ 202,81,0,255 }, "Wolfy2D & JMP - A Scripting Language for Game Engines"); ImGui::SameLine();
   ImGui::Text("    "); ImGui::SameLine();
   ImGui::Text("Author: Julio Marcelo Picardo Pena"); ImGui::SameLine();
   ImGui::Text("    "); ImGui::SameLine();

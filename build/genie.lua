@@ -154,4 +154,4 @@ function GenerateProject(name)
 end
 
 -- PROJECTS
-GenerateProject("01_Testing")
+GenerateProject("Demo")
