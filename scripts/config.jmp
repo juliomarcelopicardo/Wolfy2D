@@ -1,78 +1,114 @@
-# JMP Scripting Language.
+# JMP - A Scripting Language for Game Engines - Demo
 # Author: Julio Marcelo Picardo Peña
 # Contact: juliomarcelopicardo@gmail.com
+# Supervisors: Dr. Paul Parry and Mr. Brent Poynton
 
+############################################
+#                                                                                                             #
+#   Functions registered from C++ that can be called:                   #
+#                                                                                                             #
+#      -  LoadSprite(sprite_name, texture_path)                                 #
+#      -  SetPosition(sprite_name, position_x, position_y)                   #
+#      -  SetSize(sprite_name, size_x, size_y)                                         #
+#      -  SetRotation(sprite_name, rotation_in_radians)                     #
+#      -  DrawLine(start_x, start_y, end_x, end_y)                                #
+#      -  DrawText(string, position_x, position_y)                                  #
+#                                                                                                             #
+#   Variables registered from C++ that can be used:                      #
+#                                                                                                             #
+#      -  center_x - Center position of the scene in the X axis.          #
+#      -  center_y - Center position of the scene in the Y axis.          #
+#      -  width - Scene width.                                                                 #
+#      -  height - Scene height.                                                              #
+#      -  time - Milliseconds since application started.                       #
+#                                                                                                             #
+#   Init() function is called from C++ just once per compilation     #
+#   Update() function is called from C++ once per frame              #
+#                                                                                                             #
+############################################
 
-
+# Texture paths.
 VARPACK Texture {
   VAR mario = "../data/mario.png"
   VAR observer = "../data/observer.png"
   VAR small_cloud = "../data/smallcloud.png"
   VAR pipe = "../data/pipe.png"
+  VAR bricks = "../data/bricks.jpg"
   VAR background = "../data/background.jpg"
   VAR big_cloud = "../data/bigcloud.png"
 }
 
+# Sprite names.
 VARPACK Sprite {
   VAR mario = "Mario"
   VAR observer = "Observer"
   VAR small_cloud = "Smallcloud"
   VAR pipe = "Pipe"
+  VAR bricks = "Bricks"
   VAR background = "BackGround"
   VAR big_cloud = "BigCloud"
 }
 
-# Initializing Observer Sprite
-FUNC InitObserverSprite() {
-  CreateSprite(Sprite.observer, Texture.observer)
-  SpriteSetPosition(Sprite.observer, 100.0, 300.0)
-  SpriteSetSize(Sprite.observer, 100.0, 100.0)
+# Loading sprites and textures in memory.
+FUNC LoadSprites() {
+  LoadSprite(Sprite.mario, Texture.mario)
+  LoadSprite(Sprite.observer, Texture.observer)
+  LoadSprite(Sprite.background, Texture.background)
+  LoadSprite(Sprite.big_cloud, Texture.big_cloud)
+  LoadSprite(Sprite.small_cloud, Texture.small_cloud)
+  LoadSprite(Sprite.pipe, Texture.pipe)
+  LoadSprite(Sprite.bricks, Texture.bricks)
 }
 
-# Initializing Mario Sprite
-FUNC InitMarioSprite() {
-  CreateSprite(Sprite.mario, Texture.mario)
-  SpriteSetPosition(Sprite.mario, 190.0, 834.0)
-  SpriteSetSize(Sprite.mario, 100.0, 100.0)
+# Set the position of the sprites
+FUNC SetupPositions() {
+  SetPosition(Sprite.mario, 190.0, 834.0)
+  SetPosition(Sprite.background, center_x, center_y)
+  SetPosition(Sprite.big_cloud, center_x, 200.0)
+  SetPosition(Sprite.small_cloud, 1500, 200.0)
+  SetPosition(Sprite.pipe, 1761, 732.0)
+  SetPosition(Sprite.observer, 200, 300.0)
+  SetPosition(Sprite.bricks, 950, 600.0)
 }
 
-# Initializing Background Sprite
-FUNC InitBackgroundSprite() {
-  CreateSprite(Sprite.background, Texture.background)
-  SpriteSetPosition(Sprite.background, center_x, center_y)
-  SpriteSetSize(Sprite.background, width, height)
+# Set the sizes of the sprites
+FUNC SetupSizes() {
+  SetSize(Sprite.mario, 100.0, 100.0)
+  SetSize(Sprite.background, width, height)
+  SetSize(Sprite.big_cloud, 400.0, 200.0)
+  SetSize(Sprite.small_cloud, 200, 200.0)
+  SetSize(Sprite.pipe, 200, 300.0)
+  SetSize(Sprite.observer, 100, 100.0)
+  SetSize(Sprite.bricks, 500, 100.0)
 }
 
-# Initializing Big Cloud Sprite
-FUNC InitBigCloudSprite() {
-  CreateSprite(Sprite.big_cloud, Texture.big_cloud)
-  SpriteSetPosition(Sprite.big_cloud, center_x, 200.0)
-  SpriteSetSize(Sprite.big_cloud, 400.0, 200.0)
+# Render sprites in the scene.
+FUNC RenderSprites() {
+  Render(Sprite.background)
+  Render(Sprite.mario)
+  Render(Sprite.big_cloud)
+  Render(Sprite.observer)
+  Render(Sprite.pipe)
+  Render(Sprite.small_cloud)
+  Render(Sprite.bricks)
 }
 
 FUNC Init() {
-  InitMarioSprite()
-  InitBackgroundSprite()
-  InitBigCloudSprite()
-  InitObserverSprite()
+  LoadSprites()
+  SetupPositions()
+  SetupSizes()
 }
 
 FUNC Update() {
 
-  time = time * 0.005
-  time = SIN(time) * 2.0
+  time = time * 0.002
+  VAR rotation = SIN(time) * 0.7
+  SetRotation(Sprite.observer, rotation)
 
-  #SpriteSetRotation(SpriteName.mario, time)
-
-  Render()
-}
-
-FUNC Render() {
-  RenderSprite(Sprite.background)
-  RenderSprite(Sprite.mario)
-  RenderSprite(Sprite.big_cloud)
-  RenderSprite(Sprite.observer)
-
+  RenderSprites()
+  
   DrawLine(0.0, 50.0, width, 50.0)
-  DrawText("EXAMPLE - SUPER MARIO SCENE", 30, 5.0)
+  DrawText("JMP - A SCRIPTING LANGUAGE FOR GAME ENGINES", 30, 5.0)
 }
+
+

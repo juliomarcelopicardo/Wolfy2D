@@ -86,12 +86,6 @@ void DrawLine(std::vector<JMP::Value>& p) {
   Draw::Line(origin, destiny);
 }
 
-void DrawRect(std::vector<JMP::Value>& p) {
-  const Vec2 origin = { p[0].getAsFloat(), p[1].getAsFloat() };
-  const Vec2 destiny = { p[2].getAsFloat(), p[3].getAsFloat() };
-  Draw::Line(origin, destiny);
-}
-
 int32 main() {
   
   auto& core = Core::instance();
@@ -99,25 +93,31 @@ int32 main() {
   jmp.processFile(kScriptFilename);
   strncpy_s(core.script_code_, SCRIPT_CODE_MAX_LENGTH, jmp.getCurrentScript().c_str(), SCRIPT_CODE_MAX_LENGTH);
   float32 time = (float32)Time();
+
   jmp.registerVariable("time", JMP::kValueType_Float, &time);
-  jmp.registerFunction("CreateSprite", &CreateSprite);
-  jmp.registerFunction("RenderSprite", &RenderSprite);
-  jmp.registerFunction("SpriteSetPosition", &SpriteSetPosition);
-  jmp.registerFunction("SpriteSetRotation", &SpriteSetRotation);
-  jmp.registerFunction("SpriteSetSize", &SpriteSetSize);
+  jmp.registerFunction("LoadSprite", &CreateSprite);
+  jmp.registerFunction("Render", &RenderSprite);
+  jmp.registerFunction("SetPosition", &SpriteSetPosition);
+  jmp.registerFunction("SetRotation", &SpriteSetRotation);
+  jmp.registerFunction("SetSize", &SpriteSetSize);
   jmp.registerFunction("DrawLine", &DrawLine);
   jmp.registerFunction("DrawText", &DrawText);
 
-  Window::Init(1800,1024);
-  //Window::InitMaximized("Wolfy2D Engine: JMP Scripting Language demo.", true);
+  Window::InitMaximized("Wolfy2D Engine: JMP A Scripting Language for Game Engines - Demo.", false);
   Vec2 window_size = { (float32)Window::Width(), (float32)Window::Height() };
   jmp.registerVariable("width", JMP::kValueType_Float, &window_size.x);
   jmp.registerVariable("height", JMP::kValueType_Float, &window_size.y);
   Vec2 screen_center = { window_size.x * 0.5f, window_size.y * 0.5f };
   jmp.registerVariable("center_x", JMP::kValueType_Float, &screen_center.x);
   jmp.registerVariable("center_y", JMP::kValueType_Float, &screen_center.y);
+
+
+
   jmp.runFunction("Init()");
-  while (Window::IsOpened() && !Input::IsKeyboardButtonDown(Input::kKeyboardButton_Escape)) {
+  
+  while (Window::IsOpened() && 
+         !Input::IsKeyboardButtonDown(Input::kKeyboardButton_Escape)) {
+
     Window::Clear();
     time = (float32)Time();
     jmp.runFunction("Update()");    Window::Frame();

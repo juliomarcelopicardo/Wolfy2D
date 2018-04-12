@@ -281,7 +281,7 @@ void UserInterface::updateBottomBar() const {
 
 void UserInterface::updateHierarchyDock() const {
 
-  if (ImGui::BeginDock("SceneHierarchy")) {
+  if (ImGui::BeginDock("Scene Hierarchy")) {
     auto& map = Core::instance().sprite_factory_;
     for (const auto& pair : map) {
       ImGui::PushID(&pair.second);

@@ -159,7 +159,7 @@ void Wnd::init(const int32 width, const int32 height, const char * name) {
     printf("\n Error: Init window failed.");
     exit(EXIT_FAILURE);
   }
-  glfwSetWindowPos(glfw_window_, 30, 30);
+  glfwSetWindowPos(glfw_window_, 0, 30);
 
   // Window and Input Callbacks
   SetWindowCallbacks();
